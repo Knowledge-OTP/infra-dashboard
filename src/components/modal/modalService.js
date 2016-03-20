@@ -14,13 +14,11 @@
             var ModalService = {};
 
             ModalService.showBaseModal = function (popupData) {
-                // @todo: how we pass the override css class??
-                //this.overrideCssClass = popupData.overrideCssClass;
-
                 $mdDialog.show({
                     locals: {
                         svgIcon: popupData.svgIcon,
-                        innerTemplateUrl: popupData.innerTemplateUrl
+                        innerTemplateUrl: popupData.innerTemplateUrl,
+                        overrideCssClass: popupData.overrideCssClass
                     },
                     bindToController: true,
                     controller: popupData.controllerName,
