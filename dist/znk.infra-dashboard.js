@@ -96,7 +96,10 @@
                     locals: {
                         svgIcon: popupData.svgIcon,
                         innerTemplateUrl: popupData.innerTemplateUrl,
-                        overrideCssClass: popupData.overrideCssClass
+                        overrideCssClass: popupData.overrideCssClass,
+                        closeModal: function closeModal (){
+                            $mdDialog.hide();
+                        }
                     },
                     bindToController: true,
                     controller: popupData.controllerName,
