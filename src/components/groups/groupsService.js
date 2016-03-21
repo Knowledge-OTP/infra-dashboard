@@ -2,8 +2,10 @@
     'use strict';
 
     angular.module('znk.infra-dashboard.groups').service('GroupsService', [
-        'StorageSrv',
-        function (StorageSrv) {
+        'InfraConfigSrv',
+        function (InfraConfigSrv) {
+            
+            var StorageSrv = InfraConfigSrv.getStorageService();
             var GROUPS_PATH = StorageSrv.variables.appUserSpacePath + '/groups';
 
             this.createGroup = function (groupName) {
