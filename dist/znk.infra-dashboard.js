@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('znk.infra-dashboard', [
-        'znk.infra-dashboard.groups'
+        'znk.infra-dashboard.groups',
+        'znk.infra-dashboard.modal'
     ]);
 })(angular);
 
