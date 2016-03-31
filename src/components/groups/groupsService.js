@@ -40,11 +40,17 @@
             };
 
             this.setGroup = function (id, newGroup) {
-                return StorageSrv.set(GROUPS_PATH + '/' + id, newGroup);
+                var self = this;
+                return this.getAllGroups().then(function (groups) {
+                    groups[id] = newGroup;
+                    return self.setGroups(groups);
+                });
             };
 
             this.getGroup = function (id) {
-                return StorageSrv.get(GROUPS_PATH + '/' + id);
+                return this.getAllGroups().then(function (groups) {
+                    return groups[id];
+                });
             };
 
             this.getAllGroups = function () {
