@@ -85,7 +85,9 @@
                             }
 
                             toGroup.students[studentId] = studentObj;
-                            return self.setGroup(toGroupKey, toGroup);
+                            return self.setGroup(toGroupKey, toGroup).then(function () {
+                                return self.getAllGroups();
+                            });
                         });
                     });
                 });
