@@ -74,12 +74,12 @@
 
             this.moveToGroup = function (fromGroupKey, toGroupKey, studentId) {
                 var self = this;
-                self.getGroup(fromGroupKey).then(function (fromGroup) {
+                return self.getGroup(fromGroupKey).then(function (fromGroup) {
                     var studentObj = fromGroup.students[studentId];
                     delete fromGroup.students[studentId];
 
-                    self.setGroup(fromGroupKey, fromGroup).then(function () {
-                        self.getGroup(toGroupKey).then(function (toGroup) {
+                    return self.setGroup(fromGroupKey, fromGroup).then(function () {
+                        return self.getGroup(toGroupKey).then(function (toGroup) {
                             if (!toGroup.students) {
                                 toGroup.students = {};
                             }
