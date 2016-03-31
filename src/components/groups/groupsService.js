@@ -4,7 +4,7 @@
     angular.module('znk.infra-dashboard.groups').service('GroupsService', [
         'InfraConfigSrv',
         function (InfraConfigSrv) {
-            
+
             var StorageSrv = InfraConfigSrv.getStorageService();
             var GROUPS_PATH = StorageSrv.variables.appUserSpacePath + '/groups';
 
@@ -49,6 +49,25 @@
 
             this.getAllGroups = function () {
                 return StorageSrv.get(GROUPS_PATH);
+            };
+
+            this.moveToGroup = function (fromGroupKey, toGroupKey, studentId) {
+                var self = this;
+                self.getGroup(fromGroupKey).then(function (fromGroup) {
+                    var studentObj = fromGroup.students[studentId];
+                    delete fromGroup.students[studentId];
+
+                    self.setGroup(fromGroupKey, fromGroup).then(function () {
+                        self.getGroup(toGroupKey).then(function (toGroup) {
+                            if (!toGroup.students) {
+                                toGroup.students = {};
+                            }
+
+                            toGroup.students[studentId] = studentObj;
+                            return self.setGroup(toGroupKey, toGroup);
+                        });
+                    });
+                });
             };
         }
     ]);
