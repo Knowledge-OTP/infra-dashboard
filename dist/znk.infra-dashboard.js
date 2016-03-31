@@ -97,6 +97,7 @@
                         svgIcon: popupData.svgIcon,
                         innerTemplateUrl: popupData.innerTemplateUrl,
                         overrideCssClass: popupData.overrideCssClass,
+                        modalData: popupData.modalData,
                         closeModal: function closeModal (){
                             $mdDialog.hide();
                         }
