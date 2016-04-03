@@ -81,7 +81,12 @@
             this.updateStudent = function (groupKey, studentId, newStudent) {
                 var self = this;
                 return self.getGroup(groupKey).then(function (studentGroup) {
-                    studentGroup.students[studentId] = newStudent;
+                    if (!newStudent) {
+                        delete studentGroup.students[studentId];
+                    } else {
+                        studentGroup.students[studentId] = newStudent;
+                    }
+
                     return self.setGroup(groupKey, studentGroup).then(function () {
                         return self.getAllGroups();
                     });
