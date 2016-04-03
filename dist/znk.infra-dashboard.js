@@ -98,6 +98,16 @@
                     });
                 });
             };
+
+            this.updateStudent = function (groupKey, newStuednt) {
+                var self = this;
+                return self.getGroup(groupKey).then(function (studentGroup) {
+                    studentGroup.students[newStuednt].receiverUid = newStuednt;
+                    return self.setGroup(groupKey, studentGroup).then(function () {
+                        return self.getAllGroups();
+                    });
+                });
+            };
         }
     ]);
 })(angular);
