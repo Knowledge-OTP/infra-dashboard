@@ -57,19 +57,25 @@
                 return StorageSrv.get(GROUPS_PATH);
             };
 
-            this.moveToGroup = function (fromGroupKey, toGroupKey, studentId) {
+            this.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
                 var self = this;
                 return self.getGroup(fromGroupKey).then(function (fromGroup) {
-                    var studentObj = fromGroup.students[studentId];
-                    delete fromGroup.students[studentId];
+                    var movedStudents = {};
+
+                    angular.forEach(studentIdsArr, function (studentId) {
+                        movedStudents[studentId] = fromGroup.students[studentId];
+                        delete fromGroup.students[studentId];
+                    });
 
                     return self.setGroup(fromGroupKey, fromGroup).then(function () {
                         return self.getGroup(toGroupKey).then(function (toGroup) {
                             if (!toGroup.students) {
                                 toGroup.students = {};
                             }
+                            angular.forEach(studentIdsArr, function (studentId) {
+                                toGroup.students[studentId] = movedStudents[studentId];
+                            });
 
-                            toGroup.students[studentId] = studentObj;
                             return self.setGroup(toGroupKey, toGroup).then(function () {
                                 return self.getAllGroups();
                             });
