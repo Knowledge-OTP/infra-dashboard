@@ -78,14 +78,18 @@
                 });
             };
 
-            this.updateStudent = function (groupKey, newStuednt) {
+            this.updateStudent = function (groupKey, studentId, newStudent) {
                 var self = this;
                 return self.getGroup(groupKey).then(function (studentGroup) {
-                    studentGroup.students[newStuednt.receiverUid] = newStuednt;
+                    studentGroup.students[studentId] = newStudent;
                     return self.setGroup(groupKey, studentGroup).then(function () {
                         return self.getAllGroups();
                     });
                 });
+            };
+
+            this.removeStudent = function (groupKey, studentId) {
+                return  this.updateStudent(groupKey, studentId, null);
             };
         }
     ]);
