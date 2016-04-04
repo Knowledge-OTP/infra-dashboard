@@ -11,13 +11,17 @@
             };
 
             this.$get = ['$injector', function($injector) {
+                function _getStorage(){
+                    return $injector.get(StorageSrvName);
+                }
 
-                var StorageSrv = $injector.get(StorageSrvName);
-                var GROUPS_PATH = StorageSrv.variables.appUserSpacePath + '/groups';
+                function _getGroupPath(){
+                    return _getStorage().variables.appUserSpacePath + '/groups';
+                }
 
                 this.createGroup = function (groupName) {
                     var self = this;
-                    return StorageSrv.get(GROUPS_PATH).then(function (groups) {
+                    return _getStorage().get(_getGroupPath()).then(function (groups) {
                         var groupId = Object.keys(groups).length + 1;
                         groups[groupId] = {
                             name: groupName
@@ -43,7 +47,7 @@
                 };
 
                 this.setGroups = function (newGroups) {
-                    return StorageSrv.set(GROUPS_PATH, newGroups);
+                    return _getStorage().set(_getGroupPath(), newGroups);
                 };
 
                 this.setGroup = function (id, newGroup) {
@@ -61,7 +65,7 @@
                 };
 
                 this.getAllGroups = function () {
-                    return StorageSrv.get(GROUPS_PATH);
+                    return _getStorage().get(_getGroupPath());
                 };
 
                 this.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
