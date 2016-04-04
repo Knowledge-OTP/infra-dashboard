@@ -23,106 +23,114 @@
     'use strict';
 
     angular.module('znk.infra-dashboard.groups').service('GroupsService', [
-        'InfraConfigSrv',
-        function (InfraConfigSrv) {
+        function () {
 
-            var StorageSrv = InfraConfigSrv.getStorageService();
-            var GROUPS_PATH = StorageSrv.variables.appUserSpacePath + '/groups';
+            var StorageSrv;
 
-            this.createGroup = function (groupName) {
-                var self = this;
-                return StorageSrv.get(GROUPS_PATH).then(function (groups) {
-                    var groupId = Object.keys(groups).length + 1;
-                    groups[groupId] = {
-                        name: groupName
-                    };
-
-                    return self.setGroups(groups);
-                });
+            this.setStorageService = function (storageService) {
+                StorageSrv = storageService;
             };
 
-            this.addStudentsToGroup = function (groupId, studentsArr) {
-                var self = this;
-                return this.getGroup(groupId).then(function (group) {
-                    if (!angular.isArray(group.student)) {
-                        group.student = [];
-                    }
+            this.$get = [function() {
 
-                    angular.forEach(studentsArr, function (studentId) {
-                        group.student.push(studentId);
+                var GROUPS_PATH = StorageSrv.variables.appUserSpacePath + '/groups';
+
+                this.createGroup = function (groupName) {
+                    var self = this;
+                    return StorageSrv.get(GROUPS_PATH).then(function (groups) {
+                        var groupId = Object.keys(groups).length + 1;
+                        groups[groupId] = {
+                            name: groupName
+                        };
+
+                        return self.setGroups(groups);
                     });
+                };
 
-                    return self.setGroup(groupId, group);
-                });
-            };
+                this.addStudentsToGroup = function (groupId, studentsArr) {
+                    var self = this;
+                    return this.getGroup(groupId).then(function (group) {
+                        if (!angular.isArray(group.student)) {
+                            group.student = [];
+                        }
 
-            this.setGroups = function (newGroups) {
-                return StorageSrv.set(GROUPS_PATH, newGroups);
-            };
+                        angular.forEach(studentsArr, function (studentId) {
+                            group.student.push(studentId);
+                        });
 
-            this.setGroup = function (id, newGroup) {
-                var self = this;
-                return this.getAllGroups().then(function (groups) {
-                    groups[id] = newGroup;
-                    return self.setGroups(groups);
-                });
-            };
-
-            this.getGroup = function (id) {
-                return this.getAllGroups().then(function (groups) {
-                    return groups[id];
-                });
-            };
-
-            this.getAllGroups = function () {
-                return StorageSrv.get(GROUPS_PATH);
-            };
-
-            this.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
-                var self = this;
-                return self.getGroup(fromGroupKey).then(function (fromGroup) {
-                    var movedStudents = {};
-
-                    angular.forEach(studentIdsArr, function (studentId) {
-                        movedStudents[studentId] = fromGroup.students[studentId];
-                        delete fromGroup.students[studentId];
+                        return self.setGroup(groupId, group);
                     });
+                };
 
-                    return self.setGroup(fromGroupKey, fromGroup).then(function () {
-                        return self.getGroup(toGroupKey).then(function (toGroup) {
-                            if (!toGroup.students) {
-                                toGroup.students = {};
-                            }
-                            angular.forEach(studentIdsArr, function (studentId) {
-                                toGroup.students[studentId] = movedStudents[studentId];
-                            });
+                this.setGroups = function (newGroups) {
+                    return StorageSrv.set(GROUPS_PATH, newGroups);
+                };
 
-                            return self.setGroup(toGroupKey, toGroup).then(function () {
-                                return self.getAllGroups();
+                this.setGroup = function (id, newGroup) {
+                    var self = this;
+                    return this.getAllGroups().then(function (groups) {
+                        groups[id] = newGroup;
+                        return self.setGroups(groups);
+                    });
+                };
+
+                this.getGroup = function (id) {
+                    return this.getAllGroups().then(function (groups) {
+                        return groups[id];
+                    });
+                };
+
+                this.getAllGroups = function () {
+                    return StorageSrv.get(GROUPS_PATH);
+                };
+
+                this.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
+                    var self = this;
+                    return self.getGroup(fromGroupKey).then(function (fromGroup) {
+                        var movedStudents = {};
+
+                        angular.forEach(studentIdsArr, function (studentId) {
+                            movedStudents[studentId] = fromGroup.students[studentId];
+                            delete fromGroup.students[studentId];
+                        });
+
+                        return self.setGroup(fromGroupKey, fromGroup).then(function () {
+                            return self.getGroup(toGroupKey).then(function (toGroup) {
+                                if (!toGroup.students) {
+                                    toGroup.students = {};
+                                }
+                                angular.forEach(studentIdsArr, function (studentId) {
+                                    toGroup.students[studentId] = movedStudents[studentId];
+                                });
+
+                                return self.setGroup(toGroupKey, toGroup).then(function () {
+                                    return self.getAllGroups();
+                                });
                             });
                         });
                     });
-                });
-            };
+                };
 
-            this.updateStudent = function (groupKey, studentId, newStudent) {
-                var self = this;
-                return self.getGroup(groupKey).then(function (studentGroup) {
-                    if (!newStudent) {
-                        delete studentGroup.students[studentId];
-                    } else {
-                        studentGroup.students[studentId] = newStudent;
-                    }
+                this.updateStudent = function (groupKey, studentId, newStudent) {
+                    var self = this;
+                    return self.getGroup(groupKey).then(function (studentGroup) {
+                        if (!newStudent) {
+                            delete studentGroup.students[studentId];
+                        } else {
+                            studentGroup.students[studentId] = newStudent;
+                        }
 
-                    return self.setGroup(groupKey, studentGroup).then(function () {
-                        return self.getAllGroups();
+                        return self.setGroup(groupKey, studentGroup).then(function () {
+                            return self.getAllGroups();
+                        });
                     });
-                });
-            };
+                };
 
-            this.removeStudent = function (groupKey, studentId) {
-                return  this.updateStudent(groupKey, studentId, null);
-            };
+                this.removeStudent = function (groupKey, studentId) {
+                    return  this.updateStudent(groupKey, studentId, null);
+                };
+
+            }];
         }
     ]);
 })(angular);
