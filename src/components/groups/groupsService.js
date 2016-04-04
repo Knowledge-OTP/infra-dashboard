@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('znk.infra-dashboard.groups').service('GroupsService', [
+    angular.module('znk.infra-dashboard.groups').provider('GroupsService', [
         function () {
 
             var StorageSrv;
