@@ -7,7 +7,7 @@
             var StorageSrv;
 
             this.setStorageService = function (storageService) {
-                StorageSrv = storageService;
+                StorageSrv = storageService.$get;
             };
 
             this.$get = [function() {
