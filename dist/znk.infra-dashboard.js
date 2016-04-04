@@ -32,6 +32,8 @@
             };
 
             this.$get = ['$injector', function($injector) {
+
+                var GroupsService = {};
                 function _getStorage(){
                     return $injector.get(StorageSrvName);
                 }
@@ -40,7 +42,7 @@
                     return _getStorage().variables.appUserSpacePath + '/groups';
                 }
 
-                this.createGroup = function (groupName) {
+                GroupsService.createGroup = function (groupName) {
                     var self = this;
                     return _getStorage().get(_getGroupPath()).then(function (groups) {
                         var groupId = Object.keys(groups).length + 1;
@@ -52,7 +54,7 @@
                     });
                 };
 
-                this.addStudentsToGroup = function (groupId, studentsArr) {
+                GroupsService.addStudentsToGroup = function (groupId, studentsArr) {
                     var self = this;
                     return this.getGroup(groupId).then(function (group) {
                         if (!angular.isArray(group.student)) {
@@ -67,11 +69,11 @@
                     });
                 };
 
-                this.setGroups = function (newGroups) {
+                GroupsService.setGroups = function (newGroups) {
                     return _getStorage().set(_getGroupPath(), newGroups);
                 };
 
-                this.setGroup = function (id, newGroup) {
+                GroupsService.setGroup = function (id, newGroup) {
                     var self = this;
                     return this.getAllGroups().then(function (groups) {
                         groups[id] = newGroup;
@@ -79,17 +81,17 @@
                     });
                 };
 
-                this.getGroup = function (id) {
+                GroupsService.getGroup = function (id) {
                     return this.getAllGroups().then(function (groups) {
                         return groups[id];
                     });
                 };
 
-                this.getAllGroups = function () {
+                GroupsService.getAllGroups = function () {
                     return _getStorage().get(_getGroupPath());
                 };
 
-                this.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
+                GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
                     var self = this;
                     return self.getGroup(fromGroupKey).then(function (fromGroup) {
                         var movedStudents = {};
@@ -116,7 +118,7 @@
                     });
                 };
 
-                this.updateStudent = function (groupKey, studentId, newStudent) {
+                GroupsService.updateStudent = function (groupKey, studentId, newStudent) {
                     var self = this;
                     return self.getGroup(groupKey).then(function (studentGroup) {
                         if (!newStudent) {
@@ -131,9 +133,11 @@
                     });
                 };
 
-                this.removeStudent = function (groupKey, studentId) {
+                GroupsService.removeStudent = function (groupKey, studentId) {
                     return  this.updateStudent(groupKey, studentId, null);
                 };
+
+                return GroupsService;
 
             }];
         }
