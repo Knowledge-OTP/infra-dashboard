@@ -25,14 +25,15 @@
     angular.module('znk.infra-dashboard.groups').provider('GroupsService', [
         function () {
 
-            var StorageSrv;
+            var StorageSrvName;
 
-            this.setStorageService = function (storageService) {
-                StorageSrv = storageService.$get;
+            this.setStorageServiceName = function (storageServiceName) {
+                StorageSrvName = storageServiceName;
             };
 
-            this.$get = [function() {
+            this.$get = ['$injector', function($injector) {
 
+                var StorageSrv = $injector.get(StorageSrvName);
                 var GROUPS_PATH = StorageSrv.variables.appUserSpacePath + '/groups';
 
                 this.createGroup = function (groupName) {
