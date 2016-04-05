@@ -133,10 +133,6 @@
                     });
                 };
 
-                GroupsService.removeStudent = function (groupKey, studentId) {
-                    return  this.updateStudent(groupKey, studentId, null);
-                };
-
                 return GroupsService;
 
             }];
