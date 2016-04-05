@@ -134,7 +134,7 @@
                 };
 
                 GroupsService.editGroupName = function (groupKey, newName) {
-                    return GroupsService.getGroup().then(function (group) {
+                    return GroupsService.getGroup(groupKey).then(function (group) {
                         group.name = newName;
                         return GroupsService.setGroup(groupKey, group);
                     });
