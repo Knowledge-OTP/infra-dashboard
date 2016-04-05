@@ -13,6 +13,8 @@
             this.$get = ['$injector', function($injector) {
 
                 var GroupsService = {};
+                var defaultGroupName = 'assorted';
+
                 function _getStorage(){
                     return $injector.get(StorageSrvName);
                 }
@@ -33,36 +35,18 @@
                     });
                 };
 
-                GroupsService.addStudentsToGroup = function (groupId, studentsArr) {
+                GroupsService.updateStudent = function (groupKey, studentId, newStudent) {
                     var self = this;
-                    return this.getGroup(groupId).then(function (group) {
-                        if (!angular.isArray(group.student)) {
-                            group.student = [];
+                    return self.getGroup(groupKey).then(function (studentGroup) {
+                        if (!newStudent) {
+                            delete studentGroup.students[studentId];
+                        } else {
+                            studentGroup.students[studentId] = newStudent;
                         }
 
-                        angular.forEach(studentsArr, function (studentId) {
-                            group.student.push(studentId);
+                        return self.setGroup(groupKey, studentGroup).then(function () {
+                            return self.getAllGroups();
                         });
-
-                        return self.setGroup(groupId, group);
-                    });
-                };
-
-                GroupsService.setGroups = function (newGroups) {
-                    return _getStorage().set(_getGroupPath(), newGroups);
-                };
-
-                GroupsService.setGroup = function (id, newGroup) {
-                    var self = this;
-                    return this.getAllGroups().then(function (groups) {
-                        groups[id] = newGroup;
-                        return self.setGroups(groups);
-                    });
-                };
-
-                GroupsService.getGroup = function (id) {
-                    return this.getAllGroups().then(function (groups) {
-                        return groups[id];
                     });
                 };
 
@@ -97,18 +81,41 @@
                     });
                 };
 
-                GroupsService.updateStudent = function (groupKey, studentId, newStudent) {
-                    var self = this;
-                    return self.getGroup(groupKey).then(function (studentGroup) {
-                        if (!newStudent) {
-                            delete studentGroup.students[studentId];
-                        } else {
-                            studentGroup.students[studentId] = newStudent;
-                        }
+                GroupsService.setGroups = function (newGroups) {
+                    return _getStorage().set(_getGroupPath(), newGroups);
+                };
 
-                        return self.setGroup(groupKey, studentGroup).then(function () {
-                            return self.getAllGroups();
+                GroupsService.setGroup = function (id, newGroup) {
+                    var self = this;
+                    return this.getAllGroups().then(function (groups) {
+                        groups[id] = newGroup;
+                        return self.setGroups(groups);
+                    });
+                };
+
+                GroupsService.getGroup = function (id) {
+                    return this.getAllGroups().then(function (groups) {
+                        return groups[id];
+                    });
+                };
+
+                GroupsService.deleteGroup = function (groupKey) {
+                    return GroupsService.getAllGroups().then(function (groups) {
+                        var students = angular.copy(groups[groupKey].students);
+                        delete groups[groupKey];
+
+                        angular.forEach(students, function (student, key) {
+                            groups[defaultGroupName].students[key] = student;
                         });
+
+                        return GroupsService.setGroups(groups);
+                    });
+                };
+
+                GroupsService.editGroupName = function (groupKey, newName) {
+                    return GroupsService.getGroup().then(function (group) {
+                        group.name = newName;
+                        return GroupsService.setGroup(groupKey, group);
                     });
                 };
 
