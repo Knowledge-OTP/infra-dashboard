@@ -12,7 +12,7 @@
                 AuthServiceName = authServiceName;
             };
 
-            this.$get = ['$injector', '$q', 'ENV', '$timeout', function($injector, $q, ENV, $timeout) {
+            this.$get = ['$injector', '$q', 'ENV', '$timeout', function($injector, $q) {
 
                 var GroupsService = {};
                 var defaultGroupName = 'assorted';
@@ -21,10 +21,6 @@
 
                 function _getStorage(){
                     return $injector.get(StorageSrvName);
-                }
-
-                function _authService(){
-                    return $injector.get(AuthServiceName);
                 }
 
                 function _getGroupPath(){
@@ -127,29 +123,6 @@
                         return GroupsService.setGroup(groupKey, group);
                     });
                 };
-
-                function groupListener() {
-                    var authData = _authService().getAuth();
-                    var fbGroupsPath = _getStorage().variables.appUserSpacePath + '/groups';
-                    if (authData && authData.uid) {
-                        var groupsFullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + fbGroupsPath;
-                        var groupsPath = groupsFullPath.replace('$$uid', authData.uid);
-                        var ref = new Firebase(groupsPath);
-                        ref.on('child_added', function (dataSnapshot) {
-                            $timeout(function () {
-                                allGroups[dataSnapshot.key()] = dataSnapshot.val();
-                            });
-                        });
-
-                        ref.on('child_removed', function (dataSnapshot) {
-                            $timeout(function () {
-                                delete allGroups[dataSnapshot.key()];
-                            });
-                        });
-                    }
-                }
-
-                groupListener();
 
                 return GroupsService;
 
