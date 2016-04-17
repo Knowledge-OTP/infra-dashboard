@@ -5,19 +5,15 @@
         function () {
 
             var StorageSrvName;
-            var AuthServiceName;
 
-            this.setHelpersServiceName = function (storageServiceName, authServiceName) {
+            this.setStorageServiceName = function (storageServiceName) {
                 StorageSrvName = storageServiceName;
-                AuthServiceName = authServiceName;
             };
 
-            this.$get = ['$injector', '$q', 'ENV', '$timeout', function($injector, $q) {
+            this.$get = ['$injector', function($injector) {
 
                 var GroupsService = {};
                 var defaultGroupName = 'assorted';
-                var allGroups = {};
-
 
                 function _getStorage(){
                     return $injector.get(StorageSrvName);
@@ -56,7 +52,7 @@
                 };
 
                 GroupsService.getAllGroups = function () {
-                    return $q.when(allGroups);
+                    return _getStorage().get(_getGroupPath());
                 };
 
                 GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
