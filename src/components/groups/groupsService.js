@@ -16,7 +16,7 @@
 
                 var GroupsService = {};
                 var defaultGroupName = 'assorted';
-                var allGroups;
+                var allGroups = {};
 
 
                 function _getStorage(){
@@ -60,7 +60,6 @@
                 };
 
                 GroupsService.getAllGroups = function () {
-                    /*return _getStorage().get(_getGroupPath());*/
                     return $q.when(allGroups);
                 };
 
