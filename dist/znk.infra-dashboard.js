@@ -70,7 +70,7 @@
                 AuthServiceName = authServiceName;
             };
 
-            this.$get = ['$injector', '$q', 'ENV', '$timeout', function($injector, $q, ENV, $timeout) {
+            this.$get = ['$injector', '$q', 'ENV', '$timeout', function($injector, $q, ENV) {
 
                 var GroupsService = {};
                 var defaultGroupName = 'assorted';
@@ -194,15 +194,11 @@
                         var groupsPath = groupsFullPath.replace('$$uid', authData.uid);
                         var ref = new Firebase(groupsPath);
                         ref.on('child_added', function (dataSnapshot) {
-                            $timeout(function () {
-                                allGroups[dataSnapshot.key()] = dataSnapshot.val();
-                            });
+                            allGroups[dataSnapshot.key()] = dataSnapshot.val();
                         });
 
                         ref.on('child_removed', function (dataSnapshot) {
-                            $timeout(function () {
-                                delete allGroups[dataSnapshot.key()];
-                            });
+                            delete allGroups[dataSnapshot.key()];
                         });
                     }
                 }
