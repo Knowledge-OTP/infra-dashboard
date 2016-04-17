@@ -5,18 +5,26 @@
         function () {
 
             var StorageSrvName;
+            var AuthServiceName;
 
-            this.setStorageServiceName = function (storageServiceName) {
+            this.setHelpersServiceName = function (storageServiceName, authServiceName) {
                 StorageSrvName = storageServiceName;
+                AuthServiceName = authServiceName;
             };
 
-            this.$get = ['$injector', function($injector) {
+            this.$get = ['$injector', '$q', 'ENV', '$timeout', function($injector, $q, ENV, $timeout) {
 
                 var GroupsService = {};
                 var defaultGroupName = 'assorted';
+                var allGroups;
+
 
                 function _getStorage(){
                     return $injector.get(StorageSrvName);
+                }
+
+                function _authService(){
+                    return $injector.get(AuthServiceName);
                 }
 
                 function _getGroupPath(){
@@ -52,7 +60,8 @@
                 };
 
                 GroupsService.getAllGroups = function () {
-                    return _getStorage().get(_getGroupPath());
+                    /*return _getStorage().get(_getGroupPath());*/
+                    return $q.when(allGroups);
                 };
 
                 GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
@@ -119,6 +128,29 @@
                         return GroupsService.setGroup(groupKey, group);
                     });
                 };
+
+                function groupListener() {
+                    var authData = _authService().getAuth();
+                    var fbGroupsPath = _getStorage().variables.appUserSpacePath + '/groups';
+                    if (authData && authData.uid) {
+                        var groupsFullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + fbGroupsPath;
+                        var groupsPath = groupsFullPath.replace('$$uid', authData.uid);
+                        var ref = new Firebase(groupsPath);
+                        ref.on('child_added', function (dataSnapshot) {
+                            $timeout(function () {
+                                allGroups[dataSnapshot.key()] = dataSnapshot.val();
+                            });
+                        });
+
+                        ref.on('child_removed', function (dataSnapshot) {
+                            $timeout(function () {
+                                delete allGroups[dataSnapshot.key()];
+                            });
+                        });
+                    }
+                }
+
+                groupListener();
 
                 return GroupsService;
 
