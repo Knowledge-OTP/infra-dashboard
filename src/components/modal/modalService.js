@@ -20,6 +20,7 @@
                         innerTemplateUrl: popupData.innerTemplateUrl,
                         overrideCssClass: popupData.overrideCssClass,
                         modalData: popupData.modalData,
+                        modalName: popupData.modalName,
                         closeModal: function closeModal (){
                             $mdDialog.hide();
                         }
