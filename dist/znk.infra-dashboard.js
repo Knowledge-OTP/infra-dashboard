@@ -3,8 +3,15 @@
 
     angular.module('znk.infra-dashboard', [
         'znk.infra-dashboard.groups',
-        'znk.infra-dashboard.modal'
+        'znk.infra-dashboard.modal',
+        'znk.infra-dashboard.utils'
     ]);
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-dashboard.utils', []);
 })(angular);
 
 (function (angular) {
@@ -17,6 +24,36 @@
     'use strict';
 
     angular.module('znk.infra-dashboard.modal', []);
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-dashboard.utils').filter('cutString', [function () {
+
+        return function (str, length) {
+
+            if (!str) {
+                return '';
+            }
+            if (str.length < length) {
+                return str;
+            }
+
+            var words = str.split(' ');
+            var newStr = '';
+
+            for (var i = 0; i < words.length; i++) {
+                if (newStr.length + words[i].length <= length) {
+                    newStr = newStr + words[i] + ' ';
+                } else {
+                    break;
+                }
+            }
+
+            return newStr + '...';
+        };
+    }]);
 })(angular);
 
 (function (angular) {
@@ -47,9 +84,16 @@
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
                     return _getStorage().get(_getGroupPath()).then(function (groups) {
-                        var groupId = Object.keys(groups).length + 1;
+                        var increment = 1;
+                        var groupId = Object.keys(groups).length + increment;
+                        while (angular.isDefined(groups[groupId])){
+                            increment++;
+                            groupId = Object.keys(groups).length + increment;
+                        }
+
                         groups[groupId] = {
-                            name: groupName
+                            name: groupName,
+                            groupKey: groupId
                         };
 
                         return self.setGroups(groups);
