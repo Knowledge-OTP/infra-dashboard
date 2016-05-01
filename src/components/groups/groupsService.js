@@ -26,9 +26,16 @@
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
                     return _getStorage().get(_getGroupPath()).then(function (groups) {
-                        var groupId = Object.keys(groups).length + 1;
+                        var increment = 1;
+                        var groupId = Object.keys(groups).length + increment;
+                        while (angular.isDefined(groups[groupId])){
+                            increment++;
+                            groupId = Object.keys(groups).length + increment;
+                        }
+
                         groups[groupId] = {
-                            name: groupName
+                            name: groupName,
+                            groupKey: groupId
                         };
 
                         return self.setGroups(groups);
