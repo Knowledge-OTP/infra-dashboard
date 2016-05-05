@@ -63,28 +63,23 @@
 
                 GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
                     var self = this;
-                    return self.getGroup(fromGroupKey).then(function (fromGroup) {
+                    return self.getAllGroups().then(function (allGroups) {
                         var movedStudents = {};
 
                         angular.forEach(studentIdsArr, function (studentId) {
-                            movedStudents[studentId] = fromGroup.students[studentId];
-                            delete fromGroup.students[studentId];
+                            movedStudents[studentId] = allGroups[fromGroupKey].students[studentId];
+                            delete  allGroups[fromGroupKey].students[studentId];
                         });
 
-                        return self.setGroup(fromGroupKey, fromGroup).then(function () {
-                            return self.getGroup(toGroupKey).then(function (toGroup) {
-                                if (!toGroup.students) {
-                                    toGroup.students = {};
-                                }
-                                angular.forEach(studentIdsArr, function (studentId) {
-                                    toGroup.students[studentId] = movedStudents[studentId];
-                                });
+                        if(!allGroups[toGroupKey].students) {
+                            allGroups[toGroupKey].students = {};
+                        }
 
-                                return self.setGroup(toGroupKey, toGroup).then(function () {
-                                    return self.getAllGroups();
-                                });
-                            });
+                        angular.forEach(studentIdsArr, function (studentId) {
+                            allGroups[toGroupKey].students[studentId] = movedStudents[studentId];
                         });
+
+                        return self.setGroups(allGroups);
                     });
                 };
 
