@@ -86,7 +86,12 @@
                     var self = this;
                     return _getStorage().get(_getGroupPath()).then(function (groups) {
                         var increment = 1;
-                        var groupId = Object.keys(groups).length + increment;
+                        var groupId = GroupsService.defaultGroupName;
+
+                        if(Object.keys(groups).length){
+                            groupId = Object.keys(groups).length + increment;
+                        }
+
                         while (angular.isDefined(groups[groupId])){
                             increment++;
                             groupId = Object.keys(groups).length + increment;
