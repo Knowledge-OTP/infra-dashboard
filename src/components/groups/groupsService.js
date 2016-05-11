@@ -12,8 +12,9 @@
 
             this.$get = ['$injector', function($injector) {
 
-                var GroupsService = {};
-                var defaultGroupName = 'assorted';
+                var GroupsService = {
+                    defaultGroupName: 'assorted'
+                };
 
                 function _getStorage(){
                     return $injector.get(StorageSrvName);
@@ -107,7 +108,7 @@
                         delete groups[groupKey];
 
                         angular.forEach(students, function (student, key) {
-                            groups[defaultGroupName].students[key] = student;
+                            groups[GroupsService.defaultGroupName].students[key] = student;
                         });
 
                         return GroupsService.setGroups(groups);
