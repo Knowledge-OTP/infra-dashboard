@@ -3,7 +3,7 @@
 
     angular.module('znk.infra-dashboard.groups').provider('GroupsService', [
         function () {
-            
+
             var StorageSrvName;
             var AuthSrvName;
 
@@ -12,7 +12,7 @@
                 AuthSrvName = authServiceName;
             };
 
-            this.$get = ['$injector',  'ENV', '$timeout', '$q', function($injector, ENV, $timeout, $q) {
+            this.$get = ['$injector',  'ENV', '$timeout', function($injector, ENV, $timeout) {
 
                 var GroupsService = {
                     defaultGroupName: 'assorted',
@@ -21,7 +21,7 @@
 
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
-                    return _getStorage().get(_getGroupPath()).then(function (groups) {
+                    return self.getAllGroups().then(function (groups) {
                         var increment = 1;
                         var groupId = GroupsService.defaultGroupName;
 
@@ -59,7 +59,10 @@
                 };
 
                 GroupsService.getAllGroups = function () {
-                    return $q.when(GroupsService.groups);
+                    return _getStorage().get(_getGroupPath()).then(function (groups) {
+                        GroupsService.groups = groups;
+                        return GroupsService.groups;
+                    });
                 };
 
                 GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
@@ -145,6 +148,7 @@
 
                 function groupsChildAdded(dataSnapshot) {
                     $timeout(function () {
+                        console.log('GroupsService.groups', GroupsService.groups);
                         GroupsService.groups[dataSnapshot.key()] = dataSnapshot.val();
                     });
                 }
