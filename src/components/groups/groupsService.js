@@ -70,14 +70,18 @@
                     };
                 })();
 
-                GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
+                GroupsService.moveToGroup = function (toGroupKey, studentIdsArr) {
                     var self = this;
                     return self.getAllGroups().then(function (allGroups) {
                         var movedStudents = {};
 
                         angular.forEach(studentIdsArr, function (studentId) {
-                            movedStudents[studentId] = allGroups[fromGroupKey].students[studentId];
-                            delete  allGroups[fromGroupKey].students[studentId];
+                            angular.forEach(allGroups, function (group) {
+                                if(group.students && group.students[studentId]){
+                                    movedStudents[studentId] = group.students[studentId];
+                                    delete  group.students[studentId];
+                                }
+                            });
                         });
 
                         if(!allGroups[toGroupKey].students) {
