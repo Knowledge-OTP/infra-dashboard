@@ -3,26 +3,20 @@
 
     angular.module('znk.infra-dashboard.groups').provider('GroupsService', [
         function () {
-
             var StorageSrvName;
+            var AuthSrvName;
 
-            this.setStorageServiceName = function (storageServiceName) {
+            this.setHelpersServiceName = function (storageServiceName, authServiceName) {
                 StorageSrvName = storageServiceName;
+                AuthSrvName = authServiceName;
             };
 
-            this.$get = ['$injector', function($injector) {
+            this.$get = ['$injector',  'ENV', '$timeout', '$q', function($injector, ENV, $timeout, $q) {
 
                 var GroupsService = {
-                    defaultGroupName: 'assorted'
+                    defaultGroupName: 'assorted',
+                    groups: {}
                 };
-
-                function _getStorage(){
-                    return $injector.get(StorageSrvName);
-                }
-
-                function _getGroupPath(){
-                    return _getStorage().variables.appUserSpacePath + '/groups';
-                }
 
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
@@ -64,7 +58,7 @@
                 };
 
                 GroupsService.getAllGroups = function () {
-                    return _getStorage().get(_getGroupPath());
+                    return $q.when(GroupsService.groups);
                 };
 
                 GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
@@ -126,6 +120,47 @@
                         return GroupsService.setGroup(groupKey, group);
                     });
                 };
+
+                function _getAuthSrv(){
+                    return $injector.get(AuthSrvName);
+                }
+
+                function _getStorage(){
+                    return $injector.get(StorageSrvName);
+                }
+
+                function _getGroupPath(){
+                    return _getStorage().variables.appUserSpacePath + '/groups';
+                }
+
+                function addGroupListener() {
+                    var authData = _getAuthSrv().getAuth();
+                    if (authData && authData.uid) {
+                        var ref = new FirebaseListenerRef(authData.uid);
+                        ref.on('child_added', groupsChildAdded);
+                        ref.on('child_removed', groupsChildRemoved);
+                    }
+                }
+
+                function groupsChildAdded(dataSnapshot) {
+                    $timeout(function () {
+                        GroupsService.groups[dataSnapshot.key()] = dataSnapshot.val();
+                    });
+                }
+
+                function groupsChildRemoved(dataSnapshot) {
+                    $timeout(function () {
+                        delete GroupsService.groups[dataSnapshot.key()];
+                    });
+                }
+
+                function FirebaseListenerRef(uid) {
+                    var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + _getGroupPath();
+                    var groupsFullPath = fullPath.replace('$$uid', uid);
+                    return new Firebase(groupsFullPath);
+                }
+
+                addGroupListener();
 
                 return GroupsService;
 
