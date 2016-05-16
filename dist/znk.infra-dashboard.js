@@ -119,11 +119,12 @@
                 GroupsService.getAllGroups = (function () {
                     var getAllGroupsProm =  _getStorage().get(_getGroupPath()).then(function (groups) {
                         GroupsService.groups = groups;
-                        return GroupsService.groups;
                     });
 
                     return function(){
-                        return getAllGroupsProm;
+                        return getAllGroupsProm.then(function(){
+                            return GroupsService.groups;
+                        });
                     };
                 })();
 
