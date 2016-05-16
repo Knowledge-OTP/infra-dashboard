@@ -58,12 +58,16 @@
                     });
                 };
 
-                GroupsService.getAllGroups = function () {
-                    return _getStorage().get(_getGroupPath()).then(function (groups) {
+                GroupsService.getAllGroups = (function () {
+                    var getAllGroupsProm =  _getStorage().get(_getGroupPath()).then(function (groups) {
                         GroupsService.groups = groups;
                         return GroupsService.groups;
                     });
-                };
+
+                    return function(){
+                        return getAllGroupsProm;
+                    };
+                })();
 
                 GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
                     var self = this;
