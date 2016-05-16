@@ -61,6 +61,7 @@
 
     angular.module('znk.infra-dashboard.groups').provider('GroupsService', [
         function () {
+            
             var StorageSrvName;
             var AuthSrvName;
 
