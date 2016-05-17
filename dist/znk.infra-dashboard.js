@@ -63,28 +63,23 @@
         function () {
 
             var StorageSrvName;
+            var AuthSrvName;
 
-            this.setStorageServiceName = function (storageServiceName) {
+            this.setHelpersServiceName = function (storageServiceName, authServiceName) {
                 StorageSrvName = storageServiceName;
+                AuthSrvName = authServiceName;
             };
 
-            this.$get = ['$injector', function($injector) {
+            this.$get = ['$injector',  'ENV', '$timeout', function($injector, ENV, $timeout) {
 
                 var GroupsService = {
-                    defaultGroupName: 'assorted'
+                    defaultGroupName: 'assorted',
+                    groups: {}
                 };
-
-                function _getStorage(){
-                    return $injector.get(StorageSrvName);
-                }
-
-                function _getGroupPath(){
-                    return _getStorage().variables.appUserSpacePath + '/groups';
-                }
 
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
-                    return _getStorage().get(_getGroupPath()).then(function (groups) {
+                    return self.getAllGroups().then(function (groups) {
                         var increment = 1;
                         var groupId = GroupsService.defaultGroupName;
 
@@ -121,18 +116,30 @@
                     });
                 };
 
-                GroupsService.getAllGroups = function () {
-                    return _getStorage().get(_getGroupPath());
-                };
+                GroupsService.getAllGroups = (function () {
+                    var getAllGroupsProm =  _getStorage().get(_getGroupPath()).then(function (groups) {
+                        GroupsService.groups = groups;
+                    });
 
-                GroupsService.moveToGroup = function (fromGroupKey, toGroupKey, studentIdsArr) {
+                    return function(){
+                        return getAllGroupsProm.then(function(){
+                            return GroupsService.groups;
+                        });
+                    };
+                })();
+
+                GroupsService.moveToGroup = function (toGroupKey, studentIdsArr) {
                     var self = this;
                     return self.getAllGroups().then(function (allGroups) {
                         var movedStudents = {};
 
                         angular.forEach(studentIdsArr, function (studentId) {
-                            movedStudents[studentId] = allGroups[fromGroupKey].students[studentId];
-                            delete  allGroups[fromGroupKey].students[studentId];
+                            angular.forEach(allGroups, function (group) {
+                                if(group.students && group.students[studentId]){
+                                    movedStudents[studentId] = group.students[studentId];
+                                    delete  group.students[studentId];
+                                }
+                            });
                         });
 
                         if(!allGroups[toGroupKey].students) {
@@ -184,6 +191,47 @@
                         return GroupsService.setGroup(groupKey, group);
                     });
                 };
+
+                function _getAuthSrv(){
+                    return $injector.get(AuthSrvName);
+                }
+
+                function _getStorage(){
+                    return $injector.get(StorageSrvName);
+                }
+
+                function _getGroupPath(){
+                    return _getStorage().variables.appUserSpacePath + '/groups';
+                }
+
+                function addGroupListener() {
+                    var authData = _getAuthSrv().getAuth();
+                    if (authData && authData.uid) {
+                        var ref = new GroupsFirebaseListener(authData.uid);
+                        ref.on('child_added', groupsChildAdded);
+                        ref.on('child_removed', groupsChildRemoved);
+                    }
+                }
+
+                function groupsChildAdded(dataSnapshot) {
+                    $timeout(function () {
+                        GroupsService.groups[dataSnapshot.key()] = dataSnapshot.val();
+                    });
+                }
+
+                function groupsChildRemoved(dataSnapshot) {
+                    $timeout(function () {
+                        delete GroupsService.groups[dataSnapshot.key()];
+                    });
+                }
+
+                function GroupsFirebaseListener(uid) {
+                    var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + _getGroupPath();
+                    var groupsFullPath = fullPath.replace('$$uid', uid);
+                    return new Firebase(groupsFullPath);
+                }
+
+                addGroupListener();
 
                 return GroupsService;
 
