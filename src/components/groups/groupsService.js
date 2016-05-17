@@ -149,7 +149,7 @@
                 function addGroupListener() {
                     var authData = _getAuthSrv().getAuth();
                     if (authData && authData.uid) {
-                        var ref = new FirebaseListenerRef(authData.uid);
+                        var ref = new groupsFirebaseListener(authData.uid);
                         ref.on('child_added', groupsChildAdded);
                         ref.on('child_removed', groupsChildRemoved);
                     }
@@ -157,7 +157,6 @@
 
                 function groupsChildAdded(dataSnapshot) {
                     $timeout(function () {
-                        console.log('GroupsService.groups', GroupsService.groups);
                         GroupsService.groups[dataSnapshot.key()] = dataSnapshot.val();
                     });
                 }
@@ -168,7 +167,7 @@
                     });
                 }
 
-                function FirebaseListenerRef(uid) {
+                function groupsFirebaseListener(uid) {
                     var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + _getGroupPath();
                     var groupsFullPath = fullPath.replace('$$uid', uid);
                     return new Firebase(groupsFullPath);
