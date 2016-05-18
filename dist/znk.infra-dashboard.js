@@ -118,7 +118,14 @@
 
                 GroupsService.getAllGroups = (function () {
                     var getAllGroupsProm =  _getStorage().get(_getGroupPath()).then(function (groups) {
-                        GroupsService.groups = groups;
+                        if (angular.equals(groups, {})){
+                            GroupsService.createGroup(GroupsService.defaultGroupName).then(function (newGroups) {
+                                GroupsService.groups = newGroups;
+                            });
+                        } else {
+                            GroupsService.groups = groups;
+                        }
+
                     });
 
                     return function(){
