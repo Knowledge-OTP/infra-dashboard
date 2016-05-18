@@ -60,6 +60,12 @@
 
                 GroupsService.getAllGroups = (function () {
                     var getAllGroupsProm =  _getStorage().get(_getGroupPath()).then(function (groups) {
+                        if(angular.equals(groups, {})){
+                            groups[GroupsService.defaultGroupName] = {
+                                name: GroupsService.defaultGroupName,
+                                groupKey: GroupsService.defaultGroupName
+                            };
+                        }
                         GroupsService.groups = groups;
                     });
 
