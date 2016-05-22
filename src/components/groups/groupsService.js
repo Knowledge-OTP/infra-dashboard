@@ -12,12 +12,16 @@
                 AuthSrvName = authServiceName;
             };
 
-            this.$get = ['$injector',  'ENV', '$timeout', function($injector, ENV, $timeout) {
+            this.$get = ['$injector', 'ENV', function($injector, ENV) {
 
                 var GroupsService = {
-                    defaultGroupName: 'assorted',
-                    groups: {}
+                    defaultGroupName: 'assorted'
                 };
+                var authSrv = $injector.get(AuthSrvName);
+                var storageSrv = $injector.get(StorageSrvName);
+                var GROUPS_PATH = storageSrv.variables.appUserSpacePath + '/groups';
+                var teacherGroups = {};
+                var callbacks = {};
 
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
@@ -58,23 +62,12 @@
                     });
                 };
 
-                GroupsService.getAllGroups = (function () {
-                    var getAllGroupsProm =  _getStorage().get(_getGroupPath()).then(function (groups) {
-                        if(angular.equals(groups, {})){
-                            groups[GroupsService.defaultGroupName] = {
-                                name: GroupsService.defaultGroupName,
-                                groupKey: GroupsService.defaultGroupName
-                            };
-                        }
-                        GroupsService.groups = groups;
+                GroupsService.getAllGroups = function () {
+                    return storageSrv.get(GROUPS_PATH, groupsDefault()).then(function (groups) {
+                        teacherGroups = groups;
+                        return teacherGroups;
                     });
-
-                    return function(){
-                        return getAllGroupsProm.then(function(){
-                            return GroupsService.groups;
-                        });
-                    };
-                })();
+                };
 
                 GroupsService.moveToGroup = function (toGroupKey, studentIdsArr) {
                     var self = this;
@@ -103,7 +96,7 @@
                 };
 
                 GroupsService.setGroups = function (newGroups) {
-                    return _getStorage().set(_getGroupPath(), newGroups);
+                    return storageSrv.set(GROUPS_PATH, newGroups);
                 };
 
                 GroupsService.setGroup = function (id, newGroup) {
@@ -140,46 +133,33 @@
                     });
                 };
 
-                function _getAuthSrv(){
-                    return $injector.get(AuthSrvName);
-                }
-
-                function _getStorage(){
-                    return $injector.get(StorageSrvName);
-                }
-
-                function _getGroupPath(){
-                    return _getStorage().variables.appUserSpacePath + '/groups';
-                }
-
-                function addGroupListener() {
-                    var authData = _getAuthSrv().getAuth();
+                GroupsService.addRemoveGroupsListener = function (options) {
+                    var authData = authSrv.getAuth();
                     if (authData && authData.uid) {
-                        var ref = new GroupsFirebaseListener(authData.uid);
-                        ref.on('child_added', groupsChildAdded);
-                        ref.on('child_removed', groupsChildRemoved);
+                        var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
+                        var groupsFullPath = fullPath.replace('$$uid', authData.uid);
+                        var ref = new Firebase(groupsFullPath);
+
+                        if (angular.isFunction(options.callback)) {
+                            if (options.action === 'add'){
+                                ref.on(options.eventName, options.callback);
+                                callbacks[options.eventName] = options.callback;
+                            } else {
+                                ref.off(options.eventName, callbacks[options.eventName]);
+                                delete callbacks[options.eventName];
+                            }
+                        }
                     }
-                }
+                };
 
-                function groupsChildAdded(dataSnapshot) {
-                    $timeout(function () {
-                        GroupsService.groups[dataSnapshot.key()] = dataSnapshot.val();
-                    });
+                function groupsDefault() {
+                    var _groupsDefault = {};
+                    _groupsDefault[GroupsService.defaultGroupName] = {
+                        name: GroupsService.defaultGroupName,
+                        groupKey: GroupsService.defaultGroupName
+                    };
+                    return _groupsDefault;
                 }
-
-                function groupsChildRemoved(dataSnapshot) {
-                    $timeout(function () {
-                        delete GroupsService.groups[dataSnapshot.key()];
-                    });
-                }
-
-                function GroupsFirebaseListener(uid) {
-                    var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + _getGroupPath();
-                    var groupsFullPath = fullPath.replace('$$uid', uid);
-                    return new Firebase(groupsFullPath);
-                }
-
-                addGroupListener();
 
                 return GroupsService;
 
