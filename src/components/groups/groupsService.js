@@ -21,6 +21,7 @@
                 var storageSrv = $injector.get(StorageSrvName);
                 var GROUPS_PATH = storageSrv.variables.appUserSpacePath + '/groups';
                 var teacherGroups = {};
+                var callbacks = {};
 
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
@@ -139,15 +140,14 @@
                         var groupsFullPath = fullPath.replace('$$uid', authData.uid);
                         var ref = new Firebase(groupsFullPath);
 
-
                         if (angular.isFunction(options.callback)) {
                             if(options.type === 'add'){
                                 ref.on(options.eventName, options.callback);
+                                callbacks[options.eventName] = options.callback;
                             } else {
-                                ref.off(options.eventName, options.callback);
+                                ref.off(options.eventName, callbacks[options.eventName]);
+                                delete callbacks[options.eventName];
                             }
-
-
                         }
                     }
                 };
