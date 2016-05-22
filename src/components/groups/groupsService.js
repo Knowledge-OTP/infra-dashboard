@@ -133,7 +133,7 @@
                     });
                 };
 
-                GroupsService.setGroupsListener = function (options) {
+                GroupsService.addRemoveGroupsListener = function (options) {
                     var authData = authSrv.getAuth();
                     if (authData && authData.uid) {
                         var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
@@ -141,7 +141,7 @@
                         var ref = new Firebase(groupsFullPath);
 
                         if (angular.isFunction(options.callback)) {
-                            if(options.type === 'add'){
+                            if (options.action === 'add'){
                                 ref.on(options.eventName, options.callback);
                                 callbacks[options.eventName] = options.callback;
                             } else {
