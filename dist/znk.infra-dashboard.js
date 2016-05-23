@@ -70,7 +70,7 @@
                 AuthSrvName = authServiceName;
             };
 
-            this.$get = ['$injector', 'ENV', function($injector, ENV) {
+            this.$get = ['$injector', 'ENV', '$q', function($injector, ENV, $q) {
 
                 var GroupsService = {
                     defaultGroupName: 'assorted'
@@ -106,6 +106,9 @@
                 };
 
                 GroupsService.updateStudent = function (groupKey, studentId, newStudent) {
+                    if(!groupKey){
+                        return $q.reject('student group key not defined');
+                    }
                     var self = this;
                     return self.getGroup(groupKey).then(function (studentGroup) {
                         if (!newStudent) {
@@ -128,6 +131,9 @@
                 };
 
                 GroupsService.moveToGroup = function (toGroupKey, studentIdsArr) {
+                    if(!toGroupKey){
+                        return $q.reject('to group key not defined');
+                    }
                     var self = this;
                     return self.getAllGroups().then(function (allGroups) {
                         var movedStudents = {};
@@ -158,6 +164,9 @@
                 };
 
                 GroupsService.setGroup = function (id, newGroup) {
+                    if(!id){
+                        return $q.reject('group key not defined');
+                    }
                     var self = this;
                     return this.getAllGroups().then(function (groups) {
                         groups[id] = newGroup;
@@ -185,6 +194,9 @@
                 };
 
                 GroupsService.editGroupName = function (groupKey, newName) {
+                    if(!groupKey){
+                        return $q.reject('group key not defined');
+                    }
                     return GroupsService.getGroup(groupKey).then(function (group) {
                         group.name = newName;
                         return GroupsService.setGroup(groupKey, group);
