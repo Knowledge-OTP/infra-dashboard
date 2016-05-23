@@ -70,7 +70,7 @@
                 AuthSrvName = authServiceName;
             };
 
-            this.$get = ['$injector', 'ENV', '$q', function($injector, ENV, $q) {
+            this.$get = ['$injector', 'ENV', '$q', '$log', function($injector, ENV, $q, $log) {
 
                 var GroupsService = {
                     defaultGroupName: 'assorted'
@@ -107,6 +107,7 @@
 
                 GroupsService.updateStudent = function (groupKey, studentId, newStudent) {
                     if(!groupKey){
+                        $log.error('GroupsService.updateStudent:: student group key not defined');
                         return $q.reject('student group key not defined');
                     }
                     var self = this;
@@ -132,6 +133,7 @@
 
                 GroupsService.moveToGroup = function (toGroupKey, studentIdsArr) {
                     if(!toGroupKey){
+                        $log.error('GroupsService.moveToGroup:: to group key not defined');
                         return $q.reject('to group key not defined');
                     }
                     var self = this;
@@ -163,20 +165,21 @@
                     return storageSrv.set(GROUPS_PATH, newGroups);
                 };
 
-                GroupsService.setGroup = function (id, newGroup) {
-                    if(!id){
+                GroupsService.setGroup = function (groupKey, newGroup) {
+                    if(!groupKey){
+                        $log.error('GroupsService.setGroup:: group key not defined');
                         return $q.reject('group key not defined');
                     }
                     var self = this;
                     return this.getAllGroups().then(function (groups) {
-                        groups[id] = newGroup;
+                        groups[groupKey] = newGroup;
                         return self.setGroups(groups);
                     });
                 };
 
-                GroupsService.getGroup = function (id) {
+                GroupsService.getGroup = function (groupKey) {
                     return this.getAllGroups().then(function (groups) {
-                        return groups[id];
+                        return groups[groupKey];
                     });
                 };
 
@@ -195,6 +198,7 @@
 
                 GroupsService.editGroupName = function (groupKey, newName) {
                     if(!groupKey){
+                        $log.error('GroupsService.editGroupName:: group key not defined');
                         return $q.reject('group key not defined');
                     }
                     return GroupsService.getGroup(groupKey).then(function (group) {
