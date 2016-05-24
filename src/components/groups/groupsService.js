@@ -14,13 +14,13 @@
 
             this.$get = ['$injector', 'ENV', '$q', '$log', function($injector, ENV, $q, $log) {
 
-                function groupsListenerRef() {
+                function getGroupsRef() {
                     var authData = authSrv.getAuth();
                     var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
                     var groupsFullPath = fullPath.replace('$$uid', authData.uid);
                     return new Firebase(groupsFullPath);
                 }
-                
+
                 var GroupsService = {
                     defaultGroupName: 'assorted'
                 };
@@ -28,7 +28,7 @@
                 var storageSrv = $injector.get(StorageSrvName);
                 var GROUPS_PATH = storageSrv.variables.appUserSpacePath + '/groups';
                 var groupChangeCbArr = [];
-                var groupsRef = groupsListenerRef();
+                var groupsRef = getGroupsRef();
 
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
@@ -159,19 +159,22 @@
                     GroupsService.getAllGroups().then(function(groups){
                         var groupsKeys = Object.keys(groups);
                         groupsKeys.forEach(function(key){
-                            if(!groupsNewValue[key]){
+                            if(groupsNewValue && !groupsNewValue[key]){
                                 delete groups[key];
                             }
                         });
 
-                        var newGroupKeys = Object.keys(groupsNewValue);
-                        newGroupKeys.forEach(function(key){
-                            if(groups[key]){
-                                angular.extend(groups[key], groupsNewValue[key]);
-                            }else{
-                                groups[key] = groupsNewValue[key];
-                            }
-                        });
+                        if(groupsNewValue){
+                            var newGroupKeys = Object.keys(groupsNewValue);
+                            newGroupKeys.forEach(function(key){
+                                if(groups[key]){
+                                    angular.extend(groups[key], groupsNewValue[key]);
+                                }else{
+                                    groups[key] = groupsNewValue[key];
+                                }
+                            });
+                        }
+
                         groupChangeCbArr.forEach(function(cb){
                             cb(groups);
                         });
@@ -183,7 +186,6 @@
                         callback(groups);
                     });
                     groupChangeCbArr.push(callback);
-
                 };
 
                 GroupsService.removeGroupsChangeListener = function (callback) {
@@ -201,8 +203,6 @@
                     };
                     return _groupsDefault;
                 }
-
-
 
                 return GroupsService;
 
