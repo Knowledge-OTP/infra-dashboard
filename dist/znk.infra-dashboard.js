@@ -225,11 +225,7 @@
                         if(groupsNewValue){
                             var newGroupKeys = Object.keys(groupsNewValue);
                             newGroupKeys.forEach(function(key){
-                                if(groups[key]){
-                                    angular.extend(groups[key], groupsNewValue[key]);
-                                }else{
-                                    groups[key] = groupsNewValue[key];
-                                }
+                                groups[key] = groupsNewValue[key];
                             });
                         }
 
