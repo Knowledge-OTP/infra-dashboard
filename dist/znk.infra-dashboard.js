@@ -72,14 +72,21 @@
 
             this.$get = ['$injector', 'ENV', '$q', '$log', function($injector, ENV, $q, $log) {
 
+                function getGroupsRef() {
+                    var authData = authSrv.getAuth();
+                    var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
+                    var groupsFullPath = fullPath.replace('$$uid', authData.uid);
+                    return new Firebase(groupsFullPath);
+                }
+
                 var GroupsService = {
                     defaultGroupName: 'assorted'
                 };
                 var authSrv = $injector.get(AuthSrvName);
                 var storageSrv = $injector.get(StorageSrvName);
                 var GROUPS_PATH = storageSrv.variables.appUserSpacePath + '/groups';
-                var teacherGroups = {};
-                var callbacks = {};
+                var groupChangeCbArr = [];
+                var groupsRef = getGroupsRef();
 
                 GroupsService.createGroup = function (groupName) {
                     var self = this;
@@ -125,10 +132,7 @@
                 };
 
                 GroupsService.getAllGroups = function () {
-                    return storageSrv.get(GROUPS_PATH, groupsDefault()).then(function (groups) {
-                        teacherGroups = groups;
-                        return teacherGroups;
-                    });
+                    return storageSrv.get(GROUPS_PATH, groupsDefault());
                 };
 
                 GroupsService.moveToGroup = function (toGroupKey, studentIdsArr) {
@@ -207,22 +211,45 @@
                     });
                 };
 
-                GroupsService.addRemoveGroupsListener = function (options) {
-                    var authData = authSrv.getAuth();
-                    if (authData && authData.uid) {
-                        var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
-                        var groupsFullPath = fullPath.replace('$$uid', authData.uid);
-                        var ref = new Firebase(groupsFullPath);
-
-                        if (angular.isFunction(options.callback)) {
-                            if (options.action === 'add'){
-                                ref.on(options.eventName, options.callback);
-                                callbacks[options.eventName] = options.callback;
-                            } else {
-                                ref.off(options.eventName, callbacks[options.eventName]);
-                                delete callbacks[options.eventName];
+                groupsRef.on('value', function(snapShot){
+                    var groupsNewValue = snapShot.val();
+                    //update storage groups
+                    GroupsService.getAllGroups().then(function(groups){
+                        var groupsKeys = Object.keys(groups);
+                        groupsKeys.forEach(function(key){
+                            if(groupsNewValue && !groupsNewValue[key]){
+                                delete groups[key];
                             }
+                        });
+
+                        if(groupsNewValue){
+                            var newGroupKeys = Object.keys(groupsNewValue);
+                            newGroupKeys.forEach(function(key){
+                                if(groups[key]){
+                                    angular.extend(groups[key], groupsNewValue[key]);
+                                }else{
+                                    groups[key] = groupsNewValue[key];
+                                }
+                            });
                         }
+
+                        groupChangeCbArr.forEach(function(cb){
+                            cb(groups);
+                        });
+                    });
+                });
+
+                GroupsService.addGroupsChangeListener = function (callback) {
+                    GroupsService.getAllGroups().then(function(groups){
+                        callback(groups);
+                    });
+                    groupChangeCbArr.push(callback);
+                };
+
+                GroupsService.removeGroupsChangeListener = function (callback) {
+                    var cbIndex = groupChangeCbArr.indexOf(callback);
+                    if(cbIndex !== -1){
+                        groupChangeCbArr.splice(cbIndex, 1);
                     }
                 };
 
