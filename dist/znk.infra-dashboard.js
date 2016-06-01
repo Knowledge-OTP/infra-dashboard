@@ -76,7 +76,7 @@
                     var authData = authSrv.getAuth();
                     var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
                     var groupsFullPath = fullPath.replace('$$uid', authData.uid);
-                    return new Firebase(groupsFullPath);
+                    return new Firebase(groupsFullPath,  ENV.firebaseAppScopeName);
                 }
 
                 var GroupsService = {
