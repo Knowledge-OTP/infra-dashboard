@@ -14,13 +14,6 @@
 
             this.$get = ['$injector', 'ENV', '$q', '$log', function($injector, ENV, $q, $log) {
 
-                function getGroupsRef() {
-                    var authData = authSrv.getAuth();
-                    var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
-                    var groupsFullPath = fullPath.replace('$$uid', authData.uid);
-                    return new Firebase(groupsFullPath,  ENV.firebaseAppScopeName);
-                }
-
                 var GroupsService = {
                     defaultGroupName: 'assorted'
                 };
@@ -28,6 +21,14 @@
                 var storageSrv = $injector.get(StorageSrvName);
                 var GROUPS_PATH = storageSrv.variables.appUserSpacePath + '/groups';
                 var groupChangeCbArr = [];
+                var groupChildAddedCbArr = [];
+
+                function getGroupsRef() {
+                    var authData = authSrv.getAuth();
+                    var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
+                    var groupsFullPath = fullPath.replace('$$uid', authData.uid);
+                    return new Firebase(groupsFullPath,  ENV.firebaseAppScopeName);
+                }
                 var groupsRef = getGroupsRef();
 
                 GroupsService.createGroup = function (groupName) {
@@ -177,6 +178,32 @@
                     });
                 });
 
+                groupsRef.on('child_changed', function(snapShot){
+                    var groupsNewValue = snapShot.val();
+                    GroupsService.getAllGroups().then(function(allGroups){
+                        var allGroupsStudents = 0;
+                        var newGroupStudents = 0;
+
+                        if(allGroups[groupsNewValue.groupKey] && allGroups[groupsNewValue.groupKey].students){
+                            allGroupsStudents = Object.keys(allGroups[groupsNewValue.groupKey].students).length;
+                        }
+
+                        if(groupsNewValue && groupsNewValue.students){
+                            newGroupStudents = Object.keys(groupsNewValue.students).length;
+                        }
+
+                        if(newGroupStudents > allGroupsStudents) {
+                            angular.forEach(groupsNewValue.students, function (student) {
+                                if(!allGroups[groupsNewValue.groupKey].students || !allGroups[groupsNewValue.groupKey].students[student.receiverUid]){
+                                    groupChildAddedCbArr.forEach(function(cb){
+                                        cb(student);
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+
                 GroupsService.addGroupsChangeListener = function (callback) {
                     GroupsService.getAllGroups().then(function(groups){
                         callback(groups);
@@ -188,6 +215,17 @@
                     var cbIndex = groupChangeCbArr.indexOf(callback);
                     if(cbIndex !== -1){
                         groupChangeCbArr.splice(cbIndex, 1);
+                    }
+                };
+
+                GroupsService.addGroupsChildAddedListener = function (callback) {
+                    groupChildAddedCbArr.push(callback);
+                };
+
+                GroupsService.removeGroupsChildAddedListener = function (callback) {
+                    var cbIndex = groupChildAddedCbArr.indexOf(callback);
+                    if(cbIndex !== -1){
+                        groupChildAddedCbArr.splice(cbIndex, 1);
                     }
                 };
 
