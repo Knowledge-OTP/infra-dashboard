@@ -1,10 +1,9 @@
 (function (angular) {
     'use strict';
 
-    angular.module('znk.infra-dashboard.userResults').provider('UserResultsService', [
+    angular.module('znk.infra-dashboard.userResults').service('UserResultsService', [
         'ENV',
         function (ENV) {
-
             var userResultsService = {};
             var fbRef = new Firebase(ENV.fbDataEndPoint, ENV.firebaseAppScopeName);
 
@@ -28,9 +27,8 @@
                     return arr;
                 });
             }
-            
+
             return userResultsService;
         }
     ]);
 })(angular);
-
