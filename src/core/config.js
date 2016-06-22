@@ -4,6 +4,7 @@
     angular.module('znk.infra-dashboard', [
         'znk.infra-dashboard.groups',
         'znk.infra-dashboard.modal',
-        'znk.infra-dashboard.utils'
+        'znk.infra-dashboard.utils',
+        'znk.infra-dashboard.userResults'
     ]);
 })(angular);
