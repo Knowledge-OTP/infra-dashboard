@@ -365,6 +365,17 @@
         function (ENV) {
             var userResultsService = {};
             var fbRef = new Firebase(ENV.fbDataEndPoint, ENV.firebaseAppScopeName);
+            var self = this;
+
+            userResultsService.getExerciseResultsByExerciseType = function (uid, exerciseTypeId) {
+                return self.getExerciseResults(uid).then(function (exerciseResults) {
+                    var resultsByExerciseType = exerciseResults.filter(function (results) {
+                        return results.exerciseTypeId === exerciseTypeId;
+                    });
+
+                    return resultsByExerciseType;
+                });
+            };
 
             userResultsService.getExerciseResults = function (uid) {
                 return getResultsFromFB(ENV.studentAppName + '/exerciseResults', uid);
