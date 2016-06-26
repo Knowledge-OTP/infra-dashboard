@@ -1,4 +1,8 @@
 @import 'imports/variables',
         'imports/colors',
-        'imports/mixins';
+        'imports/mixins',
+        'imports/fonts',
+        'theme';
 
+// Assign Lesson
+@import "../../components/assign-lesson/main";

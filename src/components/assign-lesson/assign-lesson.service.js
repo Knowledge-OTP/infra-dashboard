@@ -6,12 +6,15 @@
             return {
                 openModal: function() {
                     $mdDialog.show({
+                        locals: {
+                          cssClass: 'assign-lesson-modal'
+                        },
                         controller: 'assignLessonCtrl',
-                        templateUrl: 'components/assign-lesson/assign-lesson.template.html',
-                        clickOutsideToClose: true
+                        templateUrl: 'components/assign-lesson/templates/assignLesson.template.html',
+                        clickOutsideToClose: true,
+                        autoWrap: false
                     })
                 }
             };
         });
 })(angular);
-

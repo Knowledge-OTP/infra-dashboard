@@ -1,0 +1,27 @@
+<md-dialog ng-class="vm.cssClass"
+           class="purchase-popup base-border-radius"
+           aria-label="Get Zinkerz"
+           translate-namespace="PURCHASE_POPUP">
+    <div class="dialog-container">
+        <div class="popup-header">
+            <div class="raccoon">
+                <svg-icon name="raccoon-logo-icon"></svg-icon>
+            </div>
+            <div class="close-popup-wrap">
+                <svg-icon name="close-popup" ng-click="vm.close()"></svg-icon>
+            </div>
+        </div>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <h2>
+                    <span ng-bind="vm.modalTitle"></span>
+                    <span class="pill pro" translate=".PRO"></span>
+                </h2>
+
+                <lesson-list data="vm.lessons"></lesson-list>
+
+            </div>
+        </md-dialog-content>
+    </div>
+</md-dialog>

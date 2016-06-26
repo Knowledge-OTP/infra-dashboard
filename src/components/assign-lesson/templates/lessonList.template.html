@@ -1,0 +1,17 @@
+<div class="lesson-list">
+    <header class="list-header flex-container">
+        <div ng-repeat="column in columns"
+             ng-class="column.cssClassName"
+             class="flex-item">
+            {{column.name}}
+        </div>
+    </header>
+    <div ng-repeat="lesson in data track by lesson.id"
+         class="lesson-item flex-container">
+        <div ng-repeat="column in columns"
+             ng-class="column.cssClassName"
+             class="flex-item"
+             bind-html-compile="column.templateFn(lesson, column)">
+        </div>
+    </div>
+</div>
