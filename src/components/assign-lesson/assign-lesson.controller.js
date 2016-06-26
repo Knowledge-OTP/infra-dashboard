@@ -40,5 +40,23 @@
                     }
                 }
             ];
+
+            function subjectFilter(gridItem, value){
+                return gridItem.subjectId === value;
+            }
+
+            function statusFilter(gridItem, value){
+                return gridItem.assign === value;
+            }
+
+            function searchFilter(gridItem, value){
+                return (gridItem.name.indexOf(value) > -1 || gridItem.desc.indexOf(value) > -1);
+            }
+
+            $scope.vm.gridFilters = [
+                subjectFilter,
+                statusFilter,
+                searchFilter
+            ];
         });
 })(angular);

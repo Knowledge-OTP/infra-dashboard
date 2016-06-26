@@ -19,7 +19,69 @@
                     <span class="pill pro" translate=".PRO"></span>
                 </h2>
 
-                <lesson-list data="vm.lessons"></lesson-list>
+                <div class="search-and-filter flex-container">
+                    <div class="search flex-item">
+                        <input type="search"
+                               ng-model="vm.searchTerm"
+                               placeholder="Search"
+                               name="search-box"
+                               aria-label="Search">
+                        <!--<svg-icon name="search-icon" class="search-icon"></svg-icon>-->
+                    </div>
+                    <div class="filters flex-item">
+                        <div class="filter-by-subject">
+                            <div class="clear-filter"
+                                 ng-if="vm.currentSelectedSubject"
+                                 ng-click="vm.subjectSelectedHandler(null)">
+                                <svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>
+                            </div>
+                            <md-menu md-offset="-10 60">
+                                <md-button ng-click="$mdOpenMenu($event);"
+                                           aria-label="Filter by subject"
+                                           class="md-icon-button">
+                                    <span>{{(vm.currentSelectedSubject) ? vm.currentSelectedSubject : vm.subjectLabel }}</span>
+                                    <md-icon class="material-icons">{{$mdMenuIsOpen ? 'expand_less': 'expand_more'}}</md-icon>
+                                </md-button>
+                                <md-menu-content class="student-review-grid-filter-menu">
+                                    <md-list>
+                                        <md-list-item ng-repeat="subject in vm.subjects"
+                                                      ng-click="vm.subjectSelectedHandler(subject.id)">
+                                            <span>{{subject.name}}</span>
+                                        </md-list-item>
+                                    </md-list>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                        <div class="filter-by-status">
+                            <div class="clear-filter"
+                                 ng-if="vm.currentSelectedExercise"
+                                 ng-click="vm.exerciseSelectedHandler(null)">
+                                <svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>
+                            </div>
+                            <md-menu md-offset="5 60">
+                                <md-button ng-click="$mdOpenMenu($event);"
+                                           aria-label="Filter by exercise"
+                                           class="md-icon-button">
+                                    <span>{{ (vm.currentSelectedExercise) ? vm.currentSelectedExercise : vm.exercisesLabel }}</span>
+                                    <md-icon class="material-icons">{{$mdMenuIsOpen ? 'expand_less': 'expand_more'}}</md-icon>
+                                </md-button>
+                                <md-menu-content class="student-review-grid-filter-menu">
+                                    <md-list>
+                                        <md-list-item ng-repeat="exerciseType in vm.exerciseTypesForFilter"
+                                                      ng-click="vm.exerciseSelectedHandler(exerciseType.id)">
+                                            <span>{{exerciseType.name}}</span>
+                                        </md-list-item>
+                                    </md-list>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                    </div>
+                </div>
+
+                <lesson-list data="vm.lessons"
+                             search-term="vm.searchTerm"
+                             filters="vm.gridFilters"
+                ></lesson-list>
 
             </div>
         </md-dialog-content>

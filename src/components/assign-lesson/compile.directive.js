@@ -3,12 +3,12 @@
 
     var module = angular.module('znk.infra-dashboard.assign-lesson');
 
-    module.directive('bindHtmlCompile', ['$compile', function ($compile) {
+    module.directive('compile', ['$compile', function ($compile) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
                 scope.$watch(function () {
-                    return scope.$eval(attrs.bindHtmlCompile);
+                    return scope.$eval(attrs.compile);
                 }, function (value) {
                     // In case value is a TrustedValueHolderType, sometimes it
                     // needs to be explicitly called into a string in order to

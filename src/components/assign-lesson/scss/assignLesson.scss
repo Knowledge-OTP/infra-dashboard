@@ -1,0 +1,96 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.search-and-filter {
+    &.flex-container {
+
+    }
+    .search,
+    .filters {
+        &.flex-item {
+            flex-grow: 1;
+        }
+    }
+    .search {
+        max-width: 25%;
+        padding: {
+            top: 0;
+            left: 25px;
+            right: 18px;
+            bottom: 0;
+        };
+        font-size: 14px;
+        color: #9a9797;
+        font-weight: 400;
+        outline: 0;
+        height: 25px;
+        border: 1px solid #CACACA;
+        border-radius: 21px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+
+        input {
+            height: 100%;
+            padding: 0;
+            border: none;
+        }
+
+        .search-icon {
+            width: 14px;
+            position: absolute;
+            top: 16px;
+            left: 7px;
+        }
+
+        //.search-icon * {
+        //    stroke: $bcColor22;
+        //}
+    }
+    .filters {
+        height: 46px;
+        overflow: hidden;
+        .filter-by-subject,
+        .filter-by-status {
+            float:right;
+
+            .clear-filter {
+                margin:0;
+                display: inline-block;
+                cursor: pointer;
+                //svg-icon[name="wrong-icon"] {
+                //    width: 13px;
+                //    height: 13px;
+                //    border: 1px solid $bcColor24;
+                //    border-radius: 50%;
+                //    box-sizing: border-box;
+                //    padding: 1px;
+                //    svg {
+                //        width: 100%;
+                //    }
+                //}
+            }
+
+            md-menu{
+                padding: 0;
+                display: inline-block;
+                .md-button {
+                    width: auto;
+                    background: transparent;
+                    span {
+                        width: auto;
+                        @include text-style(14px, $fcColor11, Lato, $thinFontWeight);
+                        text-transform: capitalize;
+                    }
+                    md-icon {
+                        color: $fcColor11;
+                        font-size: 20px;
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
+    }
+}
