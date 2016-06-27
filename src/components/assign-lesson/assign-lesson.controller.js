@@ -2,7 +2,9 @@
     'use strict';
     angular
         .module('znk.infra-dashboard.assign-lesson')
-        .controller('assignLessonCtrl', function ($scope, locals) {
+        .controller('assignLessonCtrl', function ($scope, $q, locals) {
+            'ngInject';
+
             $scope.vm = {};
             $scope.vm.cssClass = locals.cssClass;
             $scope.vm.modalTitle = 'Assign Lesson';
@@ -40,17 +42,95 @@
                     }
                 }
             ];
+            $scope.vm.currentSubject = '';
+            $scope.vm.currentStatus = '';
 
-            function subjectFilter(gridItem, value){
-                return gridItem.subjectId === value;
+
+
+            /**
+             * Filters
+             */
+
+            self.subjects = [
+                {
+                    id: SubjectEnum.ENGLISH.enum,
+                    name: 'English'
+                },
+                {
+                    id: SubjectEnum.MATH.enum,
+                    name: 'Math'
+                },
+                {
+                    id: SubjectEnum.READING.enum,
+                    name: 'Reading'
+                },
+                {
+                    id: SubjectEnum.SCIENCE.enum,
+                    name: 'Science'
+                },
+                {
+                    id: SubjectEnum.WRITING.enum,
+                    name: 'Writing'
+                }
+            ];
+
+            $translate([
+                translateNamespace + '.' + 'EXERCISE_TYPES.EXERCISES',
+                translateNamespace + '.' + 'EXERCISE_TYPES.SECTIONS'
+            ]).then(function (translation) {
+                self.exerciseTypesForFilter = [
+                    {
+                        id: 1,
+                        name: translation['DASHBOARD_REVIEW.EXERCISE_TYPES.EXERCISES']
+                    },
+                    {
+                        id: 2,
+                        name: translation['DASHBOARD_REVIEW.EXERCISE_TYPES.SECTIONS']
+                    }
+                ];
+            }).catch(function (err) {
+                $log.debug('Could not fetch translation', err);
+            });
+
+            self.exercisesLabel = translateFilter('DASHBOARD_REVIEW.EXERCISES_FILTER_LABEL');
+
+            self.subjectLabel = translateFilter('DASHBOARD_REVIEW.SUBJECT_FILTER_LABEL');
+
+            var filtersValues = {};
+            self.subjectSelectedHandler = function (selectedSubjectId) {
+                filtersValues.subject = selectedSubjectId;
+                _refreshGrid();
+                self.currentSelectedSubject = (SubjectEnum.getEnumMap()[selectedSubjectId]) ? SubjectEnum.getEnumMap()[selectedSubjectId] : '';
+            };
+
+            self.exerciseSelectedHandler = function (selectedExerciseId) {
+                filtersValues.exercise = selectedExerciseId;
+                _refreshGrid();
+                if (selectedExerciseId === null) {
+                    self.currentSelectedExercise = '';
+                } else {
+                    self.exerciseTypesForFilter.filter(function (obj) {
+                        if (obj.id === selectedExerciseId) {
+                            self.currentSelectedExercise = obj.name;
+                        }
+                    });
+                }
+            };
+
+
+            function subjectFilter(gridItem) {
+                var value = $scope.vm.currentSubject;
+                return value ? gridItem.subjectId === value : true;
             }
 
-            function statusFilter(gridItem, value){
-                return gridItem.assign === value;
+            function statusFilter(gridItem) {
+                var value = $scope.vm.currentStatus;
+                return value ? gridItem.assign === value : true;
             }
 
-            function searchFilter(gridItem, value){
-                return (gridItem.name.indexOf(value) > -1 || gridItem.desc.indexOf(value) > -1);
+            function searchFilter(gridItem) {
+                var value = ($scope.vm.searchTerm) ? $scope.vm.searchTerm.toLowerCase() : '';
+                return value ? (gridItem.name.toLowerCase().indexOf(value) > -1 || gridItem.desc.toLowerCase().indexOf(value) > -1) : true; // what if data member s undefined?
             }
 
             $scope.vm.gridFilters = [
@@ -58,5 +138,25 @@
                 statusFilter,
                 searchFilter
             ];
+
+            var filtersValues = [
+                'vm.currentSubject',
+                'vm.currentStatus',
+                'vm.searchTerm'
+            ];
+
+            function _refreshGrid() {
+                if ($scope.vm.gridActions && $scope.vm.gridActions.refresh) {
+                    return $scope.vm.gridActions.refresh();
+                }
+                return $q.reject('refresh grid function not set yet');
+            }
+
+            $scope.$watchGroup(filtersValues, function(newValues) {
+                if (!newValues) {
+                    return;
+                }
+                _refreshGrid();
+            });
         });
 })(angular);

@@ -20,6 +20,7 @@
                 </h2>
 
                 <div class="search-and-filter flex-container">
+
                     <div class="search flex-item">
                         <input type="search"
                                ng-model="vm.searchTerm"
@@ -28,6 +29,7 @@
                                aria-label="Search">
                         <!--<svg-icon name="search-icon" class="search-icon"></svg-icon>-->
                     </div>
+
                     <div class="filters flex-item">
                         <div class="filter-by-subject">
                             <div class="clear-filter"
@@ -81,6 +83,7 @@
                 <lesson-list data="vm.lessons"
                              search-term="vm.searchTerm"
                              filters="vm.gridFilters"
+                             actions="vm.gridActions"
                 ></lesson-list>
 
             </div>

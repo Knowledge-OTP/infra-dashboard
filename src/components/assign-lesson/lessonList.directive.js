@@ -2,28 +2,27 @@
     'use strict';
 
     angular.module('znk.infra-dashboard.assign-lesson').directive('lessonList', [
-        '$sce',
-        function ($sce) {
+        '$sce', '$timeout', '$q',
+        function ($sce, $timeout, $q) {
             return {
                 templateUrl: 'components/assign-lesson/templates/lessonList.template.html',
                 restrict: 'E',
                 scope: {
                     dataGetter: '&data',
                     searchTerm: '=',
-                    filtersGetter: '&filters'
+                    filtersGetter: '&filters',
+                    actions: '=?'
                 },
-                link: function (scope, element, attrs) {
+                link: function (scope) {
 
-                    //var getGridApiDefer = $q.defer();
-                    //scope.actions.refresh = function () {
-                    //    return getGridApiDefer.promise.then(function (gridApi) {
-                    //        gridApi.core.refreshRows();
-                    //        return gridApi.grid.refresh();
-                    //    });
-                    //};
+                    var rawData;
+
+                    if (!angular.isObject(scope.actions)) {
+                        scope.actions = {};
+                    }
 
                     scope.d = {};
-
+                    scope.api = {};
                     scope.columns = [
                         {
                             name: '',
@@ -74,22 +73,26 @@
                             '<label for="' + row.id + '"></label>';
                     }
 
-                    // listen to changes in the search term and update the grid
-                    scope.$watch('searchTerm', function (newVal) {
-                        if (angular.isUndefined(newVal)) {
-                            return;
-                        }
-                        attrs.searchTerm = newVal;
-                    });
+                    var getGridApiDefer = $q.defer();
+                    scope.actions.refresh = function () {
+                        getGridApiDefer.resolve();
+                        return getGridApiDefer.promise.then(function () {
+                            filterData();
+                        });
+                    };
 
                     scope.$watch('dataGetter()', function (data) {
-                        scope.d.processedData = [];
+                        console.log('dataGetter() triggered');
+                        rawData = data;
+                        filterData();
+                    });
 
-                        if (!data || !data.length) {
+                    function filterData(){
+                        scope.d.processedData = [];
+                        if (!rawData || !rawData.length) {
                             return;
                         }
-
-                        data.forEach(function (item) {
+                        rawData.forEach(function (item) {
                             var filters = scope.filtersGetter() || [];
                             for (var i = 0; i < filters.length; i++) {
                                 var filter = filters[i];
@@ -99,7 +102,7 @@
                             }
                             scope.d.processedData.push(item);
                         });
-                    });
+                    }
                 }
             };
         }
