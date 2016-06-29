@@ -1,17 +1,19 @@
 <div class="lesson-list">
     <header class="list-header row-header flex-container">
-        <div ng-repeat="column in columns"
-             ng-class="column.cssClassName"
+        <div ng-repeat="column in options.columns"
+             ng-class="::column.cssClassName"
              class="flex-item">
             {{column.name}}
         </div>
     </header>
-    <div ng-repeat="lesson in d.processedData as results track by lesson.id"
-         class="lesson-item flex-container">
-        <div ng-repeat="column in columns"
-             ng-class="column.cssClassName"
-             class="row flex-item"
-             compile="column.colTemplateFn(lesson, column)">
+    <div class="rows-wrapper znk-scrollbar">
+        <div ng-repeat="lesson in d.processedData as results track by lesson.id"
+             class="lesson-item flex-container">
+            <div ng-repeat="column in options.columns"
+                 ng-class="::column.cssClassName"
+                 class="row flex-item"
+                 compile="column.colTemplateFn(lesson, column)">
+            </div>
         </div>
     </div>
 </div>

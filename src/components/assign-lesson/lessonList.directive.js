@@ -2,16 +2,17 @@
     'use strict';
 
     angular.module('znk.infra-dashboard.assign-lesson').directive('lessonList', [
-        '$sce', '$timeout', '$q',
-        function ($sce, $timeout, $q) {
+        '$timeout', '$q', '$log',
+        function ($timeout, $q, $log) {
             return {
                 templateUrl: 'components/assign-lesson/templates/lessonList.template.html',
                 restrict: 'E',
                 scope: {
+                    options: '=',
                     dataGetter: '&data',
                     searchTerm: '=',
                     filtersGetter: '&filters',
-                    actions: '=?'
+                    actions: '='
                 },
                 link: function (scope) {
 
@@ -21,57 +22,13 @@
                         scope.actions = {};
                     }
 
+                    if (!angular.isObject(scope.options) || angular.isUndefined(scope.options)) {
+                        $log.error('No options passed to grid');
+                        return;
+                    }
+
                     scope.d = {};
                     scope.api = {};
-                    scope.columns = [
-                        {
-                            name: '',
-                            cssClassName: 'icon',
-                            dataProperty: '',
-                            colTemplateFn: iconTemplate
-                        },
-                        {
-                            name: 'Title',
-                            cssClassName: 'title',
-                            dataProperty: 'name',
-                            colTemplateFn: defaultTemplate
-                        },
-                        {
-                            name: 'Subject',
-                            cssClassName: 'subject',
-                            colTemplateFn: defaultTemplate
-                        },
-                        {
-                            name: 'Description',
-                            cssClassName: 'description',
-                            dataProperty: 'desc',
-                            colTemplateFn: defaultTemplate
-                        },
-                        {
-                            name: 'Select',
-                            cssClassName: 'select',
-                            dataProperty: 'assign',
-                            colTemplateFn: selectTemplate
-                        }
-                    ];
-
-                    function trustAsHtml(html) {
-                        return $sce.trustAsHtml(html);
-                    }
-
-                    function iconTemplate(row, col) {
-                        return row[col.dataProperty];
-                    }
-
-                    function defaultTemplate(row, col) {
-                        return row[col.dataProperty];
-                    }
-
-                    function selectTemplate(row, col) {
-                        scope.isChecked = (row[col.dataProperty]);
-                        return '<input id="' + row.id + '" type="checkbox" class="checkbox" ng-checked="isChecked" />' +
-                            '<label for="' + row.id + '"></label>';
-                    }
 
                     var getGridApiDefer = $q.defer();
                     scope.actions.refresh = function () {
@@ -81,13 +38,9 @@
                         });
                     };
 
-                    scope.$watch('dataGetter()', function (data) {
-                        console.log('dataGetter() triggered');
-                        rawData = data;
-                        filterData();
-                    });
-
                     function filterData(){
+                        var t0 = performance.now();
+                        //
                         scope.d.processedData = [];
                         if (!rawData || !rawData.length) {
                             return;
@@ -102,7 +55,15 @@
                             }
                             scope.d.processedData.push(item);
                         });
+                        //
+                        var t1 = performance.now();
+                        console.log("Call to filterData took " + (t1 - t0) + " milliseconds.");
                     }
+
+                    scope.$watch('dataGetter()', function (data) {
+                        rawData = data;
+                        filterData();
+                    });
                 }
             };
         }

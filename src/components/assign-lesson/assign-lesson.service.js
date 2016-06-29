@@ -13,7 +13,7 @@
                         templateUrl: 'components/assign-lesson/templates/assignLesson.template.html',
                         clickOutsideToClose: true,
                         autoWrap: false
-                    });
+                    })
                 }
             };
         });
