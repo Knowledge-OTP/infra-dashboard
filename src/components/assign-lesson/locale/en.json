@@ -1,0 +1,8 @@
+{
+    "ASSIGN_LESSON": {
+        "STATUS_LABEL": "Status",
+        "SUBJECT_LABEL": "Subject",
+        "ASSIGN": "Assign",
+        "STUDENT": "Student: {{currentStudent}}"
+    }
+}
