@@ -88,6 +88,15 @@
                 var groupChangeCbArr = [];
                 var groupChildAddedCbArr = [];
 
+                function groupsDefault() {
+                    var _groupsDefault = {};
+                    _groupsDefault[GroupsService.defaultGroupName] = {
+                        name: GroupsService.defaultGroupName,
+                        groupKey: GroupsService.defaultGroupName
+                    };
+                    return _groupsDefault;
+                }
+                
                 function getGroupsRef() {
                     var authData = authSrv.getAuth();
                     var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
@@ -294,14 +303,6 @@
                     }
                 };
 
-                function groupsDefault() {
-                    var _groupsDefault = {};
-                    _groupsDefault[GroupsService.defaultGroupName] = {
-                        name: GroupsService.defaultGroupName,
-                        groupKey: GroupsService.defaultGroupName
-                    };
-                    return _groupsDefault;
-                }
 
                 return GroupsService;
 
@@ -367,6 +368,19 @@
             var fbRef = new Firebase(ENV.fbDataEndPoint, ENV.firebaseAppScopeName);
             var self = this;
 
+            function getResultsFromFB(path, uid) {
+                return fbRef.child(path).orderByChild('uid').equalTo(uid).once('value').then(function (snapshot) {
+                    var arr = [];
+                    snapshot.forEach(function(dataItem){
+                        var item = dataItem.val();
+                        if (item.isComplete) {
+                            arr.push(item);
+                        }
+                    });
+                    return arr;
+                });
+            }
+
             userResultsService.getExerciseResultsByExerciseType = function (uid, exerciseTypeId) {
                 return self.getExerciseResults(uid).then(function (exerciseResults) {
                     var resultsByExerciseType = exerciseResults.filter(function (results) {
@@ -384,19 +398,6 @@
             userResultsService.getExamResults = function (uid) {
                 return getResultsFromFB(ENV.studentAppName + '/examResults', uid);
             };
-
-            function getResultsFromFB(path, uid) {
-                return fbRef.child(path).orderByChild('uid').equalTo(uid).once('value').then(function (snapshot) {
-                    var arr = [];
-                    snapshot.forEach(function(dataItem){
-                        var item = dataItem.val();
-                        if (item.isComplete) {
-                            arr.push(item);
-                        }
-                    });
-                    return arr;
-                });
-            }
 
             return userResultsService;
         }
