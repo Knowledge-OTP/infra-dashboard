@@ -116,7 +116,7 @@
                         name: 'Select',
                         cssClassName: 'select',
                         dataProperty: 'assign',
-                        colTemplateFn: selectTemplate
+                        //colTemplateFn: selectTemplate
                     }
                 ],
                 subjectMapping: [
