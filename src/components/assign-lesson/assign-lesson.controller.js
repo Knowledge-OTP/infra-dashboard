@@ -87,57 +87,57 @@
                 ]
             };
 
-            //$scope.SAT_Options = {
-            //    columns: [
-            //        {
-            //            name: '',
-            //            cssClassName: 'icon',
-            //            dataProperty: 'categoryId',
-            //            colTemplateFn: iconTemplate
-            //        },
-            //        {
-            //            name: 'Title',
-            //            cssClassName: 'title',
-            //            dataProperty: 'name',
-            //            colTemplateFn: defaultTemplate
-            //        },
-            //        {
-            //            name: 'Subject',
-            //            cssClassName: 'subject',
-            //            colTemplateFn: defaultTemplate
-            //        },
-            //        {
-            //            name: 'Description',
-            //            cssClassName: 'description',
-            //            dataProperty: 'desc',
-            //            colTemplateFn: defaultTemplate
-            //        },
-            //        {
-            //            name: 'Select',
-            //            cssClassName: 'select',
-            //            dataProperty: 'assign',
-            //            colTemplateFn: selectTemplate
-            //        }
-            //    ],
-            //    subjectMapping: [
-            //        {
-            //            id: TestScoreCategoryEnum.MATH.enum,
-            //            iconName: 'math-icon'
-            //        },
-            //        {
-            //            id: TestScoreCategoryEnum.READING.enum,
-            //            iconName: 'reading-icon'
-            //        },
-            //        {
-            //            id: TestScoreCategoryEnum.WRITING.enum,
-            //            iconName: 'writing-icon'
-            //        },
-            //        {
-            //            id: TestScoreCategoryEnum.ESSAY.enum,
-            //            iconName: 'essay-icon'
-            //        }
-            //    ]
-            //};
+            $scope.SAT_Options = {
+                columns: [
+                    {
+                        name: '',
+                        cssClassName: 'icon',
+                        dataProperty: 'categoryId',
+                        colTemplateFn: iconTemplate
+                    },
+                    {
+                        name: 'Title',
+                        cssClassName: 'title',
+                        dataProperty: 'name',
+                        colTemplateFn: defaultTemplate
+                    },
+                    {
+                        name: 'Subject',
+                        cssClassName: 'subject',
+                        colTemplateFn: defaultTemplate
+                    },
+                    {
+                        name: 'Description',
+                        cssClassName: 'description',
+                        dataProperty: 'desc',
+                        colTemplateFn: defaultTemplate
+                    },
+                    {
+                        name: 'Select',
+                        cssClassName: 'select',
+                        dataProperty: 'assign',
+                        colTemplateFn: selectTemplate
+                    }
+                ],
+                subjectMapping: [
+                    {
+                        id: TestScoreCategoryEnum.MATH.enum,
+                        iconName: 'math-icon'
+                    },
+                    {
+                        id: TestScoreCategoryEnum.READING.enum,
+                        iconName: 'reading-icon'
+                    },
+                    {
+                        id: TestScoreCategoryEnum.WRITING.enum,
+                        iconName: 'writing-icon'
+                    },
+                    {
+                        id: TestScoreCategoryEnum.ESSAY.enum,
+                        iconName: 'essay-icon'
+                    }
+                ]
+            };
 
             $scope.vm.gridOptions = $scope.ACT_Options;
 
