@@ -1,8 +1,9 @@
+/* eslint-disable */
 (function (angular) {
     'use strict';
     angular
         .module('znk.infra-dashboard.assign-lesson')
-        .controller('assignLessonCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http) {
+        .controller('assignLessonCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http, $timeout, TestScoreCategoryEnum) {
             'ngInject';
 
             //$translatePartialLoader.addPart('assign-lesson');
@@ -12,58 +13,29 @@
             $scope.vm.cssClass = locals.cssClass;
             $scope.vm.modalTitle = 'Assign Lesson';
             $scope.vm.currentStudent = 'Brandon Butler'; // TODO: mock
-
-            //$scope.vm.lessons = [
-            //    {
-            //        "id":1,
-            //        "name":"ACT Module 1",
-            //        "desc":"ACT Module 1 desc",
-            //        "order":1,
-            //        "subjectId":0,
-            //        "assign":true,
-            //        "results": {
-            //            "contentAssign":false,
-            //            "date":1466673537034,
-            //            "guid":"63d32a42-4d46-4d43-5d8f-60a2d6fac49e",
-            //            "moduleId":1,
-            //            "uid":"a04aebb4-50e9-48f8-a8db-4964c4350b84",
-            //            "tutorId":null
-            //        }
-            //    },
-            //    {
-            //        "id":2,
-            //        "name":"Module 2",
-            //        "desc":"Desc for module 2",
-            //        "order":2,
-            //        "subjectId":2,
-            //        "assign":false,
-            //        "results": {
-            //            "contentAssign":false,
-            //            "date":1466674319530,
-            //            "guid":"79db996b-cd75-404b-b913-1f883520fea2",
-            //            "moduleId":2,
-            //            "uid":"a04aebb4-50e9-48f8-a8db-4964c4350b84",
-            //            "tutorId":null
-            //        }
-            //    }
-            //];
+            $scope.vm.currentSubject = '';
+            $scope.vm.currentStatus = '';
+            $scope.vm.searchTerm = '';
+            $scope.selectedLessons = [];
 
             $http({
                 method: 'GET',
-                url: 'http://localhost:9002/assign-lesson/MOCK_DATA_500.json'
+                //url: 'http://localhost:9002/assign-lesson/MOCK_DATA_500.json'
+                url: 'http://localhost:9002/assign-lesson/MOCK_DATA_20.json'
             }).then(function successCallback(response) {
                 $scope.vm.lessons = response.data;
             }, function errorCallback(response) {
 
             });
 
-            $scope.vm.gridOptions = {
+            $scope.ACT_Options = {
                 columns: [
                     {
                         name: '',
                         cssClassName: 'icon',
-                        dataProperty: '',
-                        colTemplateFn: iconTemplate
+                        dataProperty: 'subjectId',
+                        colTemplateFn: iconTemplate,
+                        compile: true
                     },
                     {
                         name: 'Title',
@@ -85,13 +57,89 @@
                     {
                         name: 'Select',
                         cssClassName: 'select',
-                        dataProperty: 'assign',
-                        colTemplateFn: selectTemplate
+                        dataProperty: '',
+                        // colTemplateFn: selectTemplate,
+                        callbackFn: onLessonSelect,
+                        compile: true
+                    }
+                ],
+                subjectMapping: [
+                    {
+                        id: SubjectEnum.ENGLISH.enum,
+                        iconName: 'english-icon'
+                    },
+                    {
+                        id: SubjectEnum.MATH.enum,
+                        iconName: 'math-icon'
+                    },
+                    {
+                        id: SubjectEnum.READING.enum,
+                        iconName: 'reading-icon'
+                    },
+                    {
+                        id: SubjectEnum.SCIENCE.enum,
+                        iconName: 'science-icon'
+                    },
+                    {
+                        id: SubjectEnum.WRITING.enum,
+                        iconName: 'writing-icon'
                     }
                 ]
             };
-            $scope.vm.currentSubject = '';
-            $scope.vm.currentStatus = '';
+
+            //$scope.SAT_Options = {
+            //    columns: [
+            //        {
+            //            name: '',
+            //            cssClassName: 'icon',
+            //            dataProperty: 'categoryId',
+            //            colTemplateFn: iconTemplate
+            //        },
+            //        {
+            //            name: 'Title',
+            //            cssClassName: 'title',
+            //            dataProperty: 'name',
+            //            colTemplateFn: defaultTemplate
+            //        },
+            //        {
+            //            name: 'Subject',
+            //            cssClassName: 'subject',
+            //            colTemplateFn: defaultTemplate
+            //        },
+            //        {
+            //            name: 'Description',
+            //            cssClassName: 'description',
+            //            dataProperty: 'desc',
+            //            colTemplateFn: defaultTemplate
+            //        },
+            //        {
+            //            name: 'Select',
+            //            cssClassName: 'select',
+            //            dataProperty: 'assign',
+            //            colTemplateFn: selectTemplate
+            //        }
+            //    ],
+            //    subjectMapping: [
+            //        {
+            //            id: TestScoreCategoryEnum.MATH.enum,
+            //            iconName: 'math-icon'
+            //        },
+            //        {
+            //            id: TestScoreCategoryEnum.READING.enum,
+            //            iconName: 'reading-icon'
+            //        },
+            //        {
+            //            id: TestScoreCategoryEnum.WRITING.enum,
+            //            iconName: 'writing-icon'
+            //        },
+            //        {
+            //            id: TestScoreCategoryEnum.ESSAY.enum,
+            //            iconName: 'essay-icon'
+            //        }
+            //    ]
+            //};
+
+            $scope.vm.gridOptions = $scope.ACT_Options;
 
 
             /**
@@ -165,53 +213,58 @@
                 $log.debug(err);
             });
 
-            var filtersValues = {};
-            $scope.vm.subjectSelectedHandler = function (selectedSubjectId) {
-                filtersValues.subject = selectedSubjectId;
-                _refreshGrid();
-                $scope.vm.currentSelectedSubject = (SubjectEnum.getEnumMap()[selectedSubjectId]) ? SubjectEnum.getEnumMap()[selectedSubjectId] : '';
-            };
+            //self.statusSelectedHandler = function (selectedStatusId) {
+            //    //filtersValues.exercise = selectedStatusId;
+            //    //_refreshGrid();
+            //    if (selectedStatusId === null) {
+            //        self.currentSelectedStatus = '';
+            //    } else {
+            //        self.exerciseTypesForFilter.filter(function (obj) {
+            //            if (obj.id === selectedStatusId) {
+            //                self.currentSelectedStatus = obj.name;
+            //            }
+            //        });
+            //    }
+            //};
 
-            self.statusSelectedHandler = function (selectedStatusId) {
-                filtersValues.exercise = selectedStatusId;
-                _refreshGrid();
-                if (selectedStatusId === null) {
-                    self.currentSelectedStatus = '';
-                } else {
-                    self.exerciseTypesForFilter.filter(function (obj) {
-                        if (obj.id === selectedStatusId) {
-                            self.currentSelectedStatus = obj.name;
-                        }
-                    });
-                }
-            };
-
-
-            $scope.vm.submitAssigned = function() {
-              console.log('assigned button clicked');
-            };
 
             /**
              * Template Functions
              */
 
             function iconTemplate(row, col) {
-                return row[col.dataProperty];
+                //var html;
+                //var iconObj = $scope.vm.gridOptions.subjectMapping.filter(function (subject) {
+                //    return subject.id === row[col.dataProperty];
+                //});
+                //if (iconObj.length !== 0) {
+                //    var iconName = iconObj[0].iconName;
+                //    html = '<svg-icon name=' + iconName + '></svg-icon>';
+                //} else {
+                //    html = '';
+                //}
+                //return html;
             }
 
             function defaultTemplate(row, col) {
                 return row[col.dataProperty];
             }
 
-            function selectTemplate(row, col) {
-                //var isChecked = (row[col.dataProperty]);
-                //return '<input id="' + row.id + '" type="checkbox" class="checkbox" ng-checked="'+isChecked+'" />' +
-                //    '<label for="' + row.id + '"></label>';
-                return '<input id="' + row.id + '"' +
-                    '          type="checkbox"' +
-                    '          class="checkbox" />' +
-                    '<label for="' + row.id + '"></label>';
+            //function selectTemplate(row, col) {
+            //    //debugger;
+            //    //return '<input id="lesson-item-'+row.id+'" type="checkbox" class="checkbox" ng-click="'+onLessonSelect(row.id)+'"/>' +
+            //    //    '<label for="lesson-item-'+row.id+'"></label>';
+            //    //return '<input id="lesson-item-'+row.id+'" ' +
+            //    //    '         type="checkbox" ' +
+            //    //    '         class="checkbox" ' +
+            //    //    '         ng-click="' + col.callbackFn(row, col) + '" /> ' +
+            //    //    '    <label for="lesson-item-'+row.id+'"></label>';
+            //}
+
+            function onLessonSelect(row) {
+                $scope.selectedLessons[row.id] = !$scope.selectedLessons[row.id];
             }
+
 
             /**
              *  Filter Functions
@@ -219,12 +272,12 @@
 
             function subjectFilter(gridItem) {
                 var value = $scope.vm.currentSubject;
-                return value ? gridItem.subjectId === value : true;
+                return angular.isNumber(value) ? gridItem.subjectId === value : true;
             }
 
             function statusFilter(gridItem) {
                 var value = $scope.vm.currentStatus;
-                return value ? gridItem.assign === value : true;
+                return (value === "") ? true : gridItem.assign === value;
             }
 
             function searchFilter(gridItem) {
@@ -232,6 +285,12 @@
                 return value ? (gridItem.name.toLowerCase().indexOf(value) > -1 || gridItem.desc.toLowerCase().indexOf(value) > -1) : true; // what if data member s undefined?
             }
 
+
+            /**
+             * Custom Filtering functions can be passed to this array
+             * Function must return true / false
+             * @arg gridItem
+             */
             $scope.vm.gridFilters = [
                 subjectFilter,
                 statusFilter,
@@ -251,11 +310,18 @@
                 return $q.reject('refresh grid function not set yet');
             }
 
-            $scope.$watchGroup(watchFilters, function(newValues) {
-                if (!newValues) {
+            $scope.vm.submitAssigned = function() {
+                console.log($scope.selectedLessons);
+                //return $scope.vm.gridActions.submit();
+            };
+
+            $scope.$watchGroup(watchFilters, function(newValues, oldValues) {
+                if (angular.equals(newValues, oldValues)) {
                     return;
                 }
-                _refreshGrid();
+                $timeout(function(){
+                    _refreshGrid();
+                }, 300);
             });
         });
 })(angular);

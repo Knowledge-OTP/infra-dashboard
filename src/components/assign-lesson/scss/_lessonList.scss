@@ -1,5 +1,5 @@
 $headerHeight: 40px;
-$rowHeight: 52px;
+$rowHeight: 45px;
 lesson-list {
     //height:100%;
     font-family: Lato, sans-serif;
@@ -34,6 +34,7 @@ lesson-list {
             //height: $headerHeight;
             background-color: $bgColor15;
             border-radius: 20px;
+            margin-bottom: 5px;
             .flex-item {
                 line-height: $headerHeight;
             }
@@ -44,6 +45,7 @@ lesson-list {
             height: $rowHeight * 8;
             overflow-y: scroll;
             overflow-x: hidden;
+            margin:0 5px;
         }
         .lesson-item {
             height: $rowHeight;
@@ -57,8 +59,9 @@ lesson-list {
                 /* Base for label styling */
                 [type="checkbox"]:not(:checked),
                 [type="checkbox"]:checked {
-                    position: absolute;
-                    left: -9999px;
+                    //position: absolute;
+                    //left: -9999px;
+                    visibility: hidden;
                 }
                 [type="checkbox"]:not(:checked) + label,
                 [type="checkbox"]:checked + label {
@@ -79,7 +82,7 @@ lesson-list {
                     border: 1px solid $bcColor2;
                     background: $bgColor6;
                     border-radius: 50%;
-                    box-shadow: 0;
+                    box-shadow: none;
                 }
                 /* checked mark aspect */
                 [type="checkbox"]:not(:checked) + label:after,
@@ -90,17 +93,20 @@ lesson-list {
                     left: 4px;
                     font-size: 22px;
                     line-height: 0.8;
-                    color: #09ad7e;
-                    transition: all .2s;
+                    color: $fcColor2;
+                    transition: all .1s;
                 }
                 /* checked mark aspect changes */
                 [type="checkbox"]:not(:checked) + label:after {
                     opacity: 0;
-                    transform: scale(0);
+                    //transform: scale(0);
+                }
+                [type="checkbox"]:checked + label:before {
+                    background-color: $bgColor3;
                 }
                 [type="checkbox"]:checked + label:after {
                     opacity: 1;
-                    transform: scale(1);
+                    //transform: scale(1);
                 }
                 /* disabled checkbox */
                 [type="checkbox"]:disabled:not(:checked) + label:before,

@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function (angular) {
     'use strict';
 
@@ -7,13 +8,13 @@
                 openModal: function() {
                     $mdDialog.show({
                         locals: {
-                          cssClass: 'assign-lesson-modal'
+                            cssClass: 'assign-lesson-modal'
                         },
                         controller: 'assignLessonCtrl',
                         templateUrl: 'components/assign-lesson/templates/assignLesson.template.html',
                         clickOutsideToClose: true,
                         autoWrap: false
-                    })
+                    });
                 }
             };
         });

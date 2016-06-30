@@ -20,6 +20,8 @@
              translate-values="{currentStudent: vm.currentStudent}">
         </div>
 
+        <div class="divider"></div>
+
         <div class="search-and-filter flex-container">
 
             <div class="search flex-item">
@@ -42,13 +44,13 @@
                         <md-button ng-click="$mdOpenMenu($event);"
                                    aria-label="Filter by subject"
                                    class="md-icon-button">
-                            <span>{{(vm.currentSelectedSubject) ? vm.currentSelectedSubject : vm.subjectLabel }}</span>
+                            <span>{{(vm.currentSubjectName) ? vm.currentSubjectName : vm.subjectLabel }}</span>
                             <md-icon class="material-icons">{{$mdMenuIsOpen ? 'expand_less': 'expand_more'}}</md-icon>
                         </md-button>
                         <md-menu-content class="student-review-grid-filter-menu">
                             <md-list>
                                 <md-list-item ng-repeat="subject in vm.subjects"
-                                              ng-click="vm.subjectSelectedHandler(subject.id)">
+                                              ng-click="vm.currentSubject = subject.id; vm.currentSubjectName = subject.name">
                                     <span>{{subject.name}}</span>
                                 </md-list-item>
                             </md-list>
@@ -57,21 +59,22 @@
                 </div>
                 <div class="filter-by-status">
                     <div class="clear-filter"
-                         ng-if="vm.currentSelectedStatus"
-                         ng-click="vm.statusSelectedHandler(null)">
+                         ng-if="vm.currentStatus !== ''"
+                         ng-click="vm.currentStatus = ''">
                         <!--<svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>-->
+                        X
                     </div>
                     <md-menu md-offset="5 60">
                         <md-button ng-click="$mdOpenMenu($event);"
                                    aria-label="Filter by Status"
                                    class="md-icon-button">
-                            <span>{{ (vm.currentSelectedStatus) ? vm.currentSelectedStatus : vm.statusLabel }}</span>
+                            <span>{{ (vm.currentStatusName) ? vm.currentStatusName : vm.statusLabel }}</span>
                             <md-icon class="material-icons">{{$mdMenuIsOpen ? 'expand_less': 'expand_more'}}</md-icon>
                         </md-button>
                         <md-menu-content class="student-review-grid-filter-menu">
                             <md-list>
                                 <md-list-item ng-repeat="status in vm.statuses"
-                                              ng-click="vm.statusSelectedHandler(status.id)">
+                                              ng-click="vm.currentStatus = status.val; vm.currentStatusName = status.name">
                                     <span>{{status.name}}</span>
                                 </md-list-item>
                             </md-list>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function (angular) {
     'use strict';
 
@@ -38,9 +39,16 @@
                         });
                     };
 
+                    //scope.actions.submit = function () {
+                    //    //if (!scope.d.processedData || scope.d.processedData.length === 0) {
+                    //    //    return;
+                    //    //}
+                    //    //angular.forEach(scope.d.processedData, function(value, key){
+                    //    //    debugger;
+                    //    //});
+                    //};
+
                     function filterData(){
-                        var t0 = performance.now();
-                        //
                         scope.d.processedData = [];
                         if (!rawData || !rawData.length) {
                             return;
@@ -55,12 +63,13 @@
                             }
                             scope.d.processedData.push(item);
                         });
-                        //
-                        var t1 = performance.now();
-                        console.log("Call to filterData took " + (t1 - t0) + " milliseconds.");
                     }
 
                     scope.$watch('dataGetter()', function (data) {
+                        console.log('dataGetter() triggered');
+                        if (angular.isUndefined(data) || !angular.isArray(data)) {
+                            return;
+                        }
                         rawData = data;
                         filterData();
                     });

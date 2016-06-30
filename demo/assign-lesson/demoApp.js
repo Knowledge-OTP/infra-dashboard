@@ -5,7 +5,9 @@
             'znk.infra-dashboard.assign-lesson',
             'pascalprecht.translate',
             'ngMaterial',
-            'znk.infra.enum'
+            'znk.infra.enum',
+            'TestScoreCategoryEnum.module',
+            'znk.infra.svgIcon'
         ])
         .controller('demoAppCtrl', function ($scope, AssignLessonSrv) {
             $scope.vm = {};

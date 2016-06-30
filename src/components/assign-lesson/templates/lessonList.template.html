@@ -1,4 +1,5 @@
 <div class="lesson-list">
+    Showing {{d.processedData.length}} Lessons
     <header class="list-header row-header flex-container">
         <div ng-repeat="column in options.columns"
              ng-class="::column.cssClassName"
@@ -11,8 +12,24 @@
              class="lesson-item flex-container">
             <div ng-repeat="column in options.columns"
                  ng-class="::column.cssClassName"
-                 class="row flex-item"
-                 compile="column.colTemplateFn(lesson, column)">
+                 class="row flex-item">
+                <div ng-switch="column.compile">
+                    <div ng-switch-when="true">
+                        <div ng-switch="column.name">
+                            <div ng-switch-when="Select">
+                                <input id="lesson-item-{{lesson.id}}"
+                                       type="checkbox"
+                                       class="checkbox"
+                                       ng-click="column.callbackFn(lesson, column)" />
+                                <label for="lesson-item-{{lesson.id}}"></label>
+                            </div>
+                            <div ng-switch-default>
+                                <div compile="column.colTemplateFn(lesson, column)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-switch-default>{{column.colTemplateFn(lesson, column)}}</div>
+                </div>
             </div>
         </div>
     </div>
