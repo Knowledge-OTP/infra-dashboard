@@ -23,6 +23,15 @@
                 var groupChangeCbArr = [];
                 var groupChildAddedCbArr = [];
 
+                function groupsDefault() {
+                    var _groupsDefault = {};
+                    _groupsDefault[GroupsService.defaultGroupName] = {
+                        name: GroupsService.defaultGroupName,
+                        groupKey: GroupsService.defaultGroupName
+                    };
+                    return _groupsDefault;
+                }
+                
                 function getGroupsRef() {
                     var authData = authSrv.getAuth();
                     var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
@@ -229,14 +238,6 @@
                     }
                 };
 
-                function groupsDefault() {
-                    var _groupsDefault = {};
-                    _groupsDefault[GroupsService.defaultGroupName] = {
-                        name: GroupsService.defaultGroupName,
-                        groupKey: GroupsService.defaultGroupName
-                    };
-                    return _groupsDefault;
-                }
 
                 return GroupsService;
 
