@@ -182,24 +182,6 @@
                 }
             ];
 
-            //$translate([
-            //    translateNamespace + '.' + 'EXERCISE_TYPES.EXERCISES',
-            //    translateNamespace + '.' + 'EXERCISE_TYPES.SECTIONS'
-            //]).then(function (translation) {
-            //    self.exerciseTypesForFilter = [
-            //        {
-            //            id: 1,
-            //            name: translation['DASHBOARD_REVIEW.EXERCISE_TYPES.EXERCISES']
-            //        },
-            //        {
-            //            id: 2,
-            //            name: translation['DASHBOARD_REVIEW.EXERCISE_TYPES.SECTIONS']
-            //        }
-            //    ];
-            //}).catch(function (err) {
-            //    $log.debug('Could not fetch translation', err);
-            //});
-
             var translateNamespace = 'ASSIGN_LESSON';
             var translatedStrings = [
                 translateNamespace + '.SUBJECT_LABEL',
@@ -213,37 +195,23 @@
                 $log.debug(err);
             });
 
-            //self.statusSelectedHandler = function (selectedStatusId) {
-            //    //filtersValues.exercise = selectedStatusId;
-            //    //_refreshGrid();
-            //    if (selectedStatusId === null) {
-            //        self.currentSelectedStatus = '';
-            //    } else {
-            //        self.exerciseTypesForFilter.filter(function (obj) {
-            //            if (obj.id === selectedStatusId) {
-            //                self.currentSelectedStatus = obj.name;
-            //            }
-            //        });
-            //    }
-            //};
-
 
             /**
              * Template Functions
              */
 
             function iconTemplate(row, col) {
-                //var html;
-                //var iconObj = $scope.vm.gridOptions.subjectMapping.filter(function (subject) {
-                //    return subject.id === row[col.dataProperty];
-                //});
-                //if (iconObj.length !== 0) {
-                //    var iconName = iconObj[0].iconName;
-                //    html = '<svg-icon name=' + iconName + '></svg-icon>';
-                //} else {
-                //    html = '';
-                //}
-                //return html;
+                var html;
+                var iconObj = $scope.vm.gridOptions.subjectMapping.filter(function (subject) {
+                    return subject.id === row[col.dataProperty];
+                });
+                if (iconObj.length !== 0) {
+                    var iconName = iconObj[0].iconName;
+                    html = '<svg-icon name=' + iconName + '></svg-icon>';
+                } else {
+                    html = '';
+                }
+                return html;
             }
 
             function defaultTemplate(row, col) {
