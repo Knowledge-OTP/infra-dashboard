@@ -3,6 +3,8 @@
         "STATUS_LABEL": "Status",
         "SUBJECT_LABEL": "Subject",
         "ASSIGN": "Assign",
-        "STUDENT": "Student: {{currentStudent}}"
+        "ASSIGNED": "Assigned",
+        "STUDENT": "Student: {{currentStudent}}",
+        "CLEAR_FILTER": "Clear Filter"
     }
 }

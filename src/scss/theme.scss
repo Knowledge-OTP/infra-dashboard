@@ -1,11 +1,11 @@
 /**
- *  Customize Scrollbar for questions
+ *  Custom Scrollbar design
  */
 .znk-scrollbar {
     ::-webkit-scrollbar,
     &::-webkit-scrollbar {
         height: 20px;
-        width: 10px;
+        width: 5px;
         background-color: #FBFAFA;
         border-radius: 100px;
     }

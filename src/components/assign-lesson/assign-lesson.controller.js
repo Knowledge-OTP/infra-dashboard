@@ -6,26 +6,40 @@
         .controller('assignLessonCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http, $timeout, TestScoreCategoryEnum) {
             'ngInject';
 
-            //$translatePartialLoader.addPart('assign-lesson');
-            //$translate.refresh();
-
             $scope.vm = {};
+            $scope.vm.gridActions = {};
             $scope.vm.cssClass = locals.cssClass;
             $scope.vm.modalTitle = 'Assign Lesson';
             $scope.vm.currentStudent = 'Brandon Butler'; // TODO: mock
             $scope.vm.currentSubject = '';
             $scope.vm.currentStatus = '';
             $scope.vm.searchTerm = '';
-            $scope.selectedLessons = [];
+            $scope.vm.selectedLessons = [];
+
+            var translateNamespace = 'ASSIGN_LESSON';
+            var translatedStrings = [
+                translateNamespace + '.SUBJECT_LABEL',
+                translateNamespace + '.STATUS_LABEL',
+                translateNamespace + '.ASSIGNED',
+                translateNamespace + '.CLEAR_FILTER'
+            ];
+
+            $translate(translatedStrings).then(function(translation){
+                $scope.vm.subjectLabel = translation[translateNamespace + '.SUBJECT_LABEL'];
+                $scope.vm.statusLabel = translation[translateNamespace + '.STATUS_LABEL'];
+                $scope.vm.assignedText = translation[translateNamespace + '.ASSIGNED'];
+                $scope.vm.clearFilter = translation[translateNamespace + '.CLEAR_FILTER'];
+            }).catch(function(err){
+                $log.debug(err);
+            });
 
             $http({
                 method: 'GET',
-                //url: 'http://localhost:9002/assign-lesson/MOCK_DATA_500.json'
-                url: 'http://localhost:9002/assign-lesson/MOCK_DATA_20.json'
+                url: 'http://localhost:9002/assign-lesson/MOCK_DATA_100.json'
             }).then(function successCallback(response) {
                 $scope.vm.lessons = response.data;
             }, function errorCallback(response) {
-
+                $log.error(response);
             });
 
             $scope.ACT_Options = {
@@ -46,7 +60,12 @@
                     {
                         name: 'Subject',
                         cssClassName: 'subject',
-                        colTemplateFn: defaultTemplate
+                        colTemplateFn: function(row) {
+                            var subjectObj = $scope.vm.gridOptions.subjectMapping.filter(function (subject) {
+                                return subject.id === row.subjectId;
+                            });
+                            return (subjectObj.length !== 0) ? subjectObj[0].name : '';
+                        }
                     },
                     {
                         name: 'Description',
@@ -58,30 +77,35 @@
                         name: 'Select',
                         cssClassName: 'select',
                         dataProperty: '',
-                        // colTemplateFn: selectTemplate,
-                        callbackFn: onLessonSelect,
+                        colTemplateFn: selectTemplate,
+                        onLessonSelect: onLessonSelect,
                         compile: true
                     }
                 ],
                 subjectMapping: [
                     {
                         id: SubjectEnum.ENGLISH.enum,
+                        name: SubjectEnum.ENGLISH.val,
                         iconName: 'english-icon'
                     },
                     {
                         id: SubjectEnum.MATH.enum,
+                        name: SubjectEnum.MATH.val,
                         iconName: 'math-icon'
                     },
                     {
                         id: SubjectEnum.READING.enum,
+                        name: SubjectEnum.READING.val,
                         iconName: 'reading-icon'
                     },
                     {
                         id: SubjectEnum.SCIENCE.enum,
+                        name: SubjectEnum.SCIENCE.val,
                         iconName: 'science-icon'
                     },
                     {
                         id: SubjectEnum.WRITING.enum,
+                        name: SubjectEnum.WRITING.val,
                         iconName: 'writing-icon'
                     }
                 ]
@@ -146,7 +170,7 @@
              * Filters
              */
 
-            $scope.vm.subjects = [
+            $scope.vm.ACT_Subjects = [
                 {
                     id: SubjectEnum.ENGLISH.enum,
                     name: 'English'
@@ -182,19 +206,6 @@
                 }
             ];
 
-            var translateNamespace = 'ASSIGN_LESSON';
-            var translatedStrings = [
-                translateNamespace + '.SUBJECT_LABEL',
-                translateNamespace + '.STATUS_LABEL'
-            ];
-
-            $translate(translatedStrings).then(function(translation){
-                $scope.vm.subjectLabel = translation[translateNamespace + '.SUBJECT_LABEL'];
-                $scope.vm.statusLabel = translation[translateNamespace + '.STATUS_LABEL'];
-            }).catch(function(err){
-                $log.debug(err);
-            });
-
 
             /**
              * Template Functions
@@ -218,19 +229,23 @@
                 return row[col.dataProperty];
             }
 
-            //function selectTemplate(row, col) {
-            //    //debugger;
-            //    //return '<input id="lesson-item-'+row.id+'" type="checkbox" class="checkbox" ng-click="'+onLessonSelect(row.id)+'"/>' +
-            //    //    '<label for="lesson-item-'+row.id+'"></label>';
-            //    //return '<input id="lesson-item-'+row.id+'" ' +
-            //    //    '         type="checkbox" ' +
-            //    //    '         class="checkbox" ' +
-            //    //    '         ng-click="' + col.callbackFn(row, col) + '" /> ' +
-            //    //    '    <label for="lesson-item-'+row.id+'"></label>';
-            //}
+            function selectTemplate (row) {
+                var html;
+                if (row.assign) {
+                    html = '<div class="assigned">' + $scope.vm.assignedText + '</div>';
+                } else {
+                    html = '<input id="lesson-item-'+row.id+'" ' +
+                        '         type="checkbox" ' +
+                        '         class="checkbox" ' +
+                        '         ng-click="column.onLessonSelect(lesson)" /> ' +
+                        '<label for="lesson-item-'+row.id+'"></label>';
+                }
+                return html;
+            }
 
-            function onLessonSelect(row) {
-                $scope.selectedLessons[row.id] = !$scope.selectedLessons[row.id];
+            function onLessonSelect (row) {
+                $scope.vm.selectedLessons[row.id] = !$scope.vm.selectedLessons[row.id];
+                console.log('row ' + row.id + ' is checked');
             }
 
 
@@ -279,7 +294,7 @@
             }
 
             $scope.vm.submitAssigned = function() {
-                console.log($scope.selectedLessons);
+                console.log($scope.vm.selectedLessons);
                 //return $scope.vm.gridActions.submit();
             };
 

@@ -16,7 +16,7 @@
                     actions: '='
                 },
                 link: function (scope) {
-
+                    console.log('Directive: ', scope);
                     var rawData;
 
                     if (!angular.isObject(scope.actions)) {
@@ -38,6 +38,10 @@
                             filterData();
                         });
                     };
+
+                    //scope.actions.onLessonSelect = function (row) {
+                    //    debugger;
+                    //};
 
                     //scope.actions.submit = function () {
                     //    //if (!scope.d.processedData || scope.d.processedData.length === 0) {

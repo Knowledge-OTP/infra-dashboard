@@ -36,9 +36,11 @@
             <div class="filters flex-item">
                 <div class="filter-by-subject">
                     <div class="clear-filter"
-                         ng-if="vm.currentSelectedSubject"
-                         ng-click="vm.subjectSelectedHandler(null)">
+                         title="{{::vm.clearFilter}}"
+                         ng-if="vm.currentSubject !== ''"
+                         ng-click="vm.currentSubject = ''; vm.currentSubjectName = ''">
                         <!--<svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>-->
+                        X
                     </div>
                     <md-menu md-offset="-10 60">
                         <md-button ng-click="$mdOpenMenu($event);"
@@ -49,7 +51,7 @@
                         </md-button>
                         <md-menu-content class="student-review-grid-filter-menu">
                             <md-list>
-                                <md-list-item ng-repeat="subject in vm.subjects"
+                                <md-list-item ng-repeat="subject in vm.ACT_Subjects"
                                               ng-click="vm.currentSubject = subject.id; vm.currentSubjectName = subject.name">
                                     <span>{{subject.name}}</span>
                                 </md-list-item>
@@ -59,8 +61,9 @@
                 </div>
                 <div class="filter-by-status">
                     <div class="clear-filter"
+                         title="{{::vm.clearFilter}}"
                          ng-if="vm.currentStatus !== ''"
-                         ng-click="vm.currentStatus = ''">
+                         ng-click="vm.currentStatus = ''; vm.currentStatusName = ''">
                         <!--<svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>-->
                         X
                     </div>
