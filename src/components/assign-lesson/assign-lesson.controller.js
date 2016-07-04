@@ -228,7 +228,7 @@
                 } else {
                     html = '';
                 }
-                //return html;
+                return html;
             }
 
             function defaultTemplate(row, col) {
