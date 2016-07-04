@@ -517,6 +517,10 @@ angular.module('znk.infra-dashboard.modal').run(['$templateCache', function($tem
                 });
             }
 
+            userResultsService.getExamResults = function (uid) {
+                return getResultsFromFB(ENV.studentAppName + '/examResults', uid);
+            };
+
             userResultsService.getExerciseResultsByExerciseType = function (uid, exerciseTypeId) {
                 return self.getExerciseResults(uid).then(function (exerciseResults) {
                     var resultsByExerciseType = exerciseResults.filter(function (results) {
@@ -529,10 +533,6 @@ angular.module('znk.infra-dashboard.modal').run(['$templateCache', function($tem
 
             userResultsService.getExerciseResults = function (uid) {
                 return getResultsFromFB(ENV.studentAppName + '/exerciseResults', uid);
-            };
-
-            userResultsService.getExamResults = function (uid) {
-                return getResultsFromFB(ENV.studentAppName + '/examResults', uid);
             };
 
             return userResultsService;
