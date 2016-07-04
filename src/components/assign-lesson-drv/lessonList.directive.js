@@ -2,11 +2,11 @@
 (function (angular) {
     'use strict';
 
-    angular.module('znk.infra-dashboard.assign-lesson').directive('lessonList', [
+    angular.module('znk.infra-dashboard.assign-lesson-drv').directive('lessonList', [
         '$timeout', '$q', '$log',
         function ($timeout, $q, $log) {
             return {
-                templateUrl: 'components/assign-lesson/templates/lessonList.template.html',
+                templateUrl: 'components/assign-lesson-drv/templates/lessonList.template.html',
                 restrict: 'E',
                 scope: {
                     options: '=',

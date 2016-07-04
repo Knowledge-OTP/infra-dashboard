@@ -2,17 +2,27 @@
     'use strict';
 
     angular.module('demoApp', [
-            'znk.infra-dashboard.assign-lesson',
+            'znk.infra-dashboard.assign-lesson-drv',
             'pascalprecht.translate',
             'ngMaterial',
             'znk.infra.enum',
-            'TestScoreCategoryEnum.module',
-            'znk.infra.svgIcon'
+            'znk.infra.svgIcon',
+            // 'TestScoreCategoryEnum.module',
         ])
-        .controller('demoAppCtrl', function ($scope, AssignLessonSrv) {
+        //.controller('demoAppCtrl', function ($scope, AssignLessonSrv) {
+        .controller('demoAppCtrl', function ($scope, $mdDialog) {
             $scope.vm = {};
             $scope.vm.openModal = function() {
-                AssignLessonSrv.openModal();
+                //AssignLessonSrv.openModal();
+                $mdDialog.show({
+                    locals: {
+                        cssClass: 'assign-lesson-modal'
+                    },
+                    controller: 'assignLessonModalCtrl',
+                    templateUrl: 'templates/assignLesson.template.html',
+                    clickOutsideToClose: true,
+                    autoWrap: false
+                });
             }
         })
         .config(function ($translateProvider, $translatePartialLoaderProvider) {

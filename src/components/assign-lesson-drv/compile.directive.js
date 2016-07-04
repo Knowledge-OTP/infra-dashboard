@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    var module = angular.module('znk.infra-dashboard.assign-lesson');
+    var module = angular.module('znk.infra-dashboard.assign-lesson-drv');
 
     module.directive('compile', ['$compile', function ($compile) {
         return {

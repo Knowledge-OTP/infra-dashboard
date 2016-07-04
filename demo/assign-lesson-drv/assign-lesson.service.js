@@ -2,7 +2,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('znk.infra-dashboard.assign-lesson')
+    angular.module('demoApp')
         .factory('AssignLessonSrv', function($mdDialog) {
             return {
                 openModal: function() {
