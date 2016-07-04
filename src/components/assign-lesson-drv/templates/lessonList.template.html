@@ -16,7 +16,7 @@
                  ng-class="::column.cssClassName"
                  class="col flex-item">
                 <div ng-switch="column.compile">
-                    <div ng-switch-when="true" compile="column.colTemplateFn(row, column)"></div>
+                    <div ng-switch-when="true" compile-html="column.colTemplateFn(row, column)"></div>
                     <div ng-switch-default>{{column.colTemplateFn(row, column)}}</div>
                 </div>
             </div>

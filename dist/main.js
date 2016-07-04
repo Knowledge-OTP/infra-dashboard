@@ -9,12 +9,12 @@
 
     var module = angular.module('znk.infra-dashboard.assign-lesson-drv');
 
-    module.directive('compile', ['$compile', function ($compile) {
+    module.directive('compileHtml', ['$compile', function ($compile) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
                 scope.$watch(function () {
-                    return scope.$eval(attrs.compile);
+                    return scope.$eval(attrs.compileHtml);
                 }, function (value) {
                     // In case value is a TrustedValueHolderType, sometimes it
                     // needs to be explicitly called into a string in order to
@@ -122,7 +122,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "                 ng-class=\"::column.cssClassName\"\n" +
     "                 class=\"col flex-item\">\n" +
     "                <div ng-switch=\"column.compile\">\n" +
-    "                    <div ng-switch-when=\"true\" compile=\"column.colTemplateFn(row, column)\"></div>\n" +
+    "                    <div ng-switch-when=\"true\" compile-html=\"column.colTemplateFn(row, column)\"></div>\n" +
     "                    <div ng-switch-default>{{column.colTemplateFn(row, column)}}</div>\n" +
     "                </div>\n" +
     "            </div>\n" +
