@@ -56,7 +56,6 @@
                     }
 
                     scope.$watch('dataGetter()', function (data) {
-                        console.log('dataGetter() triggered');
                         if (angular.isUndefined(data) || !angular.isArray(data)) {
                             return;
                         }
