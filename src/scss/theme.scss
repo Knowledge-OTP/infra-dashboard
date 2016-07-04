@@ -1,0 +1,47 @@
+/**
+ *  Custom Scrollbar design
+ */
+.znk-scrollbar {
+    ::-webkit-scrollbar,
+    &::-webkit-scrollbar {
+        height: 20px;
+        width: 5px;
+        background-color: #FBFAFA;
+        border-radius: 100px;
+    }
+    ::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-thumb {
+        background-color: $scrollBarColor;
+        -webkit-border-radius: 1ex;
+    }
+}
+
+
+/**
+ *  Typography
+ */
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+

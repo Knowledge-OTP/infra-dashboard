@@ -1,3 +1,13 @@
+/* paths*/
+$imagePath: '/assets/images';
+$iconsPath: '#{$imagePath}/icons';
+$bgPath: '#{$imagePath}/bg';
+$logoPath: '#{$imagePath}/logo';
+$raccoonPath: '#{$imagePath}/raccoon';
+$posterImagesPath: '#{$imagePath}/poster';
+$znkFontsPath: '/assets/fonts';
+$googleFontCDN: '//fonts.googleapis.com/';
+
 /* fonts size */
 $extraLightFontWeight: 100;
 $ultraLightFontWeight: 100;

@@ -1,0 +1,209 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.search-and-filter {
+    &.flex-container {
+
+    }
+    .search,
+    .filters {
+        &.flex-item {
+            flex-grow: 1;
+        }
+    }
+    .search {
+        max-width: 25%;
+        padding: {
+            top: 0;
+            left: 25px;
+            right: 18px;
+            bottom: 0;
+        };
+        font-size: 14px;
+        color: #9a9797;
+        font-weight: 400;
+        outline: 0;
+        height: 25px;
+        border: 1px solid #CACACA;
+        border-radius: 21px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        position: relative;
+
+        input {
+            height: 100%;
+            padding: 0;
+            border: none;
+            outline: none;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            cursor: pointer;
+            color: $fcColor6;
+        }
+
+        .search-icon {
+            width: 14px;
+            position: absolute;
+            top: 16px;
+            left: 7px;
+        }
+
+        //.search-icon * {
+        //    stroke: $bcColor22;
+        //}
+    }
+    .filters {
+        height: 46px;
+        overflow: hidden;
+        .filter-by-subject,
+        .filter-by-status {
+            float:right;
+
+            .clear-filter {
+                margin:0;
+                display: inline-block;
+                cursor: pointer;
+                //svg-icon[name="wrong-icon"] {
+                //    width: 13px;
+                //    height: 13px;
+                //    border: 1px solid $bcColor24;
+                //    border-radius: 50%;
+                //    box-sizing: border-box;
+                //    padding: 1px;
+                //    svg {
+                //        width: 100%;
+                //    }
+                //}
+            }
+
+            md-menu{
+                padding: 0;
+                display: inline-block;
+                .md-button {
+                    width: auto;
+                    background: transparent;
+                    span {
+                        width: auto;
+                        @include text-style(14px, $fcColor11, Lato, $thinFontWeight);
+                        text-transform: capitalize;
+                    }
+                    md-icon {
+                        color: $fcColor11;
+                        font-size: 20px;
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+md-dialog.assign-lesson-modal {
+    width: 800px;
+    overflow: visible;
+    background: 0 0;
+    box-shadow: none;
+    max-height: 90%;
+
+    .close-popup-wrap {
+        @include absolute-position(-35px, -35px);
+        height: 14px;
+        width: 14px;
+        padding: 0;
+        margin: 10px;
+        cursor: pointer;
+    }
+
+    .popup-header {
+        position: relative;
+        height: 40px;
+        background-color: $bgColor3;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+
+        .raccoon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: relative;
+            bottom: 17.5px;
+            background-color: $bgColor3;
+
+            .raccoon-logo-icon {
+                width: 45px;
+                height: 45px;
+                margin: 0 auto;
+                padding-top: 20px;
+                * {
+                    fill: $bgColor2;
+                }
+            }
+
+        }
+
+    }
+
+    md-dialog-content {
+        //height: 100%;
+        padding: 20px;
+        overflow-y: hidden;
+        background-color: $bgColor6;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+
+        h2 {
+            @include text-style(25px, $fcColor6, Quicksand, $boldFontWeight, null, null, null);
+            text-align: center;
+            margin: 15px 0 10px;
+            .pro {
+                font-size: 20px;
+                padding: 2px 7px;
+            }
+        }
+
+        .current-student {
+            @include text-style(12px, $fcColor1, Lato, $lightFontWeight);
+        }
+
+        .divider {
+            padding-top:15px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid $bcColor3;
+        }
+
+        p {
+            @include text-style(16px, $fcColor7, Lato, $lightFontWeight);
+            text-align: center;
+        }
+
+        .btn-wrap {
+            text-align: center;
+            .assign-btn {
+                width: 300px;
+                height: 42px;
+                @include text-style(16px, $fcColor2, Lato, $lightFontWeight, null, none);
+                background-color: $bgColor12;
+                border-radius: 21px;
+                &:active {
+                    background-color: $bgColor17;
+                }
+                &:hover {
+                    background-color: $bgColor18;
+                }
+
+                &.drop-shadow {
+                    box-shadow: 0px 3px 0px 0px $bsColor1;
+                }
+            }
+        }
+    }
+}
+
