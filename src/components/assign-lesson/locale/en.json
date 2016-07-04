@@ -5,6 +5,7 @@
         "ASSIGN": "Assign",
         "ASSIGNED": "Assigned",
         "STUDENT": "Student: {{currentStudent}}",
-        "CLEAR_FILTER": "Clear Filter"
+        "CLEAR_FILTER": "Clear Filter",
+        "NO_LESSONS_FOR_FILTER": "No matching lessons were found."
     }
 }

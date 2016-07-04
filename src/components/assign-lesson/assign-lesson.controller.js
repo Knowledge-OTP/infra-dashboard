@@ -10,7 +10,7 @@
             $scope.vm.gridActions = {};
             $scope.vm.cssClass = locals.cssClass;
             $scope.vm.modalTitle = 'Assign Lesson';
-            $scope.vm.currentStudent = 'Brandon Butler'; // TODO: mock
+            $scope.vm.currentStudent = 'Brandon Butler';
             $scope.vm.currentSubject = '';
             $scope.vm.currentStatus = '';
             $scope.vm.searchTerm = '';
@@ -21,7 +21,8 @@
                 translateNamespace + '.SUBJECT_LABEL',
                 translateNamespace + '.STATUS_LABEL',
                 translateNamespace + '.ASSIGNED',
-                translateNamespace + '.CLEAR_FILTER'
+                translateNamespace + '.CLEAR_FILTER',
+                translateNamespace + '.NO_LESSONS_FOR_FILTER'
             ];
 
             $translate(translatedStrings).then(function(translation){
@@ -29,141 +30,146 @@
                 $scope.vm.statusLabel = translation[translateNamespace + '.STATUS_LABEL'];
                 $scope.vm.assignedText = translation[translateNamespace + '.ASSIGNED'];
                 $scope.vm.clearFilter = translation[translateNamespace + '.CLEAR_FILTER'];
+                $scope.vm.noLessonsForFilter = translation[translateNamespace + '.NO_LESSONS_FOR_FILTER'];
+
+                $http({
+                    method: 'GET',
+                    url: 'http://localhost:9002/MOCK_DATA_100.json'
+                }).then(function successCallback(response) {
+                    $scope.vm.lessons = response.data;
+                }, function errorCallback(response) {
+                    $log.error(response);
+                });
+
+                $scope.ACT_Options = {
+                    columns: [
+                        {
+                            name: '',
+                            cssClassName: 'icon',
+                            dataProperty: 'subjectId',
+                            colTemplateFn: iconTemplate,
+                            compile: true
+                        },
+                        {
+                            name: 'Title',
+                            cssClassName: 'title',
+                            dataProperty: 'name',
+                            colTemplateFn: defaultTemplate
+                        },
+                        {
+                            name: 'Subject',
+                            cssClassName: 'subject',
+                            colTemplateFn: function(row) {
+                                var subjectObj = $scope.vm.gridOptions.subjectMapping.filter(function (subject) {
+                                    return subject.id === row.subjectId;
+                                });
+                                return (subjectObj.length !== 0) ? subjectObj[0].name : '';
+                            }
+                        },
+                        {
+                            name: 'Description',
+                            cssClassName: 'description',
+                            dataProperty: 'desc',
+                            colTemplateFn: defaultTemplate
+                        },
+                        {
+                            name: 'Select',
+                            cssClassName: 'select',
+                            dataProperty: '',
+                            colTemplateFn: selectTemplate,
+                            onLessonSelect: onLessonSelect,
+                            compile: true
+                        }
+                    ],
+                    translatedStrings: {
+                        'NO_LESSONS_FOR_FILTER' : $scope.vm.noLessonsForFilter
+                    },
+                    subjectMapping: [
+                        {
+                            id: SubjectEnum.ENGLISH.enum,
+                            name: SubjectEnum.ENGLISH.val,
+                            iconName: 'english-icon'
+                        },
+                        {
+                            id: SubjectEnum.MATH.enum,
+                            name: SubjectEnum.MATH.val,
+                            iconName: 'math-icon'
+                        },
+                        {
+                            id: SubjectEnum.READING.enum,
+                            name: SubjectEnum.READING.val,
+                            iconName: 'reading-icon'
+                        },
+                        {
+                            id: SubjectEnum.SCIENCE.enum,
+                            name: SubjectEnum.SCIENCE.val,
+                            iconName: 'science-icon'
+                        },
+                        {
+                            id: SubjectEnum.WRITING.enum,
+                            name: SubjectEnum.WRITING.val,
+                            iconName: 'writing-icon'
+                        }
+                    ]
+                };
+
+                $scope.SAT_Options = {
+                    columns: [
+                        {
+                            name: '',
+                            cssClassName: 'icon',
+                            dataProperty: 'categoryId',
+                            colTemplateFn: iconTemplate
+                        },
+                        {
+                            name: 'Title',
+                            cssClassName: 'title',
+                            dataProperty: 'name',
+                            colTemplateFn: defaultTemplate
+                        },
+                        {
+                            name: 'Subject',
+                            cssClassName: 'subject',
+                            colTemplateFn: defaultTemplate
+                        },
+                        {
+                            name: 'Description',
+                            cssClassName: 'description',
+                            dataProperty: 'desc',
+                            colTemplateFn: defaultTemplate
+                        },
+                        {
+                            name: 'Select',
+                            cssClassName: 'select',
+                            dataProperty: 'assign',
+                            //colTemplateFn: selectTemplate
+                        }
+                    ],
+                    subjectMapping: [
+                        {
+                            id: TestScoreCategoryEnum.MATH.enum,
+                            iconName: 'math-icon'
+                        },
+                        {
+                            id: TestScoreCategoryEnum.READING.enum,
+                            iconName: 'reading-icon'
+                        },
+                        {
+                            id: TestScoreCategoryEnum.WRITING.enum,
+                            iconName: 'writing-icon'
+                        },
+                        {
+                            id: TestScoreCategoryEnum.ESSAY.enum,
+                            iconName: 'essay-icon'
+                        }
+                    ]
+                };
+
+                $scope.vm.gridOptions = $scope.ACT_Options;
+
             }).catch(function(err){
                 $log.debug(err);
             });
-
-            $http({
-                method: 'GET',
-                url: 'http://localhost:9002/assign-lesson/MOCK_DATA_100.json'
-            }).then(function successCallback(response) {
-                $scope.vm.lessons = response.data;
-            }, function errorCallback(response) {
-                $log.error(response);
-            });
-
-            $scope.ACT_Options = {
-                columns: [
-                    {
-                        name: '',
-                        cssClassName: 'icon',
-                        dataProperty: 'subjectId',
-                        colTemplateFn: iconTemplate,
-                        compile: true
-                    },
-                    {
-                        name: 'Title',
-                        cssClassName: 'title',
-                        dataProperty: 'name',
-                        colTemplateFn: defaultTemplate
-                    },
-                    {
-                        name: 'Subject',
-                        cssClassName: 'subject',
-                        colTemplateFn: function(row) {
-                            var subjectObj = $scope.vm.gridOptions.subjectMapping.filter(function (subject) {
-                                return subject.id === row.subjectId;
-                            });
-                            return (subjectObj.length !== 0) ? subjectObj[0].name : '';
-                        }
-                    },
-                    {
-                        name: 'Description',
-                        cssClassName: 'description',
-                        dataProperty: 'desc',
-                        colTemplateFn: defaultTemplate
-                    },
-                    {
-                        name: 'Select',
-                        cssClassName: 'select',
-                        dataProperty: '',
-                        colTemplateFn: selectTemplate,
-                        onLessonSelect: onLessonSelect,
-                        compile: true
-                    }
-                ],
-                subjectMapping: [
-                    {
-                        id: SubjectEnum.ENGLISH.enum,
-                        name: SubjectEnum.ENGLISH.val,
-                        iconName: 'english-icon'
-                    },
-                    {
-                        id: SubjectEnum.MATH.enum,
-                        name: SubjectEnum.MATH.val,
-                        iconName: 'math-icon'
-                    },
-                    {
-                        id: SubjectEnum.READING.enum,
-                        name: SubjectEnum.READING.val,
-                        iconName: 'reading-icon'
-                    },
-                    {
-                        id: SubjectEnum.SCIENCE.enum,
-                        name: SubjectEnum.SCIENCE.val,
-                        iconName: 'science-icon'
-                    },
-                    {
-                        id: SubjectEnum.WRITING.enum,
-                        name: SubjectEnum.WRITING.val,
-                        iconName: 'writing-icon'
-                    }
-                ]
-            };
-
-            $scope.SAT_Options = {
-                columns: [
-                    {
-                        name: '',
-                        cssClassName: 'icon',
-                        dataProperty: 'categoryId',
-                        colTemplateFn: iconTemplate
-                    },
-                    {
-                        name: 'Title',
-                        cssClassName: 'title',
-                        dataProperty: 'name',
-                        colTemplateFn: defaultTemplate
-                    },
-                    {
-                        name: 'Subject',
-                        cssClassName: 'subject',
-                        colTemplateFn: defaultTemplate
-                    },
-                    {
-                        name: 'Description',
-                        cssClassName: 'description',
-                        dataProperty: 'desc',
-                        colTemplateFn: defaultTemplate
-                    },
-                    {
-                        name: 'Select',
-                        cssClassName: 'select',
-                        dataProperty: 'assign',
-                        //colTemplateFn: selectTemplate
-                    }
-                ],
-                subjectMapping: [
-                    {
-                        id: TestScoreCategoryEnum.MATH.enum,
-                        iconName: 'math-icon'
-                    },
-                    {
-                        id: TestScoreCategoryEnum.READING.enum,
-                        iconName: 'reading-icon'
-                    },
-                    {
-                        id: TestScoreCategoryEnum.WRITING.enum,
-                        iconName: 'writing-icon'
-                    },
-                    {
-                        id: TestScoreCategoryEnum.ESSAY.enum,
-                        iconName: 'essay-icon'
-                    }
-                ]
-            };
-
-            $scope.vm.gridOptions = $scope.ACT_Options;
 
 
             /**
@@ -222,14 +228,14 @@
                 } else {
                     html = '';
                 }
-                return html;
+                //return html;
             }
 
             function defaultTemplate(row, col) {
                 return row[col.dataProperty];
             }
 
-            function selectTemplate (row) {
+            function selectTemplate(row) {
                 var html;
                 if (row.assign) {
                     html = '<div class="assigned">' + $scope.vm.assignedText + '</div>';
@@ -237,7 +243,7 @@
                     html = '<input id="lesson-item-'+row.id+'" ' +
                         '         type="checkbox" ' +
                         '         class="checkbox" ' +
-                        '         ng-click="column.onLessonSelect(lesson)" /> ' +
+                        '         ng-click="column.onLessonSelect(row)" /> ' +
                         '<label for="lesson-item-'+row.id+'"></label>';
                 }
                 return html;
@@ -245,7 +251,7 @@
 
             function onLessonSelect (row) {
                 $scope.vm.selectedLessons[row.id] = !$scope.vm.selectedLessons[row.id];
-                console.log('row ' + row.id + ' is checked');
+                // $log.debug('row ' + row.id + ' is checked');
             }
 
 
@@ -295,7 +301,6 @@
 
             $scope.vm.submitAssigned = function() {
                 console.log($scope.vm.selectedLessons);
-                //return $scope.vm.gridActions.submit();
             };
 
             $scope.$watchGroup(watchFilters, function(newValues, oldValues) {

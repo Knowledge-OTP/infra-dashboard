@@ -1,5 +1,4 @@
 <div class="lesson-list">
-    <!--Showing {{d.processedData.length}} Lessons-->
     <header class="list-header row-header flex-container">
         <div ng-repeat="column in options.columns"
              ng-class="::column.cssClassName"
@@ -7,15 +6,18 @@
             {{column.name}}
         </div>
     </header>
-    <div class="rows-wrapper znk-scrollbar">
-        <div ng-repeat="lesson in d.processedData as results track by lesson.id"
+    <div class="no-rows-for-filter" ng-if="d.processedData.length === 0">
+        {{options.translatedStrings.NO_LESSONS_FOR_FILTER}}
+    </div>
+    <div class="rows-wrapper znk-scrollbar" ng-if="d.processedData.length">
+        <div ng-repeat="row in d.processedData as results track by row.id"
              class="lesson-item flex-container">
             <div ng-repeat="column in options.columns"
                  ng-class="::column.cssClassName"
                  class="col flex-item">
                 <div ng-switch="column.compile">
-                    <div ng-switch-when="true" compile="column.colTemplateFn(lesson, column)"></div>
-                    <div ng-switch-default>{{column.colTemplateFn(lesson, column)}}</div>
+                    <div ng-switch-when="true" compile="column.colTemplateFn(row, column)"></div>
+                    <div ng-switch-default>{{column.colTemplateFn(row, column)}}</div>
                 </div>
             </div>
         </div>

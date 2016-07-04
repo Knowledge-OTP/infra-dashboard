@@ -4,10 +4,10 @@
            translate-namespace="ASSIGN_LESSON">
     <div class="popup-header">
         <div class="raccoon">
-            <!--<svg-icon name="raccoon-logo-icon"></svg-icon>-->
+            <svg-icon name="raccoon-logo-icon"></svg-icon>
         </div>
         <div class="close-popup-wrap">
-            <!--<svg-icon name="close-popup" ng-click="vm.close()"></svg-icon>-->
+            <svg-icon name="close-popup" ng-click="vm.close()"></svg-icon>
         </div>
     </div>
     <md-dialog-content>
@@ -30,7 +30,10 @@
                        placeholder="Search"
                        name="search-box"
                        aria-label="Search">
-                <!--<svg-icon name="search-icon" class="search-icon"></svg-icon>-->
+                <span class="clear-search"
+                      ng-if="vm.searchTerm"
+                      ng-click="vm.searchTerm = ''">X</span>
+                <svg-icon name="search-icon" class="search-icon"></svg-icon>
             </div>
 
             <div class="filters flex-item">
@@ -39,8 +42,7 @@
                          title="{{::vm.clearFilter}}"
                          ng-if="vm.currentSubject !== ''"
                          ng-click="vm.currentSubject = ''; vm.currentSubjectName = ''">
-                        <!--<svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>-->
-                        X
+                        <svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>
                     </div>
                     <md-menu md-offset="-10 60">
                         <md-button ng-click="$mdOpenMenu($event);"
@@ -64,8 +66,7 @@
                          title="{{::vm.clearFilter}}"
                          ng-if="vm.currentStatus !== ''"
                          ng-click="vm.currentStatus = ''; vm.currentStatusName = ''">
-                        <!--<svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>-->
-                        X
+                        <svg-icon name="wrong-icon" class="svg-wrapper"></svg-icon>
                     </div>
                     <md-menu md-offset="5 60">
                         <md-button ng-click="$mdOpenMenu($event);"
@@ -87,7 +88,8 @@
             </div>
         </div>
 
-        <lesson-list data="vm.lessons"
+        <lesson-list ng-if="vm.gridOptions"
+                     data="vm.lessons"
                      options="vm.gridOptions"
                      filters="vm.gridFilters"
                      actions="vm.gridActions">

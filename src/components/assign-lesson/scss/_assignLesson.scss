@@ -31,12 +31,21 @@
         border-radius: 21px;
         margin-top: 8px;
         margin-bottom: 8px;
+        position: relative;
 
         input {
             height: 100%;
             padding: 0;
             border: none;
             outline: none;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            cursor: pointer;
+            color: $fcColor6;
         }
 
         .search-icon {
