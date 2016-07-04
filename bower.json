@@ -20,7 +20,7 @@
         "test",
         "demo"
     ],
-    "main": "dist/znk.infra-dashboard.js",
+    "main": "dist/main.js",
     "resolutions": {
         "angular": "1.4.x"
     },
