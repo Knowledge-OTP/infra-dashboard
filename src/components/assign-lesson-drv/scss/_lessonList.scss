@@ -54,6 +54,17 @@ lesson-list {
         .lesson-item {
             height: $rowHeight;
             line-height: $rowHeight;
+            .icon {
+                svg-icon {
+                    width: 100%;
+                    display: block;
+                    overflow: auto;
+                    text-align: center;
+                    svg {
+                        height: $rowHeight - 10px;
+                    }
+                }
+            }
             .title {
                 color: $fcColor6;
                 font-size: 16px;
