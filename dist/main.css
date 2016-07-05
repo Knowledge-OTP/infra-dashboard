@@ -99,7 +99,7 @@ lesson-list {
       lesson-list .lesson-list .lesson-item .icon svg-icon.icon-wrapper {
         height: 35px;
         width: 35px;
-        margin: 0 auto;
+        margin: 5px auto 0;
         border-radius: 50%;
         position: relative; }
       lesson-list .lesson-list .lesson-item .icon svg-icon svg {
