@@ -60,6 +60,13 @@ lesson-list {
                     display: block;
                     overflow: auto;
                     text-align: center;
+                    &.icon-wrapper {
+                        height: 30px;
+                        width: 30px;
+                        margin: 0 auto;
+                        border-radius: 50%;
+                        position: relative;
+                    }
                     svg {
                         height: $rowHeight - 10px;
                     }

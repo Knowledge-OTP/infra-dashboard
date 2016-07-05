@@ -99,6 +99,12 @@ lesson-list {
       display: block;
       overflow: auto;
       text-align: center; }
+      lesson-list .lesson-list .lesson-item .icon svg-icon.icon-wrapper {
+        height: 30px;
+        width: 30px;
+        margin: 0 auto;
+        border-radius: 50%;
+        position: relative; }
       lesson-list .lesson-list .lesson-item .icon svg-icon svg {
         height: 35px; }
     lesson-list .lesson-list .lesson-item .title {
