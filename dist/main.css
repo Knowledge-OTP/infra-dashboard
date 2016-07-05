@@ -95,7 +95,9 @@ lesson-list {
     height: 45px;
     line-height: 45px; }
     lesson-list .lesson-list .lesson-item .col {
-      white-space: nowrap; }
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
       lesson-list .lesson-list .lesson-item .col.icon svg-icon {
         overflow: hidden; }
         lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {
