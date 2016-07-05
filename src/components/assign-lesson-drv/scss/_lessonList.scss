@@ -57,8 +57,7 @@ lesson-list {
             .icon {
                 svg-icon {
                     display: block;
-                    overflow: auto;
-                    text-align: center;
+                    overflow: hidden;
                     &.icon-wrapper {
                         height: 30px;
                         width: 30px;
@@ -67,7 +66,9 @@ lesson-list {
                         position: relative;
                     }
                     svg {
-                        height: $rowHeight - 10px;
+                        // height: $rowHeight - 10px;\
+                        width: 65%;
+                        height: 65%;
                     }
                 }
             }
