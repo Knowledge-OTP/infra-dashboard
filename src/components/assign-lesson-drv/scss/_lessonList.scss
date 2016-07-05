@@ -47,13 +47,34 @@ lesson-list {
             //height: calc(100% - 100px);
             //max-height: $rowHeight * 8;
             height: $rowHeight * 8;
-            overflow-y: scroll;
+            overflow-y: auto;
             overflow-x: hidden;
             margin:0 10px;
+            .row {
+                .col {
+                    white-space: nowrap;
+                }
+            }
         }
         .lesson-item {
             height: $rowHeight;
             line-height: $rowHeight;
+            .icon {
+                svg-icon {
+                    overflow: hidden;
+                    &.icon-wrapper {
+                        height: $rowHeight - 10px;
+                        width: $rowHeight - 10px;
+                        margin: 5px auto 0;
+                        border-radius: 50%;
+                        position: relative;
+                    }
+                    svg {
+                        width: 65%;
+                        height: 65%;
+                    }
+                }
+            }
             .title {
                 color: $fcColor6;
                 font-size: 16px;

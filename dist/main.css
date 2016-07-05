@@ -88,12 +88,25 @@ lesson-list {
     padding: 60px 0; }
   lesson-list .lesson-list .rows-wrapper {
     height: 360px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     margin: 0 10px; }
+    lesson-list .lesson-list .rows-wrapper .row .col {
+      white-space: nowrap; }
   lesson-list .lesson-list .lesson-item {
     height: 45px;
     line-height: 45px; }
+    lesson-list .lesson-list .lesson-item .icon svg-icon {
+      overflow: hidden; }
+      lesson-list .lesson-list .lesson-item .icon svg-icon.icon-wrapper {
+        height: 35px;
+        width: 35px;
+        margin: 5px auto 0;
+        border-radius: 50%;
+        position: relative; }
+      lesson-list .lesson-list .lesson-item .icon svg-icon svg {
+        width: 65%;
+        height: 65%; }
     lesson-list .lesson-list .lesson-item .title {
       color: #4f4d4d;
       font-size: 16px;
