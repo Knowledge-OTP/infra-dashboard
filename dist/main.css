@@ -95,7 +95,6 @@ lesson-list {
     height: 45px;
     line-height: 45px; }
     lesson-list .lesson-list .lesson-item .icon svg-icon {
-      width: 100%;
       display: block;
       overflow: auto;
       text-align: center; }
