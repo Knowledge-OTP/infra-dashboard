@@ -56,17 +56,15 @@ lesson-list {
             line-height: $rowHeight;
             .icon {
                 svg-icon {
-                    display: block;
                     overflow: hidden;
                     &.icon-wrapper {
-                        height: 30px;
-                        width: 30px;
+                        height: $rowHeight - 10px;
+                        width: $rowHeight - 10px;
                         margin: 0 auto;
                         border-radius: 50%;
                         position: relative;
                     }
                     svg {
-                        // height: $rowHeight - 10px;\
                         width: 65%;
                         height: 65%;
                     }

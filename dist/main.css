@@ -95,11 +95,10 @@ lesson-list {
     height: 45px;
     line-height: 45px; }
     lesson-list .lesson-list .lesson-item .icon svg-icon {
-      display: block;
       overflow: hidden; }
       lesson-list .lesson-list .lesson-item .icon svg-icon.icon-wrapper {
-        height: 30px;
-        width: 30px;
+        height: 35px;
+        width: 35px;
         margin: 0 auto;
         border-radius: 50%;
         position: relative; }
