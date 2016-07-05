@@ -91,6 +91,8 @@ lesson-list {
     overflow-y: auto;
     overflow-x: hidden;
     margin: 0 10px; }
+    lesson-list .lesson-list .rows-wrapper .row .col {
+      white-space: nowrap; }
   lesson-list .lesson-list .lesson-item {
     height: 45px;
     line-height: 45px; }

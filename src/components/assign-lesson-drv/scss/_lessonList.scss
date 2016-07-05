@@ -50,6 +50,11 @@ lesson-list {
             overflow-y: auto;
             overflow-x: hidden;
             margin:0 10px;
+            .row {
+                .col {
+                    white-space: nowrap;
+                }
+            }
         }
         .lesson-item {
             height: $rowHeight;
