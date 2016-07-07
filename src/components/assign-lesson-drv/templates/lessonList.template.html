@@ -15,7 +15,7 @@
             <div ng-repeat="column in options.columns"
                  ng-class="::column.cssClassName"
                  class="col flex-item">
-                <div ng-switch="column.compile">
+                <div ng-switch="column.compile" class="col-inner">
                     <div ng-switch-when="true" compile-html="column.colTemplateFn(row, column)"></div>
                     <div ng-switch-default>{{column.colTemplateFn(row, column)}}</div>
                 </div>

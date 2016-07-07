@@ -94,7 +94,7 @@ lesson-list {
   lesson-list .lesson-list .lesson-item {
     height: 45px;
     line-height: 45px; }
-    lesson-list .lesson-list .lesson-item .col {
+    lesson-list .lesson-list .lesson-item .col .col-inner {
       padding: 5px;
       box-sizing: border-box;
       white-space: nowrap;
@@ -102,78 +102,78 @@ lesson-list {
       text-overflow: ellipsis;
       overflow: hidden;
       height: 100%; }
-      lesson-list .lesson-list .lesson-item .col.icon svg-icon {
-        overflow: hidden; }
-        lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {
-          height: 35px;
-          width: 35px;
-          margin: 5px auto 0;
-          border-radius: 50%;
-          position: relative; }
-        lesson-list .lesson-list .lesson-item .col.icon svg-icon svg {
-          width: 65%;
-          height: 65%; }
-      lesson-list .lesson-list .lesson-item .col.title {
-        color: #4f4d4d;
-        font-size: 16px;
-        font-weight: 400; }
-      lesson-list .lesson-list .lesson-item .col.subject {
-        text-transform: capitalize; }
-      lesson-list .lesson-list .lesson-item .col.select {
-        /* Base for label styling */
-        /* checkbox aspect */
-        /* checked mark aspect */
-        /* checked mark aspect changes */
-        /* disabled checkbox */
-        /* accessibility */
-        /* hover style just for information */ }
-        lesson-list .lesson-list .lesson-item .col.select .assigned {
-          text-transform: uppercase; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked),
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked {
-          visibility: hidden; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label,
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label {
-          position: relative;
-          padding-left: 25px;
-          cursor: pointer; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:before,
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 2px;
-          width: 25px;
-          height: 25px;
-          border: 1px solid #0a9bad;
-          background: #fff;
-          border-radius: 50%;
-          box-shadow: none; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after,
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
-          content: '✔';
-          position: absolute;
-          top: 5px;
-          left: 4px;
-          font-size: 22px;
-          line-height: 0.8;
-          color: #fff;
-          transition: all .1s; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after {
-          opacity: 0; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
-          background-color: #0a9bad; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
-          opacity: 1; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:not(:checked) + label:before,
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:before {
-          box-shadow: none;
-          border-color: #bbb;
-          background-color: #ddd; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:after {
-          color: #999; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled + label {
-          color: #aaa; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked:focus + label:before,
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked):focus + label:before {
-          border: 1px solid #0a9bad; }
+    lesson-list .lesson-list .lesson-item .col.icon svg-icon {
+      overflow: hidden; }
+      lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {
+        height: 35px;
+        width: 35px;
+        margin: 5px auto 0;
+        border-radius: 50%;
+        position: relative; }
+      lesson-list .lesson-list .lesson-item .col.icon svg-icon svg {
+        width: 65%;
+        height: 65%; }
+    lesson-list .lesson-list .lesson-item .col.title {
+      color: #4f4d4d;
+      font-size: 16px;
+      font-weight: 400; }
+    lesson-list .lesson-list .lesson-item .col.subject {
+      text-transform: capitalize; }
+    lesson-list .lesson-list .lesson-item .col.select {
+      /* Base for label styling */
+      /* checkbox aspect */
+      /* checked mark aspect */
+      /* checked mark aspect changes */
+      /* disabled checkbox */
+      /* accessibility */
+      /* hover style just for information */ }
+      lesson-list .lesson-list .lesson-item .col.select .assigned {
+        text-transform: uppercase; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked),
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked {
+        visibility: hidden; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label,
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label {
+        position: relative;
+        padding-left: 25px;
+        cursor: pointer; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:before,
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 25px;
+        height: 25px;
+        border: 1px solid #0a9bad;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: none; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after,
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
+        content: '✔';
+        position: absolute;
+        top: 5px;
+        left: 4px;
+        font-size: 22px;
+        line-height: 0.8;
+        color: #fff;
+        transition: all .1s; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after {
+        opacity: 0; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
+        background-color: #0a9bad; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
+        opacity: 1; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:not(:checked) + label:before,
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:before {
+        box-shadow: none;
+        border-color: #bbb;
+        background-color: #ddd; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:after {
+        color: #999; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled + label {
+        color: #aaa; }
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked:focus + label:before,
+      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked):focus + label:before {
+        border: 1px solid #0a9bad; }

@@ -121,7 +121,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "            <div ng-repeat=\"column in options.columns\"\n" +
     "                 ng-class=\"::column.cssClassName\"\n" +
     "                 class=\"col flex-item\">\n" +
-    "                <div ng-switch=\"column.compile\">\n" +
+    "                <div ng-switch=\"column.compile\" class=\"col-inner\">\n" +
     "                    <div ng-switch-when=\"true\" compile-html=\"column.colTemplateFn(row, column)\"></div>\n" +
     "                    <div ng-switch-default>{{column.colTemplateFn(row, column)}}</div>\n" +
     "                </div>\n" +
