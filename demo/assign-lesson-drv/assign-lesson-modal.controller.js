@@ -3,7 +3,7 @@
     'use strict';
     angular
         .module('demoApp')
-        .controller('assignLessonModalCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http, $timeout/*, TestScoreCategoryEnum*/) {
+        .controller('assignLessonModalCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http, $timeout, ZnkModuleService, UserAssignModuleService/*, TestScoreCategoryEnum*/) {
             'ngInject';
 
             $scope.vm = {};
@@ -32,14 +32,28 @@
                 $scope.vm.clearFilter = translation[translateNamespace + '.CLEAR_FILTER'];
                 $scope.vm.noLessonsForFilter = translation[translateNamespace + '.NO_LESSONS_FOR_FILTER'];
 
-                $http({
-                    method: 'GET',
-                    url: 'http://localhost:9002/MOCK_DATA_100.json'
-                }).then(function successCallback(response) {
-                    $scope.vm.lessons = response.data;
-                }, function errorCallback(response) {
-                    $log.error(response);
-                });
+
+                $scope.vm.gridData = [
+                    {"id":1,"name":"Writing Module D (Grammar)","desc":"Perez","order":1,"subjectId":8,"categoryId":12,"assign":true},
+                    {"id":2,"name":"Reading Module A (Broad Comprehension)","desc":"Cox","order":2,"subjectId":8,"categoryId":9,"assign":false},
+                    {"id":3,"name":"Reading Module B (Rhetoric)","desc":"Jordan","order":3,"subjectId":6,"categoryId":11,"assign":true},
+                    {"id":4,"name":"Reading Module C (Fine Points)","desc":"Sanders","order":4,"subjectId":7,"categoryId":12,"assign":false},
+                    {"id":5,"name":"Eugene","desc":"Hughes","order":5,"subjectId":3,"categoryId":12,"assign":false},
+                    {"id":6,"name":"Frances","desc":"Bell","order":6,"subjectId":6,"categoryId":10,"assign":false},
+                    {"id":7,"name":"Chris","desc":"Barnes","order":7,"subjectId":7,"categoryId":11,"assign":true},
+                    {"id":8,"name":"Helen","desc":"George","order":8,"subjectId":7,"categoryId":10,"assign":false},
+                    {"id":9,"name":"Teresa","desc":"Cox","order":9,"subjectId":4,"categoryId":10,"assign":true},
+                    {"id":10,"name":"Robin","desc":"Stewart","order":10,"subjectId":2,"categoryId":9,"assign":true}
+                ];
+
+                //$http({
+                //    method: 'GET',
+                //    url: 'http://localhost:9002/MOCK_DATA_100.json'
+                //}).then(function successCallback(response) {
+                //    $scope.vm.lessons = response.data;
+                //}, function errorCallback(response) {
+                //    $log.error(response);
+                //});
 
                 $scope.ACT_Options = {
                     columns: [

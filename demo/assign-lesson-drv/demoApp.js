@@ -6,7 +6,7 @@
             'pascalprecht.translate',
             'ngMaterial',
             'znk.infra.enum',
-            'znk.infra.svgIcon',
+            'znk.infra.svgIcon'
             // 'TestScoreCategoryEnum.module',
         ])
         //.controller('demoAppCtrl', function ($scope, AssignLessonSrv) {
