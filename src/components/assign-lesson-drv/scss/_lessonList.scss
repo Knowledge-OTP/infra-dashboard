@@ -55,9 +55,13 @@ lesson-list {
             height: $rowHeight;
             line-height: $rowHeight;
             .col {
+                padding: 5px;
+                box-sizing: border-box;
                 white-space: nowrap;
-                overflow: hidden;
+                -ms-text-overflow: ellipsis;
                 text-overflow: ellipsis;
+                overflow: hidden;
+                height: 100%;
                 &.icon {
                     svg-icon {
                         overflow: hidden;

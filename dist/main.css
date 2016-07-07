@@ -95,9 +95,13 @@ lesson-list {
     height: 45px;
     line-height: 45px; }
     lesson-list .lesson-list .lesson-item .col {
+      padding: 5px;
+      box-sizing: border-box;
       white-space: nowrap;
+      -ms-text-overflow: ellipsis;
+      text-overflow: ellipsis;
       overflow: hidden;
-      text-overflow: ellipsis; }
+      height: 100%; }
       lesson-list .lesson-list .lesson-item .col.icon svg-icon {
         overflow: hidden; }
         lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {
