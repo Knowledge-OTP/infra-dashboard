@@ -258,11 +258,13 @@
                 if (row.assign) {
                     html = '<div class="assigned">' + $scope.vm.assignedText + '</div>';
                 } else {
-                    html = '<input id="lesson-item-'+row.id+'" ' +
+                    html = '<div class="select-wrap">' +
+                        '<input id="lesson-item-'+row.id+'" ' +
                         '         type="checkbox" ' +
                         '         class="checkbox" ' +
                         '         ng-click="column.onLessonSelect(row)" /> ' +
-                        '<label for="lesson-item-'+row.id+'"></label>';
+                        '<label for="lesson-item-'+row.id+'"></label>' +
+                        '</div>';
                 }
                 return html;
             }

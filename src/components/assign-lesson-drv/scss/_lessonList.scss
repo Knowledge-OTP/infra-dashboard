@@ -104,18 +104,23 @@ lesson-list {
                 &.select {
                     .assigned {
                         text-transform: uppercase;
+                        text-align: center;
+                    }
+                    .select-wrap {
+                        margin: 4px auto 0;
+                        width: 27px;
+                        height: 27px;
                     }
                     /* Base for label styling */
                     [type="checkbox"]:not(:checked),
                     [type="checkbox"]:checked {
-                        //position: absolute;
-                        //left: -9999px;
-                        visibility: hidden;
+                        position: absolute;
+                        left: -9999px;
+                        //visibility: hidden;
                     }
                     [type="checkbox"]:not(:checked) + label,
                     [type="checkbox"]:checked + label {
                         position: relative;
-                        padding-left: 25px;
                         cursor: pointer;
                     }
 
@@ -124,8 +129,8 @@ lesson-list {
                     [type="checkbox"]:checked + label:before {
                         content: '';
                         position: absolute;
-                        left: 0;
-                        top: 2px;
+                        left: 50%;
+                        top: auto;
                         width: 25px;
                         height: 25px;
                         border: 1px solid $bcColor2;

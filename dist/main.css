@@ -146,21 +146,26 @@ lesson-list {
         /* accessibility */
         /* hover style just for information */ }
         lesson-list .lesson-list .lesson-item .col.select .assigned {
-          text-transform: uppercase; }
+          text-transform: uppercase;
+          text-align: center; }
+        lesson-list .lesson-list .lesson-item .col.select .select-wrap {
+          margin: 4px auto 0;
+          width: 27px;
+          height: 27px; }
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked),
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked {
-          visibility: hidden; }
+          position: absolute;
+          left: -9999px; }
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label,
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label {
           position: relative;
-          padding-left: 25px;
           cursor: pointer; }
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:before,
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
           content: '';
           position: absolute;
-          left: 0;
-          top: 2px;
+          left: 50%;
+          top: auto;
           width: 25px;
           height: 25px;
           border: 1px solid #0a9bad;
@@ -359,4 +364,4 @@ md-dialog.assign-lesson-modal {
         md-dialog.assign-lesson-modal md-dialog-content .btn-wrap .assign-btn:hover {
           background-color: #76b63e; }
         md-dialog.assign-lesson-modal md-dialog-content .btn-wrap .assign-btn.drop-shadow {
-          box-shadow: 0px 3px 0px 0px #72ab40; }
+          box-shadow: 0 3px 0 0 #72ab40; }
