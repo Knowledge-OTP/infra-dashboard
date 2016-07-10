@@ -80,29 +80,46 @@ lesson-list {
     padding: 0 15px; }
     lesson-list .lesson-list header.list-header .flex-item {
       line-height: 40px; }
+  lesson-list .lesson-list .rows-wrapper,
+  lesson-list .lesson-list .no-rows-for-filter {
+    height: 360px;
+    box-sizing: border-box; }
   lesson-list .lesson-list .no-rows-for-filter {
     font-family: Quicksand, sans-serif;
     font-size: 14px;
     color: #4f4d4d;
     text-align: center;
-    padding: 60px 0; }
+    padding: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-item-align: center;
+        align-self: center; }
   lesson-list .lesson-list .rows-wrapper {
-    height: 360px;
     overflow-y: auto;
     overflow-x: hidden;
-    margin: 0 10px; }
+    margin: 0 10px;
+    padding: 0 7px; }
   lesson-list .lesson-list .lesson-item {
     height: 45px;
-    line-height: 45px; }
+    line-height: 45px;
+    border-bottom: 1px solid #f9f9f9; }
+    lesson-list .lesson-list .lesson-item:hover {
+      background-color: #f9f9f9;
+      cursor: pointer; }
     lesson-list .lesson-list .lesson-item .col {
       overflow: hidden; }
       lesson-list .lesson-list .lesson-item .col .cell-content {
+        height: 100%;
+        line-height: 35px;
         padding: 5px;
         box-sizing: border-box;
         white-space: nowrap;
         text-overflow: ellipsis;
-        overflow: hidden;
-        height: 100%; }
+        overflow: hidden; }
       lesson-list .lesson-list .lesson-item .col.icon svg-icon {
         overflow: hidden; }
         lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {

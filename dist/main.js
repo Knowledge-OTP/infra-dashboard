@@ -113,7 +113,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "        </div>\n" +
     "    </header>\n" +
     "    <div class=\"no-rows-for-filter\" ng-if=\"d.processedData.length === 0\">\n" +
-    "        {{options.translatedStrings.NO_LESSONS_FOR_FILTER}}\n" +
+    "        <span>{{options.translatedStrings.NO_LESSONS_FOR_FILTER}}</span>\n" +
     "    </div>\n" +
     "    <div class=\"rows-wrapper znk-scrollbar\" ng-if=\"d.processedData.length\">\n" +
     "        <div ng-repeat=\"row in d.processedData as results track by row.id\"\n" +

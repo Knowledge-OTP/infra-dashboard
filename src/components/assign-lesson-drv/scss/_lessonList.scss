@@ -36,33 +36,46 @@ lesson-list {
                 line-height: $headerHeight;
             }
         }
+        .rows-wrapper,
+        .no-rows-for-filter {
+            height: $rowHeight * 8;
+            box-sizing: border-box;
+        }
         .no-rows-for-filter {
             font-family: Quicksand, sans-serif;
             font-size: 14px;
             color: $fcColor6;
             text-align: center;
-            padding: 60px 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-self: center;
         }
         .rows-wrapper {
-            //height: calc(100% - 100px);
-            //max-height: $rowHeight * 8;
-            height: $rowHeight * 8;
             overflow-y: auto;
             overflow-x: hidden;
             margin:0 10px;
+            padding: 0 7px;
         }
         .lesson-item {
             height: $rowHeight;
             line-height: $rowHeight;
+            border-bottom: 1px solid #f9f9f9;
+            &:hover {
+                background-color: #f9f9f9;
+                cursor: pointer;
+            }
             .col {
                 overflow: hidden;
                 .cell-content {
+                    height: 100%;
+                    line-height: $rowHeight - 10px;
                     padding: 5px;
                     box-sizing: border-box;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
-                    height: 100%;
                 }
                 &.icon {
                     svg-icon {
