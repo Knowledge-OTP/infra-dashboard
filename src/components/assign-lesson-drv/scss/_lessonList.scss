@@ -34,7 +34,10 @@ lesson-list {
             margin-bottom: 5px;
             padding: 0 15px;
             .flex-item {
-                line-height: $headerHeight;
+                height: $headerHeight;
+                line-height: $headerHeight - 10px;
+                padding:5px;
+                box-sizing: border-box;
             }
         }
         .rows-wrapper,

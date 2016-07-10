@@ -79,7 +79,10 @@ lesson-list {
     margin-bottom: 5px;
     padding: 0 15px; }
     lesson-list .lesson-list header.list-header .flex-item {
-      line-height: 40px; }
+      height: 40px;
+      line-height: 30px;
+      padding: 5px;
+      box-sizing: border-box; }
   lesson-list .lesson-list .rows-wrapper,
   lesson-list .lesson-list .no-rows-for-filter {
     height: 360px;
