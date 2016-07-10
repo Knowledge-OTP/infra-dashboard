@@ -15,10 +15,10 @@
             <div ng-repeat="column in options.columns"
                  ng-class="::column.cssClassName"
                  class="col flex-item">
-                <div ng-switch="column.compile" class="col-inner">
-                    <div ng-switch-when="true" compile-html="column.colTemplateFn(row, column)"></div>
-                    <div ng-switch-default>{{column.colTemplateFn(row, column)}}</div>
-                </div>
+                <ng-switch on="column.compile">
+                    <div ng-switch-when="true" class="cell-content" compile-html="column.colTemplateFn(row, column)"></div>
+                    <div ng-switch-default class="cell-content">{{column.colTemplateFn(row, column)}}</div>
+                </ng-switch>
             </div>
         </div>
     </div>

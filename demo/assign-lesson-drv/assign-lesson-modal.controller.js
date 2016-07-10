@@ -3,7 +3,7 @@
     'use strict';
     angular
         .module('demoApp')
-        .controller('assignLessonModalCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http, $timeout, ZnkModuleService, UserAssignModuleService/*, TestScoreCategoryEnum*/) {
+        .controller('assignLessonModalCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http, $timeout/*, TestScoreCategoryEnum*/) {
             'ngInject';
 
             $scope.vm = {};
@@ -243,6 +243,7 @@
                     html = '';
                 }
                 return html;
+                return '';
             }
 
             function defaultTemplate(row, col) {

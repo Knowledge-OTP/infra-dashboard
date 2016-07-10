@@ -94,86 +94,252 @@ lesson-list {
   lesson-list .lesson-list .lesson-item {
     height: 45px;
     line-height: 45px; }
-    lesson-list .lesson-list .lesson-item .col .col-inner {
-      padding: 5px;
-      box-sizing: border-box;
-      white-space: nowrap;
-      -ms-text-overflow: ellipsis;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      height: 100%; }
-    lesson-list .lesson-list .lesson-item .col.icon svg-icon {
+    lesson-list .lesson-list .lesson-item .col {
       overflow: hidden; }
-      lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {
-        height: 35px;
-        width: 35px;
-        margin: 5px auto 0;
-        border-radius: 50%;
-        position: relative; }
-      lesson-list .lesson-list .lesson-item .col.icon svg-icon svg {
-        width: 65%;
-        height: 65%; }
-    lesson-list .lesson-list .lesson-item .col.title {
+      lesson-list .lesson-list .lesson-item .col .cell-content {
+        padding: 5px;
+        box-sizing: border-box;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        height: 100%; }
+      lesson-list .lesson-list .lesson-item .col.icon svg-icon {
+        overflow: hidden; }
+        lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {
+          height: 35px;
+          width: 35px;
+          margin: 5px auto 0;
+          border-radius: 50%;
+          position: relative; }
+        lesson-list .lesson-list .lesson-item .col.icon svg-icon svg {
+          width: 65%;
+          height: 65%; }
+      lesson-list .lesson-list .lesson-item .col.title {
+        color: #4f4d4d;
+        font-size: 16px;
+        font-weight: 400; }
+      lesson-list .lesson-list .lesson-item .col.subject {
+        text-transform: capitalize; }
+      lesson-list .lesson-list .lesson-item .col.select {
+        /* Base for label styling */
+        /* checkbox aspect */
+        /* checked mark aspect */
+        /* checked mark aspect changes */
+        /* disabled checkbox */
+        /* accessibility */
+        /* hover style just for information */ }
+        lesson-list .lesson-list .lesson-item .col.select .assigned {
+          text-transform: uppercase; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked),
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked {
+          visibility: hidden; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label,
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label {
+          position: relative;
+          padding-left: 25px;
+          cursor: pointer; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:before,
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 2px;
+          width: 25px;
+          height: 25px;
+          border: 1px solid #0a9bad;
+          background: #fff;
+          border-radius: 50%;
+          box-shadow: none; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after,
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
+          content: '✔';
+          position: absolute;
+          top: 5px;
+          left: 4px;
+          font-size: 22px;
+          line-height: 0.8;
+          color: #fff;
+          transition: all .1s; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after {
+          opacity: 0; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
+          background-color: #0a9bad; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
+          opacity: 1; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:not(:checked) + label:before,
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:before {
+          box-shadow: none;
+          border-color: #bbb;
+          background-color: #ddd; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:after {
+          color: #999; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled + label {
+          color: #aaa; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked:focus + label:before,
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked):focus + label:before {
+          border: 1px solid #0a9bad; }
+
+.flex-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: start;
+      justify-content: flex-start; }
+
+.search-and-filter .search.flex-item,
+.search-and-filter .filters.flex-item {
+  -ms-flex-positive: 1;
+      flex-grow: 1; }
+
+.search-and-filter .search {
+  max-width: 25%;
+  padding-top: 0;
+  padding-left: 25px;
+  padding-right: 18px;
+  padding-bottom: 0;
+  font-size: 14px;
+  color: #9a9797;
+  font-weight: 400;
+  outline: 0;
+  height: 25px;
+  border: 1px solid #CACACA;
+  border-radius: 21px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  position: relative; }
+  .search-and-filter .search input {
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none; }
+  .search-and-filter .search .clear-search {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+    color: #4f4d4d; }
+  .search-and-filter .search .search-icon {
+    width: 14px;
+    position: absolute;
+    top: 16px;
+    left: 7px; }
+
+.search-and-filter .filters {
+  height: 46px;
+  overflow: hidden; }
+  .search-and-filter .filters .filter-by-subject,
+  .search-and-filter .filters .filter-by-status {
+    float: right; }
+    .search-and-filter .filters .filter-by-subject .clear-filter,
+    .search-and-filter .filters .filter-by-status .clear-filter {
+      margin: 0;
+      display: inline-block;
+      cursor: pointer; }
+    .search-and-filter .filters .filter-by-subject md-menu,
+    .search-and-filter .filters .filter-by-status md-menu {
+      padding: 0;
+      display: inline-block; }
+      .search-and-filter .filters .filter-by-subject md-menu .md-button,
+      .search-and-filter .filters .filter-by-status md-menu .md-button {
+        width: auto;
+        background: transparent; }
+        .search-and-filter .filters .filter-by-subject md-menu .md-button span,
+        .search-and-filter .filters .filter-by-status md-menu .md-button span {
+          width: auto;
+          font-size: 14px;
+          color: #757a83;
+          font-family: Lato;
+          font-weight: 200;
+          text-transform: capitalize; }
+        .search-and-filter .filters .filter-by-subject md-menu .md-button md-icon,
+        .search-and-filter .filters .filter-by-status md-menu .md-button md-icon {
+          color: #757a83;
+          font-size: 20px;
+          line-height: 24px; }
+
+md-dialog.assign-lesson-modal {
+  width: 800px;
+  overflow: visible;
+  background: 0 0;
+  box-shadow: none;
+  max-height: 90%; }
+  md-dialog.assign-lesson-modal .close-popup-wrap {
+    position: absolute;
+    top: -35px;
+    right: -35px;
+    height: 14px;
+    width: 14px;
+    padding: 0;
+    margin: 10px;
+    cursor: pointer; }
+  md-dialog.assign-lesson-modal .popup-header {
+    position: relative;
+    height: 40px;
+    background-color: #0a9bad;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px; }
+    md-dialog.assign-lesson-modal .popup-header .raccoon {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      margin: 0 auto;
+      position: relative;
+      bottom: 17.5px;
+      background-color: #0a9bad; }
+      md-dialog.assign-lesson-modal .popup-header .raccoon .raccoon-logo-icon {
+        width: 45px;
+        height: 45px;
+        margin: 0 auto;
+        padding-top: 20px; }
+        md-dialog.assign-lesson-modal .popup-header .raccoon .raccoon-logo-icon * {
+          fill: #87ca4d; }
+  md-dialog.assign-lesson-modal md-dialog-content {
+    padding: 20px;
+    overflow-y: hidden;
+    background-color: #fff;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px; }
+    md-dialog.assign-lesson-modal md-dialog-content h2 {
+      font-size: 25px;
       color: #4f4d4d;
+      font-family: Quicksand;
+      font-weight: 700;
+      text-align: center;
+      margin: 15px 0 10px; }
+      md-dialog.assign-lesson-modal md-dialog-content h2 .pro {
+        font-size: 20px;
+        padding: 2px 7px; }
+    md-dialog.assign-lesson-modal md-dialog-content .current-student {
+      font-size: 12px;
+      color: #363636;
+      font-family: Lato;
+      font-weight: 200; }
+    md-dialog.assign-lesson-modal md-dialog-content .divider {
+      padding-top: 15px;
+      margin-bottom: 5px;
+      border-bottom: 1px solid #CFCFCF; }
+    md-dialog.assign-lesson-modal md-dialog-content p {
       font-size: 16px;
-      font-weight: 400; }
-    lesson-list .lesson-list .lesson-item .col.subject {
-      text-transform: capitalize; }
-    lesson-list .lesson-list .lesson-item .col.select {
-      /* Base for label styling */
-      /* checkbox aspect */
-      /* checked mark aspect */
-      /* checked mark aspect changes */
-      /* disabled checkbox */
-      /* accessibility */
-      /* hover style just for information */ }
-      lesson-list .lesson-list .lesson-item .col.select .assigned {
-        text-transform: uppercase; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked),
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked {
-        visibility: hidden; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label,
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label {
-        position: relative;
-        padding-left: 25px;
-        cursor: pointer; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:before,
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 2px;
-        width: 25px;
-        height: 25px;
-        border: 1px solid #0a9bad;
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: none; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after,
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
-        content: '✔';
-        position: absolute;
-        top: 5px;
-        left: 4px;
-        font-size: 22px;
-        line-height: 0.8;
+      color: #87ca4d;
+      font-family: Lato;
+      font-weight: 200;
+      text-align: center; }
+    md-dialog.assign-lesson-modal md-dialog-content .btn-wrap {
+      text-align: center; }
+      md-dialog.assign-lesson-modal md-dialog-content .btn-wrap .assign-btn {
+        width: 300px;
+        height: 42px;
+        font-size: 16px;
         color: #fff;
-        transition: all .1s; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label:after {
-        opacity: 0; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:before {
-        background-color: #0a9bad; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label:after {
-        opacity: 1; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:not(:checked) + label:before,
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:before {
-        box-shadow: none;
-        border-color: #bbb;
-        background-color: #ddd; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled:checked + label:after {
-        color: #999; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:disabled + label {
-        color: #aaa; }
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked:focus + label:before,
-      lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked):focus + label:before {
-        border: 1px solid #0a9bad; }
+        font-family: Lato;
+        font-weight: 200;
+        text-transform: none;
+        background-color: #80c248;
+        border-radius: 21px; }
+        md-dialog.assign-lesson-modal md-dialog-content .btn-wrap .assign-btn:active {
+          background-color: #67a531; }
+        md-dialog.assign-lesson-modal md-dialog-content .btn-wrap .assign-btn:hover {
+          background-color: #76b63e; }
+        md-dialog.assign-lesson-modal md-dialog-content .btn-wrap .assign-btn.drop-shadow {
+          box-shadow: 0px 3px 0px 0px #72ab40; }

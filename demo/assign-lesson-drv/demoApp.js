@@ -26,7 +26,7 @@
             }
         })
         .config(function ($translateProvider, $translatePartialLoaderProvider) {
-            $translatePartialLoaderProvider.addPart('assign-lesson');
+            $translatePartialLoaderProvider.addPart('assign-lesson-drv');
             $translateProvider.useLoader('$translatePartialLoader', {
                 urlTemplate: '/{part}/locale/{lang}.json'
             });

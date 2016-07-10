@@ -55,11 +55,11 @@ lesson-list {
             height: $rowHeight;
             line-height: $rowHeight;
             .col {
-                .col-inner {
+                overflow: hidden;
+                .cell-content {
                     padding: 5px;
                     box-sizing: border-box;
                     white-space: nowrap;
-                    -ms-text-overflow: ellipsis;
                     text-overflow: ellipsis;
                     overflow: hidden;
                     height: 100%;
