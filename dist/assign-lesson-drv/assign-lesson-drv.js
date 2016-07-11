@@ -113,7 +113,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "        </div>\n" +
     "    </header>\n" +
     "    <div class=\"no-rows-for-filter\" ng-if=\"d.processedData.length === 0\">\n" +
-    "        {{options.translatedStrings.NO_LESSONS_FOR_FILTER}}\n" +
+    "        <span>{{options.translatedStrings.NO_LESSONS_FOR_FILTER}}</span>\n" +
     "    </div>\n" +
     "    <div class=\"rows-wrapper znk-scrollbar\" ng-if=\"d.processedData.length\">\n" +
     "        <div ng-repeat=\"row in d.processedData as results track by row.id\"\n" +
@@ -121,10 +121,10 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "            <div ng-repeat=\"column in options.columns\"\n" +
     "                 ng-class=\"::column.cssClassName\"\n" +
     "                 class=\"col flex-item\">\n" +
-    "                <div ng-switch=\"column.compile\">\n" +
-    "                    <div ng-switch-when=\"true\" compile-html=\"column.colTemplateFn(row, column)\"></div>\n" +
-    "                    <div ng-switch-default>{{column.colTemplateFn(row, column)}}</div>\n" +
-    "                </div>\n" +
+    "                <ng-switch on=\"column.compile\">\n" +
+    "                    <div ng-switch-when=\"true\" class=\"cell-content\" compile-html=\"column.colTemplateFn(row, column)\"></div>\n" +
+    "                    <div ng-switch-default class=\"cell-content\">{{column.colTemplateFn(row, column)}}</div>\n" +
+    "                </ng-switch>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +

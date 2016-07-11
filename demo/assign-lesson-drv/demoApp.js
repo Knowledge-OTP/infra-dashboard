@@ -6,7 +6,7 @@
             'pascalprecht.translate',
             'ngMaterial',
             'znk.infra.enum',
-            'znk.infra.svgIcon',
+            'znk.infra.svgIcon'
             // 'TestScoreCategoryEnum.module',
         ])
         //.controller('demoAppCtrl', function ($scope, AssignLessonSrv) {
@@ -26,7 +26,7 @@
             }
         })
         .config(function ($translateProvider, $translatePartialLoaderProvider) {
-            $translatePartialLoaderProvider.addPart('assign-lesson');
+            $translatePartialLoaderProvider.addPart('assign-lesson-drv');
             $translateProvider.useLoader('$translatePartialLoader', {
                 urlTemplate: '/{part}/locale/{lang}.json'
             });

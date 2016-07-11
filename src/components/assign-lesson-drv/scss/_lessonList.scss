@@ -4,6 +4,7 @@ lesson-list {
     font-family: Lato, sans-serif;
     font-size: 12px;
     font-weight: 300;
+
     .lesson-list {
         .flex-container {
             display: flex;
@@ -33,29 +34,71 @@ lesson-list {
             margin-bottom: 5px;
             padding: 0 15px;
             .flex-item {
-                line-height: $headerHeight;
+                height: $headerHeight;
+                line-height: $headerHeight - 10px;
+                padding:5px;
+                box-sizing: border-box;
             }
+        }
+        .rows-wrapper,
+        .no-rows-for-filter {
+            height: $rowHeight * 8;
+            box-sizing: border-box;
         }
         .no-rows-for-filter {
             font-family: Quicksand, sans-serif;
             font-size: 14px;
             color: $fcColor6;
             text-align: center;
-            padding: 60px 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-self: center;
         }
         .rows-wrapper {
-            //height: calc(100% - 100px);
-            //max-height: $rowHeight * 8;
-            height: $rowHeight * 8;
             overflow-y: auto;
             overflow-x: hidden;
             margin:0 10px;
+            padding: 0 7px;
+
+            /*
+            *  Custom Scrollbar design
+            */
+            &.znk-scrollbar {
+                ::-webkit-scrollbar,
+                &::-webkit-scrollbar {
+                    height: 20px;
+                    width: 5px;
+                    background-color: #FBFAFA;
+                    border-radius: 100px;
+                }
+                ::-webkit-scrollbar-thumb,
+                &::-webkit-scrollbar-thumb {
+                    background-color: $scrollBarColor;
+                    -webkit-border-radius: 1ex;
+                }
+            }
         }
         .lesson-item {
             height: $rowHeight;
             line-height: $rowHeight;
+            border-bottom: 1px solid #f9f9f9;
+            &:hover {
+                background-color: #f9f9f9;
+                cursor: pointer;
+            }
             .col {
-                white-space: nowrap;
+                overflow: hidden;
+                .cell-content {
+                    height: 100%;
+                    line-height: $rowHeight - 10px;
+                    padding: 5px;
+                    box-sizing: border-box;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
                 &.icon {
                     svg-icon {
                         overflow: hidden;
@@ -83,18 +126,22 @@ lesson-list {
                 &.select {
                     .assigned {
                         text-transform: uppercase;
+                        text-align: center;
+                    }
+                    .select-wrap {
+                        margin: 4px auto 0;
+                        width: 27px;
+                        height: 27px;
                     }
                     /* Base for label styling */
                     [type="checkbox"]:not(:checked),
                     [type="checkbox"]:checked {
-                        //position: absolute;
-                        //left: -9999px;
-                        visibility: hidden;
+                        position: absolute;
+                        left: -9999px;
                     }
                     [type="checkbox"]:not(:checked) + label,
                     [type="checkbox"]:checked + label {
                         position: relative;
-                        padding-left: 25px;
                         cursor: pointer;
                     }
 
@@ -103,8 +150,8 @@ lesson-list {
                     [type="checkbox"]:checked + label:before {
                         content: '';
                         position: absolute;
-                        left: 0;
-                        top: 2px;
+                        left: 50%;
+                        top: auto;
                         width: 25px;
                         height: 25px;
                         border: 1px solid $bcColor2;
