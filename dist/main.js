@@ -135,7 +135,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
 (function (angular) {
     'use strict';
 
-    angular.module('znk.infra-dashboard.groups', []);
+    angular.module('znk.infra-dashboard.groups', ['znk.infra.storage']);
 })(angular);
 
 (function (angular) {
@@ -152,14 +152,14 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
                 AuthSrvName = authServiceName;
             };
 
-            this.$get = ['$injector', 'ENV', '$q', '$log', function($injector, ENV, $q, $log) {
+            this.$get = ['$injector', 'ENV', '$q', '$log', 'StorageSrv', function($injector, ENV, $q, $log, StorageSrv) {
 
                 var GroupsService = {
                     defaultGroupName: 'assorted'
                 };
                 var authSrv = $injector.get(AuthSrvName);
                 var storageSrv = $injector.get(StorageSrvName);
-                var GROUPS_PATH = storageSrv.variables.appUserSpacePath + '/groups';
+                var GROUPS_PATH = StorageSrv.variables.appUserSpacePath + '/groups';
                 var groupChangeCbArr = [];
                 var groupChildAddedCbArr = [];
 
