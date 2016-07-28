@@ -125,6 +125,8 @@ lesson-list {
     lesson-list .lesson-list .lesson-item:hover {
       background-color: #f9f9f9;
       cursor: pointer; }
+    lesson-list .lesson-list .lesson-item:last-child {
+      border-bottom: 0; }
     lesson-list .lesson-list .lesson-item .col {
       overflow: hidden; }
       lesson-list .lesson-list .lesson-item .col .cell-content {
