@@ -123,7 +123,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "                 class=\"col flex-item\">\n" +
     "                <ng-switch on=\"column.compile\">\n" +
     "                    <div ng-switch-when=\"true\" class=\"cell-content\" compile-html=\"column.colTemplateFn(row, column)\"></div>\n" +
-    "                    <div ng-switch-default class=\"cell-content\">{{column.colTemplateFn(row, column)}}</div>\n" +
+    "                    <div ng-switch-default class=\"cell-content\" title=\"{{column.colTemplateFn(row, column)}}\">{{column.colTemplateFn(row, column)}}</div>\n" +
     "                </ng-switch>\n" +
     "            </div>\n" +
     "        </div>\n" +
