@@ -150,7 +150,7 @@ lesson-list {
           height: 65%; }
       lesson-list .lesson-list .lesson-item .col.title {
         color: #4f4d4d;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400; }
       lesson-list .lesson-list .lesson-item .col.subject {
         text-transform: capitalize; }
