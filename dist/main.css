@@ -48,9 +48,10 @@
   text-align: right; }
 
 lesson-list {
+  display: block;
   font-family: Lato, sans-serif;
   font-size: 12px;
-  font-weight: 300; }
+  font-weight: 400; }
   lesson-list .lesson-list .flex-container {
     display: -ms-flexbox;
     display: flex;
@@ -85,7 +86,7 @@ lesson-list {
       box-sizing: border-box; }
   lesson-list .lesson-list .rows-wrapper,
   lesson-list .lesson-list .no-rows-for-filter {
-    height: 360px;
+    max-height: 260px;
     box-sizing: border-box; }
   lesson-list .lesson-list .no-rows-for-filter {
     font-family: Quicksand, sans-serif;
@@ -350,7 +351,7 @@ md-dialog.assign-lesson-modal {
       font-size: 12px;
       color: #363636;
       font-family: Lato;
-      font-weight: 200; }
+      font-weight: 400; }
     md-dialog.assign-lesson-modal md-dialog-content .divider {
       padding-top: 15px;
       margin-bottom: 5px;
@@ -379,3 +380,7 @@ md-dialog.assign-lesson-modal {
           background-color: #76b63e; }
         md-dialog.assign-lesson-modal md-dialog-content .btn-wrap .assign-btn.drop-shadow {
           box-shadow: 0 3px 0 0 #72ab40; }
+    md-dialog.assign-lesson-modal md-dialog-content .note {
+      font-size: 12px;
+      text-align: center;
+      margin: 10px 0; }
