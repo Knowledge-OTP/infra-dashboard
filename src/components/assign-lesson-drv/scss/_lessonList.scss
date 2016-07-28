@@ -1,9 +1,10 @@
 $headerHeight: 40px;
 $rowHeight: 45px;
 lesson-list {
+    display: block;
     font-family: Lato, sans-serif;
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
 
     .lesson-list {
         .flex-container {
@@ -42,7 +43,8 @@ lesson-list {
         }
         .rows-wrapper,
         .no-rows-for-filter {
-            height: $rowHeight * 8;
+            //height: $rowHeight * 8;
+            max-height: 260px;
             box-sizing: border-box;
         }
         .no-rows-for-filter {

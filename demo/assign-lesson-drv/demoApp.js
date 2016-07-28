@@ -5,7 +5,7 @@
             'znk.infra-dashboard.assign-lesson-drv',
             'pascalprecht.translate',
             'ngMaterial',
-            'znk.infra.enum',
+            //'znk.infra.enum',
             'znk.infra.svgIcon'
             // 'TestScoreCategoryEnum.module',
         ])
