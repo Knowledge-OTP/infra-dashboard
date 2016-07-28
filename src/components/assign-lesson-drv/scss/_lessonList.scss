@@ -1,9 +1,10 @@
 $headerHeight: 40px;
 $rowHeight: 45px;
 lesson-list {
+    display: block;
     font-family: Lato, sans-serif;
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
 
     .lesson-list {
         .flex-container {
@@ -42,7 +43,8 @@ lesson-list {
         }
         .rows-wrapper,
         .no-rows-for-filter {
-            height: $rowHeight * 8;
+            //height: $rowHeight * 8;
+            max-height: 260px;
             box-sizing: border-box;
         }
         .no-rows-for-filter {
@@ -88,6 +90,9 @@ lesson-list {
                 background-color: #f9f9f9;
                 cursor: pointer;
             }
+            &:last-child {
+                border-bottom: 0;
+            }
             .col {
                 overflow: hidden;
                 .cell-content {
@@ -117,7 +122,7 @@ lesson-list {
                 }
                 &.title {
                     color: $fcColor6;
-                    font-size: 16px;
+                    font-size: 14px;
                     font-weight: 400;
                 }
                 &.subject {
@@ -162,10 +167,11 @@ lesson-list {
                     /* checked mark aspect */
                     [type="checkbox"]:not(:checked) + label:after,
                     [type="checkbox"]:checked + label:after {
-                        content: '✔';
+                        @extend .material-icons;
+                        content: '\E876';
                         position: absolute;
-                        top: 5px;
-                        left: 4px;
+                        top: 2px;
+                        left: 1px;
                         font-size: 22px;
                         line-height: 0.8;
                         color: $fcColor2;
@@ -211,4 +217,19 @@ lesson-list {
         }
 
     }
+}
+.material-icons {
+    direction: ltr;
+    display: inline-block;
+    font-family: 'Material Icons';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
 }

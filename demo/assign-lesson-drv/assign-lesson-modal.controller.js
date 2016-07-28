@@ -3,7 +3,7 @@
     'use strict';
     angular
         .module('demoApp')
-        .controller('assignLessonModalCtrl', function ($scope, $q, locals, SubjectEnum, $translate, $translatePartialLoader, $log, $http, $timeout/*, TestScoreCategoryEnum*/) {
+        .controller('assignLessonModalCtrl', function ($scope, $q, locals, $translate, $translatePartialLoader, $log, $http, $timeout/*, SubjectEnum, TestScoreCategoryEnum*/) {
             'ngInject';
 
             $scope.vm = {};
@@ -103,32 +103,52 @@
                     },
                     subjectMapping: [
                         {
-                            id: SubjectEnum.ENGLISH.enum,
-                            name: SubjectEnum.ENGLISH.val,
+                            //id: SubjectEnum.ENGLISH.enum,
+                            id: 5,
+                            //name: SubjectEnum.ENGLISH.val,
+                            name: 'english',
                             iconName: 'english-icon'
                         },
                         {
-                            id: SubjectEnum.MATH.enum,
-                            name: SubjectEnum.MATH.val,
+                            //id: SubjectEnum.MATH.enum,
+                            id: 0,
+                            //name: SubjectEnum.MATH.val,
+                            name: 'math',
                             iconName: 'math-icon'
                         },
                         {
-                            id: SubjectEnum.READING.enum,
-                            name: SubjectEnum.READING.val,
+                            //id: SubjectEnum.READING.enum,
+                            id: 1,
+                            //name: SubjectEnum.READING.val,
+                            name: 'reading',
                             iconName: 'reading-icon'
                         },
                         {
-                            id: SubjectEnum.SCIENCE.enum,
-                            name: SubjectEnum.SCIENCE.val,
+                            //id: SubjectEnum.SCIENCE.enum,
+                            id: 6,
+                            //name: SubjectEnum.SCIENCE.val,
+                            name: 'science',
                             iconName: 'science-icon'
                         },
                         {
-                            id: SubjectEnum.WRITING.enum,
-                            name: SubjectEnum.WRITING.val,
+                            //id: SubjectEnum.WRITING.enum,
+                            id: 2,
+                            //name: SubjectEnum.WRITING.val,
+                            name: 'writing',
                             iconName: 'writing-icon'
                         }
                     ]
                 };
+
+                //     MATH: 0,
+                //     READING: 1,
+                //     WRITING: 2,
+                //     LISTENING: 3,
+                //     SPEAKING: 4,
+                //     ENGLISH: 5,
+                //     SCIENCE: 6,
+                //     VERBAL: 7,
+                //     ESSAY: 8
 
                 //$scope.SAT_Options = {
                 //    columns: [
@@ -195,23 +215,28 @@
 
             $scope.vm.ACT_Subjects = [
                 {
-                    id: SubjectEnum.ENGLISH.enum,
+                    //id: SubjectEnum.ENGLISH.enum,
+                    id: 5,
                     name: 'English'
                 },
                 {
-                    id: SubjectEnum.MATH.enum,
+                    //id: SubjectEnum.MATH.enum,
+                    id: 0,
                     name: 'Math'
                 },
                 {
-                    id: SubjectEnum.READING.enum,
+                    //id: SubjectEnum.READING.enum,
+                    id: 1,
                     name: 'Reading'
                 },
                 {
-                    id: SubjectEnum.SCIENCE.enum,
+                    //id: SubjectEnum.SCIENCE.enum,
+                    id: 6,
                     name: 'Science'
                 },
                 {
-                    id: SubjectEnum.WRITING.enum,
+                    //id: SubjectEnum.WRITING.enum,
+                    id: 2,
                     name: 'Writing'
                 }
             ];

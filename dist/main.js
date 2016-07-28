@@ -123,7 +123,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "                 class=\"col flex-item\">\n" +
     "                <ng-switch on=\"column.compile\">\n" +
     "                    <div ng-switch-when=\"true\" class=\"cell-content\" compile-html=\"column.colTemplateFn(row, column)\"></div>\n" +
-    "                    <div ng-switch-default class=\"cell-content\">{{column.colTemplateFn(row, column)}}</div>\n" +
+    "                    <div ng-switch-default class=\"cell-content\" title=\"{{column.colTemplateFn(row, column)}}\">{{column.colTemplateFn(row, column)}}</div>\n" +
     "                </ng-switch>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -456,18 +456,38 @@ angular.module('znk.infra-dashboard.modal').run(['$templateCache', function($tem
 (function (angular) {
     'use strict';
 
-    angular.module('znk.infra-dashboard.userContext').service('StudentContextSrv', [
-        function () {
+    angular.module('znk.infra-dashboard.userContext').service('StudentContextSrv', ['$window', '$log',
+
+        function ($window, $log) {
             var StudentContextSrv = {};
 
+            var _storageStudentUidKey = 'currentStudentUid';
             var _currentStudentUid = '';
 
             StudentContextSrv.getCurrUid = function () {
+                if (_currentStudentUid.length === 0) {
+                    if ($window.sessionStorage) {
+                        var storedCurrentUid = $window.sessionStorage.getItem(_storageStudentUidKey);
+                        if (storedCurrentUid) {
+                            _currentStudentUid = storedCurrentUid;
+
+                        } else {
+                            $log.error('StudentContextSrv: no student uid');
+                        }
+                    } else {
+                        $log.error('StudentContextSrv: no student uid');
+                    }
+                }
                 return _currentStudentUid;
+
             };
 
             StudentContextSrv.setCurrentUid = function (uid) {
                 _currentStudentUid = uid;
+
+                if ($window.sessionStorage) {
+                    $window.sessionStorage.setItem(_storageStudentUidKey, uid);
+                }
             };
 
             return StudentContextSrv;

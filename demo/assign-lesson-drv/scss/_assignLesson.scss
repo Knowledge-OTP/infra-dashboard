@@ -170,7 +170,7 @@ md-dialog.assign-lesson-modal {
         }
 
         .current-student {
-            @include text-style(12px, $fcColor1, Lato, $lightFontWeight);
+            @include text-style(12px, $fcColor1, Lato, $regularFontWeight);
         }
 
         .divider {
@@ -203,6 +203,12 @@ md-dialog.assign-lesson-modal {
                     box-shadow: 0 3px 0 0 $bsColor1;
                 }
             }
+        }
+
+        .note {
+            font-size: 12px;
+            text-align: center;
+            margin: 10px 0;
         }
     }
 }
