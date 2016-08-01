@@ -7,7 +7,7 @@
   "dependencies": {
     "angular": "1.5.7",
     "firebase": "2.4.2",
-    "infra": "https://github.com/Knowledge-OTP/infra.git#v5.0.13",
+    "infra": "https://github.com/Knowledge-OTP/infra.git#v5.0.14",
     "angular-translate": "2.11.0",
     "angular-translate-loader-partial": "2.11.0",
     "angular-material": "1.0.9",
