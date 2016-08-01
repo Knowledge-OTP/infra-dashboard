@@ -31,12 +31,6 @@
                     scope.api = {};
 
                     var getGridApiDefer = $q.defer();
-                    scope.actions.refresh = function () {
-                        getGridApiDefer.resolve();
-                        return getGridApiDefer.promise.then(function () {
-                            filterData();
-                        });
-                    };
 
                     function filterData(){
                         scope.d.processedData = [];
@@ -54,6 +48,13 @@
                             scope.d.processedData.push(item);
                         });
                     }
+
+                    scope.actions.refresh = function () {
+                        getGridApiDefer.resolve();
+                        return getGridApiDefer.promise.then(function () {
+                            filterData();
+                        });
+                    };
 
                     scope.$watch('dataGetter()', function (data) {
                         if (angular.isUndefined(data) || !angular.isArray(data)) {

@@ -37,7 +37,7 @@
                     };
                     return _groupsDefault;
                 }
-                
+
                 function getGroupsRef() {
                     var authData = authSrv.getAuth();
                     var fullPath = ENV.fbDataEndPoint + ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
@@ -98,8 +98,8 @@
                     var studentObj = {};
                     return storageSrv.get(GROUPS_PATH, groupsDefault()).then(function(groups){
                         angular.forEach(groups, function (group) {
-                            if (!found && group.students[uid]){
-                                found=true;
+                            if (!found && group.students && group.students[uid]){
+                                found = true;
                                 studentObj = group.students[uid];
                             }
                         });
