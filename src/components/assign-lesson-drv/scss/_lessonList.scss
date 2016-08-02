@@ -141,8 +141,9 @@ lesson-list {
                     /* Base for label styling */
                     [type="checkbox"]:not(:checked),
                     [type="checkbox"]:checked {
-                        position: absolute;
-                        left: -9999px;
+                        //position: absolute;
+                        //left: -9999px;
+                        display: none; // the reason for this is to avoid the jump to the bottom of the list when checking the checkbox
                     }
                     [type="checkbox"]:not(:checked) + label,
                     [type="checkbox"]:checked + label {
