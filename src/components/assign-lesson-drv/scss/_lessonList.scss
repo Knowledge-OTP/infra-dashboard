@@ -61,8 +61,6 @@ lesson-list {
         .rows-wrapper {
             overflow-y: auto;
             overflow-x: hidden;
-            margin:0 10px;
-            padding: 0 7px;
 
             /*
             *  Custom Scrollbar design
@@ -108,8 +106,8 @@ lesson-list {
                     svg-icon {
                         overflow: hidden;
                         &.icon-wrapper {
-                            height: $rowHeight - 10px;
-                            width: $rowHeight - 10px;
+                            height: $rowHeight - 15px;
+                            width: $rowHeight - 15px;
                             margin: 5px auto 0;
                             border-radius: 50%;
                             position: relative;
@@ -127,6 +125,7 @@ lesson-list {
                 }
                 &.subject {
                     text-transform: capitalize;
+                    margin-left: 20px;
                 }
                 &.select {
                     .assigned {
