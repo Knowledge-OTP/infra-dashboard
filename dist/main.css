@@ -104,8 +104,6 @@ lesson-list {
   lesson-list .lesson-list .rows-wrapper {
     overflow-y: auto;
     overflow-x: hidden;
-    margin: 0 10px;
-    padding: 0 7px;
     /*
             *  Custom Scrollbar design
             */ }
@@ -139,8 +137,8 @@ lesson-list {
       lesson-list .lesson-list .lesson-item .col.icon svg-icon {
         overflow: hidden; }
         lesson-list .lesson-list .lesson-item .col.icon svg-icon.icon-wrapper {
-          height: 35px;
-          width: 35px;
+          height: 30px;
+          width: 30px;
           margin: 5px auto 0;
           border-radius: 50%;
           position: relative; }
@@ -152,7 +150,8 @@ lesson-list {
         font-size: 14px;
         font-weight: 400; }
       lesson-list .lesson-list .lesson-item .col.subject {
-        text-transform: capitalize; }
+        text-transform: capitalize;
+        margin-left: 20px; }
       lesson-list .lesson-list .lesson-item .col.select {
         /* Base for label styling */
         /* checkbox aspect */
