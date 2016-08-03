@@ -296,7 +296,7 @@
 
             function onLessonSelect (row) {
                 $scope.vm.selectedLessons[row.id] = !$scope.vm.selectedLessons[row.id];
-                // $log.debug('row ' + row.id + ' is checked');
+                $log.debug('row ' + row.id + ' is checked');
             }
 
 

@@ -117,7 +117,8 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "        <span>{{options.translatedStrings.NO_LESSONS_FOR_FILTER}}</span>\n" +
     "    </div>\n" +
     "    <div class=\"rows-wrapper znk-scrollbar\" ng-if=\"d.processedData.length\">\n" +
-    "        <div ng-repeat=\"row in d.processedData as results track by row.id\"\n" +
+    "        <label ng-repeat=\"row in d.processedData as results track by row.id\"\n" +
+    "               for=\"lesson-item-{{row.id}}\"\n" +
     "             class=\"lesson-item flex-container\">\n" +
     "            <div ng-repeat=\"column in options.columns\"\n" +
     "                 ng-class=\"::column.cssClassName\"\n" +
@@ -127,7 +128,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
     "                    <div ng-switch-default class=\"cell-content\" title=\"{{column.colTemplateFn(row, column)}}\">{{column.colTemplateFn(row, column)}}</div>\n" +
     "                </ng-switch>\n" +
     "            </div>\n" +
-    "        </div>\n" +
+    "        </label>\n" +
     "    </div>\n" +
     "</div>\n" +
     "");

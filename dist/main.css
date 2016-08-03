@@ -168,10 +168,8 @@ lesson-list {
           margin: 4px auto 0;
           width: 27px;
           height: 27px; }
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked),
-        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked {
-          position: absolute;
-          left: -9999px; }
+        lesson-list .lesson-list .lesson-item .col.select [type="checkbox"] {
+          display: none; }
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:not(:checked) + label,
         lesson-list .lesson-list .lesson-item .col.select [type="checkbox"]:checked + label {
           position: relative;
