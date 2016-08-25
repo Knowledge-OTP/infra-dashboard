@@ -107,6 +107,20 @@
                     });
                 };
 
+                GroupsService.getUserGroupData = function(uid){
+                    var found = false;
+                    var groupObj = {};
+                    return storageSrv.get(GROUPS_PATH, groupsDefault()).then(function(groups){
+                        angular.forEach(groups, function (group) {
+                            if (!found && group.students && group.students[uid]){
+                                found = true;
+                                groupObj = group;
+                            }
+                        });
+                        return groupObj;
+                    });
+                };
+
                 GroupsService.moveToGroup = function (toGroupKey, studentIdsArr) {
                     if(!toGroupKey){
                         $log.error('GroupsService.moveToGroup:: to group key not defined');
