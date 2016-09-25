@@ -5,7 +5,7 @@
     "Zinkerz"
   ],
   "dependencies": {
-    "infra": "https://github.com/Knowledge-OTP/infra.git#oren/int-c-e",
+    "infra": "https://github.com/Knowledge-OTP/infra.git#oren/int-c-e-2",
     "angular-translate-loader-partial": "2.11.0"
   },
   "ignore": [
