@@ -1,28 +1,28 @@
 {
-  "name": "infra-dashboard",
-  "version": "v1.0.35",
-  "authors": [
-    "Zinkerz"
-  ],
-  "dependencies": {
-    "infra": "https://github.com/Knowledge-OTP/infra.git#~v5.0.62",
-    "angular-translate-loader-partial": "2.11.0"
-  },
-  "ignore": [
-    ".*",
-    "src",
-    "test",
-    "demo"
-  ],
-  "main": "dist/main.js",
-  "resolutions": {
-    "angular": "1.5.7",
-    "angular-animate": "1.5.7"
-  },
-  "devDependencies": {
-    "es5-shim": "~4.4.1",
-    "angular-mocks": "1.5.7",
-    "mockfirebase": "~0.11.0",
-    "jasmine-jquery": "^2.1.1"
-  }
+    "name": "infra-dashboard",
+    "version": "v1.0.35",
+    "authors": [
+        "Zinkerz"
+    ],
+    "dependencies": {
+        "infra": "https://github.com/Knowledge-OTP/infra.git#~v5.0.62",
+        "angular-translate-loader-partial": "^2.12.1"
+    },
+    "ignore": [
+        ".*",
+        "src",
+        "test",
+        "demo"
+    ],
+    "main": "dist/main.js",
+    "resolutions": {
+        "angular": "1.5.7",
+        "angular-animate": "1.5.7"
+    },
+    "devDependencies": {
+        "es5-shim": "~4.4.1",
+        "angular-mocks": "1.5.7",
+        "mockfirebase": "~0.11.0",
+        "jasmine-jquery": "^2.1.1"
+    }
 }
