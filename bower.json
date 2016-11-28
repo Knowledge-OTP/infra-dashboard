@@ -5,7 +5,7 @@
         "Zinkerz"
     ],
     "dependencies": {
-        "infra": "https://github.com/Knowledge-OTP/infra.git#~v5.0.62",
+        "infra": "https://github.com/Knowledge-OTP/infra.git#~v5.0.73",
         "angular-translate-loader-partial": "^2.12.1"
     },
     "ignore": [
