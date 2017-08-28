@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('znk.infra-dashboard.userResults').service('UserResultsService', [
-        'ENV',
-        function (ENV) {
+        'ENV', '$window',
+        function (ENV, $window) {
             var userResultsService = {};
-            var fbRef = new Firebase(ENV.fbDataEndPoint, ENV.firebaseAppScopeName);
+            var fbRef = initializeFireBase().database().ref();
             var self = this;
 
             function getResultsFromFB(path, uid) {
@@ -38,6 +38,30 @@
             userResultsService.getExerciseResults = function (uid) {
                 return getResultsFromFB(ENV.studentAppName + '/exerciseResults', uid);
             };
+
+            function initializeFireBase() {
+                var dbName = ENV.firebaseAppScopeName;
+                var config = {
+                    apiKey: ENV.firebase_apiKey,
+                    authDomain: ENV.fbGlobalEndPoint,
+                    databaseURL: ENV.fbDataEndPoint,
+                    projectId: ENV.firebase_projectId,
+                    storageBucket: ENV.firebase_projectId + '.appspot.com',
+                    messagingSenderId: ENV.firebase_messagingSenderId
+                };
+
+                var existApp;
+                $window.firebase.apps.forEach(function (app) {
+                    if (app.name.toLowerCase() === dbName.toLowerCase()) {
+                        existApp = app;
+                    }
+                });
+
+                if (!existApp) {
+                    existApp = $window.firebase.initializeApp(config, dbName);
+                }
+                return existApp;
+            }
 
             return userResultsService;
         }
