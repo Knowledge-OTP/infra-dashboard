@@ -36,7 +36,7 @@
                     return authSrv.getAuth().then(authData => {
                         var fullPath = ENV.firebaseAppScopeName + '/' + GROUPS_PATH;
                         var groupsFullPath = fullPath.replace('$$uid', authData.uid);
-                        return initializeFireBase().database().ref(fullPath);
+                        return initializeFireBase().database().ref(groupsFullPath);
                     });
                 }
 

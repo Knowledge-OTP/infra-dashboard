@@ -5,7 +5,6 @@
         'ENV', '$window',
         function (ENV, $window) {
             var userResultsService = {};
-            var fbRef = initializeFireBase().database().ref();
             var self = this;
 
             function getResultsFromFB(path, uid) {
@@ -20,24 +19,6 @@
                     return arr;
                 });
             }
-
-            userResultsService.getExamResults = function (uid) {
-                return getResultsFromFB(ENV.studentAppName + '/examResults', uid);
-            };
-
-            userResultsService.getExerciseResultsByExerciseType = function (uid, exerciseTypeId) {
-                return self.getExerciseResults(uid).then(function (exerciseResults) {
-                    var resultsByExerciseType = exerciseResults.filter(function (results) {
-                        return results.exerciseTypeId === exerciseTypeId;
-                    });
-
-                    return resultsByExerciseType;
-                });
-            };
-
-            userResultsService.getExerciseResults = function (uid) {
-                return getResultsFromFB(ENV.studentAppName + '/exerciseResults', uid);
-            };
 
             function initializeFireBase() {
                 var dbName = ENV.firebaseAppScopeName;
@@ -62,6 +43,26 @@
                 }
                 return existApp;
             }
+
+            var fbRef = initializeFireBase().database().ref();
+
+            userResultsService.getExamResults = function (uid) {
+                return getResultsFromFB(ENV.studentAppName + '/examResults', uid);
+            };
+
+            userResultsService.getExerciseResultsByExerciseType = function (uid, exerciseTypeId) {
+                return self.getExerciseResults(uid).then(function (exerciseResults) {
+                    var resultsByExerciseType = exerciseResults.filter(function (results) {
+                        return results.exerciseTypeId === exerciseTypeId;
+                    });
+
+                    return resultsByExerciseType;
+                });
+            };
+
+            userResultsService.getExerciseResults = function (uid) {
+                return getResultsFromFB(ENV.studentAppName + '/exerciseResults', uid);
+            };
 
             return userResultsService;
         }
