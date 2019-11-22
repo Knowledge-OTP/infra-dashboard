@@ -75,6 +75,6 @@
     ]);
 })(angular);
 
-angular.module('znk.infra-dashboard.userResults').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.userResults').run(['$templateCache', function ($templateCache) {
 
 }]);

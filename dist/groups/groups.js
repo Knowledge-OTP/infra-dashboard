@@ -310,6 +310,6 @@
 })(angular);
 
 
-angular.module('znk.infra-dashboard.groups').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.groups').run(['$templateCache', function ($templateCache) {
 
 }]);

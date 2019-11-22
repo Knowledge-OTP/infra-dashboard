@@ -103,7 +103,7 @@
     ]);
 })(angular);
 
-angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', function ($templateCache) {
   $templateCache.put("components/assign-lesson-drv/templates/lessonList.template.html",
     "<div class=\"lesson-list\">\n" +
     "    <header class=\"list-header row-header flex-container\">\n" +

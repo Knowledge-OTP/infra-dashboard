@@ -103,7 +103,7 @@
     ]);
 })(angular);
 
-angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', function ($templateCache) {
   $templateCache.put("components/assign-lesson-drv/templates/lessonList.template.html",
     "<div class=\"lesson-list\">\n" +
     "    <header class=\"list-header row-header flex-container\">\n" +
@@ -446,7 +446,7 @@ angular.module('znk.infra-dashboard.assign-lesson-drv').run(['$templateCache', f
 })(angular);
 
 
-angular.module('znk.infra-dashboard.groups').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.groups').run(['$templateCache', function ($templateCache) {
 
 }]);
 
@@ -502,7 +502,7 @@ angular.module('znk.infra-dashboard.groups').run(['$templateCache', function($te
 
 
 
-angular.module('znk.infra-dashboard.modal').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.modal').run(['$templateCache', function ($templateCache) {
 
 }]);
 
@@ -583,7 +583,7 @@ angular.module('znk.infra-dashboard.modal').run(['$templateCache', function($tem
     ]);
 })(angular);
 
-angular.module('znk.infra-dashboard.userResults').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.userResults').run(['$templateCache', function ($templateCache) {
 
 }]);
 
@@ -623,6 +623,6 @@ angular.module('znk.infra-dashboard.userResults').run(['$templateCache', functio
     }]);
 })(angular);
 
-angular.module('znk.infra-dashboard.utils').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.utils').run(['$templateCache', function ($templateCache) {
 
 }]);

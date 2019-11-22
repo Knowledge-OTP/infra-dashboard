@@ -50,6 +50,6 @@
 
 
 
-angular.module('znk.infra-dashboard.modal').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-dashboard.modal').run(['$templateCache', function ($templateCache) {
 
 }]);
